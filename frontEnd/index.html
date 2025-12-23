@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hi Math</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/styles.css" />
+    <link rel="stylesheet" href="/assets/font/fontawesome-free-7.1.0-web/css/all.min.css">
+  </head>
+  <body>
+    <div class="app">
+      <header class="topbar" role="banner">
+        <div class="topbar__left">
+          <button class="icon-btn topbar__menu" type="button" aria-label="Mở menu" data-action="toggle-sidebar">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 6h16M4 12h16M4 18h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            </svg>
+          </button>
+
+          <a class="brand" href="#" aria-label="Fun Edu">
+            <span class="brand__mark" aria-hidden="true">
+              <!-- <svg viewBox="0 0 24 24">
+                <path d="M12 2l9 5-9 5-9-5 9-5z" fill="currentColor" opacity="0.9" />
+                <path d="M3 7v10l9 5 9-5V7" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+              </svg> -->
+              <i class="fa-solid fa-house"></i>
+            </span>
+            <span class="brand__text">Hi math</span>
+          </a>
+        </div>
+
+        <div class="topbar__right" aria-label="Thanh công cụ">
+          <button class="icon-btn" type="button" aria-label="Cài đặt">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <!-- <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              />
+              <path
+                d="M19.4 15a7.8 7.8 0 0 0 .1-1l2-1.2-2-3.4-2.3.6a7.5 7.5 0 0 0-1.7-1L15.2 6 11.8 4l-1.5 1.9a8 8 0 0 0-2 .4L6.7 4 3.3 6l.7 2.4a8 8 0 0 0-1.4 1.6l-2.5-.4-2 3.4 2.1 1.3a8 8 0 0 0 0 2l-2.1 1.3 2 3.4 2.5-.4a8 8 0 0 0 1.4 1.6L3.3 18l3.4 2 1.6-2a8 8 0 0 0 2 .4l1.5 2 3.4-2-.7-2.4a7.5 7.5 0 0 0 1.7-1l2.3.6 2-3.4-2-1.2z"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linejoin="round"
+                opacity="0.5"
+              />
+            </svg> -->
+
+          </button>
+
+          <button class="icon-btn" type="button" aria-label="Thông báo">
+            <i class="fa-solid fa-bell"></i>
+            <!-- <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M18 8a6 6 0 1 0-12 0c0 7-3 7-3 7h18s-3 0-3-7"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+              <path d="M13.7 21a2 2 0 0 1-3.4 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            </svg> -->
+          </button>
+
+          <button class="avatar" type="button" aria-label="Tài khoản">
+            <!-- <span class="avatar__ring" aria-hidden="true"></span>
+            <span class="avatar__dot" aria-hidden="true"></span> -->
+            <i class="fa-solid fa-user-astronaut"></i>
+          </button>
+        </div>
+      </header>
+
+      <aside class="sidebar" aria-label="Thanh điều hướng" data-sidebar>
+        <div class="sidebar__hero">
+          <div class="hero-badge" aria-hidden="true">
+            <div class="hero-badge__orb"></div>
+            <div class="hero-badge__icon">
+              <!-- <svg viewBox="0 0 24 24">
+                <path d="M12 3l9 5-9 5-9-5 9-5z" fill="currentColor" opacity="0.95" />
+                <path d="M5 11v6c0 1.7 3.1 4 7 4s7-2.3 7-4v-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+              </svg> -->
+              <i class="fa-solid fa-graduation-cap"></i>
+            </div>
+          </div>
+          <div class="sidebar__title">Bảng điều khiển</div>
+          <div class="sidebar__subtitle">Học toán mỗi ngày</div>
+        </div>
+
+        <nav class="nav" role="navigation">
+          <a class="nav__item is-active" href="#" data-nav="home" data-page="home">
+            <span class="nav__icon" aria-hidden="true">
+              <!-- <svg viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V10.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg> -->
+               <i class="fa-solid fa-house"></i>
+            </span>
+            <!-- <i class="fa-solid fa-house"></i> -->
+            <span class="nav__text">Trang chủ</span>
+          </a>
+
+          <button class="nav__item nav__item--btn" type="button" data-dropdown="digits" aria-expanded="false" data-page="digits">
+            <span class="nav__icon" aria-hidden="true">
+              <i class="fa-solid fa-arrow-down-1-9"></i>
+              <!-- <svg viewBox="0 0 24 24"><path d="M8 7h8M8 12h8M8 17h8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M6 4h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z" fill="none" stroke="currentColor" stroke-width="2" opacity="0.35"/></svg> -->
+            </span>
+            <span class="nav__text">Học chữ số</span>
+            <span class="nav__chev" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M8 10l4 4 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </button>
+          <div class="nav__sub" data-submenu="digits">
+            <a href="#" class="nav__subitem" data-page="digits-hoc-so">Học số</a>
+            <a href="#" class="nav__subitem" data-page="digits-ghep-so">Ghép số</a>
+            <a href="#" class="nav__subitem" data-page="digits-chan-le">Chẵn lẻ</a>
+            <a href="#" class="nav__subitem" data-page="digits-dem-hinh">Đếm hình</a>
+          </div>
+
+          <button class="nav__item nav__item--btn" type="button" data-dropdown="compare" aria-expanded="false" data-page="compare">
+            <span class="nav__icon" aria-hidden="true">
+              <div class="icon__compare--section">
+                <i class="fa-solid fa-greater-than"></i>
+                <i class="fa-solid fa-less-than"></i>
+              </div>
+              <!-- <svg viewBox="0 0 24 24"><path d="M7 16V8m10 0v8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M4 12h6M14 12h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M4 6h16v12H4z" fill="none" stroke="currentColor" stroke-width="2" opacity="0.35"/></svg> -->
+            </span>
+            <span class="nav__text">Phép so sánh</span>
+            <span class="nav__chev" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M8 10l4 4 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </button>
+          <div class="nav__sub" data-submenu="compare">
+            <a href="#" class="nav__subitem" data-page="compare-so-sanh">So sánh số</a>
+            <a href="#" class="nav__subitem" data-page="compare-xep-so">Xếp số</a>
+          </div>
+
+          <button class="nav__item nav__item--btn" type="button" data-dropdown="practice" aria-expanded="false" data-page="practice">
+            <span class="nav__icon" aria-hidden="true">
+              <i class="fa-solid fa-pen"></i>
+              <!-- <svg viewBox="0 0 24 24"><path d="M6 4h12v16H6z" fill="none" stroke="currentColor" stroke-width="2" opacity="0.35"/><path d="M8 8h8M8 12h8M8 16h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> -->
+            </span>
+            <span class="nav__text">Luyện tập</span>
+            <span class="nav__chev" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M8 10l4 4 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </button>
+          <div class="nav__sub" data-submenu="practice">
+            <a href="#" class="nav__subitem" data-page="practice-tinh-toan">Tính toán</a>
+            <a href="#" class="nav__subitem" data-page="practice-so-sanh">So sánh</a>
+          </div>
+
+          <a class="nav__item" href="#" data-nav="games" data-page="games">
+            <span class="nav__icon" aria-hidden="true">
+              <i class="fa-solid fa-gamepad"></i>
+              <!-- <svg viewBox="0 0 24 24"><path d="M7 14h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M9.5 11.5V16.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M16.5 12.5h.01" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M18.5 14.5h.01" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M6.2 7h11.6a3.2 3.2 0 0 1 3.1 2.4l1 4.1A3.2 3.2 0 0 1 18.8 18h-1.2l-2.1-2H8.5L6.4 18H5.2A3.2 3.2 0 0 1 2 13.5l1-4.1A3.2 3.2 0 0 1 6.2 7z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" opacity="0.35"/></svg> -->
+            </span>
+            <span class="nav__text">Trò chơi</span>
+          </a>
+
+          <a class="nav__item" href="#" data-nav="users" data-page="users">
+            <span class="nav__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 21a8 8 0 0 0-16 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </span>
+            <span class="nav__text">Người dùng</span>
+          </a>
+        </nav>
+
+        <div class="sidebar__footer">
+          <!-- <div class="chip" aria-label="Phiên bản">v0.1.0</div> -->
+          <a class="sidebar__hint" href="https://www.undp.org/vi/vietnam/lien-he" target="_blank">Góp ý để Hi Math tốt hơn</a>
+        </div>
+      </aside>
+
+      <main class="content" role="main">
+        <section class="hero">
+          <div class="hero__copy">
+            <h1 class="hero__title">Giới thiệu <span>Hi Math</span></h1>
+            <p class="hero__desc">
+              Hi Math là website học toán dành cho trẻ em: vừa học, vừa chơi, vừa rèn logic.
+              Mình thiết kế giao diện thân thiện, nhiều màu sắc nhưng vẫn dễ nhìn.
+            </p>
+            <div class="hero__pill">Các tính năng nổi bật</div>
+          </div>
+
+          <!-- <div class="hero__art" aria-hidden="true">
+            <div class="art-card">
+              <div class="art-card__row">
+                <div class="spark"></div>
+                <div class="spark spark--2"></div>
+                <div class="spark spark--3"></div>
+              </div>
+              <div class="art-card__row art-card__row--bars">
+                <div class="bar" style="--h: 66%"></div>
+                <div class="bar" style="--h: 40%"></div>
+                <div class="bar" style="--h: 80%"></div>
+                <div class="bar" style="--h: 55%"></div>
+              </div>
+              <div class="art-card__row art-card__row--chips">
+                <div class="mini-chip">Số</div>
+                <div class="mini-chip">So sánh</div>
+                <div class="mini-chip">Tính</div>
+                <div class="mini-chip">Game</div>
+              </div>
+            </div>
+          </div> -->
+        </section>
+
+        <section class="features" aria-label="Chức năng">
+          <a class="feature" href="#" data-feature="digits">
+            <div class="feature__icon" aria-hidden="true" style="--c1:#5b8cff;--c2:#7b5cff;">
+              <!-- <span>#</span> -->
+               <i class="fa-solid fa-1"></i>
+            </div>
+            <h3 class="feature__title">Học số</h3>
+            <p class="feature__desc">Làm quen, nhận biết, ghép số, sắp xếp và đếm hình.</p>
+          </a>
+
+          <a class="feature" href="#" data-feature="compare">
+            <div class="feature__icon" aria-hidden="true" style="--c1:#ff6a88;--c2:#ff9f5f;">
+              <i class="fa-solid fa-greater-than"></i>
+                <i class="fa-solid fa-less-than"></i>
+              <!-- <svg viewBox="0 0 24 24"><path d="M7 8h10M7 16h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M9 12h6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.7"/></svg> -->
+            </div>
+            <h3 class="feature__title">So sánh</h3>
+            <p class="feature__desc">So sánh số và so sánh theo hình, tăng tư duy quan sát.</p>
+          </a>
+
+          <a class="feature" href="#" data-feature="calc">
+            <div class="feature__icon" aria-hidden="true" style="--c1:#31c48d;--c2:#57e3ff;">
+              <i class="fa-solid fa-calculator"></i>
+              <!-- <svg viewBox="0 0 24 24"><path d="M7 4h10v16H7z" fill="none" stroke="currentColor" stroke-width="2" opacity="0.35"/><path d="M9 8h6M9 12h6M9 16h2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> -->
+            </div>
+            <h3 class="feature__title">Tính toán</h3>
+            <p class="feature__desc">Cộng trừ cơ bản, luyện tập theo cấp độ, có điểm thưởng.</p>
+          </a>
+
+          <a class="feature" href="#" data-feature="games">
+            <div class="feature__icon" aria-hidden="true" style="--c1:#ffd25a;--c2:#ff5bd6;">
+              <i class="fa-solid fa-gamepad"></i>
+              <!-- <svg viewBox="0 0 24 24"><path d="M7 14h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M10 12v4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M16.5 12.5h.01" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M18.5 14.5h.01" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path d="M6.2 7h11.6a3.2 3.2 0 0 1 3.1 2.4l1 4.1A3.2 3.2 0 0 1 18.8 18h-1.2l-2.1-2H8.5L6.4 18H5.2A3.2 3.2 0 0 1 2 13.5l1-4.1A3.2 3.2 0 0 1 6.2 7z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" opacity="0.35"/></svg> -->
+            </div>
+            <h3 class="feature__title">Trò chơi</h3>
+            <p class="feature__desc">Mini game để ghi nhớ kiến thức nhanh và tạo hứng thú.</p>
+          </a>
+
+          <a class="feature feature--wide" href="#" data-feature="pdf">
+            <div class="feature__icon" aria-hidden="true" style="--c1:#492525;--c2:#ff7fd1;">
+              <span>PDF</span>
+            </div>
+            <h3 class="feature__title">Tài liệu</h3>
+            <!-- <p class="feature__desc">Tổng hợp bài tập PDF để in ra hoặc học thêm cùng ba mẹ.</p> -->
+          </a>
+        </section>
+
+        <!-- <section class="contact" aria-label="Liên hệ">
+          <h2 class="contact__title">Liên hệ đội ngũ phát triển</h2>
+          <div class="contact__grid">
+            <div class="contact__item">
+              <div class="contact__label">Email</div>
+              <a class="contact__value" href="mailto:demo@funedu.local">demo@funedu.local</a>
+            </div>
+            <div class="contact__item">
+              <div class="contact__label">Website</div>
+              <a class="contact__value" href="#">funedu.local</a>
+            </div>
+          </div>
+        </section> -->
+
+        <footer class="page-footer">
+          <span>Hi Math luôn lắng nghe ý kiến đóng góp để hoàn thiện sản phẩm tốt hơn.</span>
+        </footer>
+      </main>
+
+      <div class="backdrop" data-backdrop hidden></div>
+
+      <div class="modal-backdrop" data-auth-backdrop hidden>
+        <div class="modal" role="dialog" aria-modal="true" aria-label="Đăng nhập / Đăng ký">
+            <div class="modal--container__button">
+              <button class="modal__close" type="button" aria-label="Đóng" data-auth-close>
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                </svg>
+              </button>
+          </div>
+
+          <div class="modal__header">
+            <div class="modal__tabs">
+              <button class="modal__tab is-active" type="button" data-auth-tab="login">Đăng nhập</button>
+              <button class="modal__tab" type="button" data-auth-tab="register">Đăng ký</button>
+            </div>
+            <!-- <p class="modal__desc">Vui lòng đăng nhập để xem mục Người dùng.</p> -->
+          </div>
+
+          <!-- Đăng nhập form -->
+          <form class="form" data-auth-form="login">
+            <label class="field">
+              <span class="field__label">Email</span>
+              <input class="field__input" type="email" placeholder="Enter your email" required data-auth-email />
+            </label>
+
+            <label class="field">
+              <span class="field__label">Mật khẩu</span>
+              <input class="field__input" type="password" placeholder="Enter your password" required />
+            </label>
+
+            <button class="btn btn--primary" type="submit">Đăng nhập</button>
+
+            <div class="form__meta">
+              <span class="dot"></span>
+              <span>Chưa có tài khoản?</span>
+              <button type="button" class="link" data-switch-to="register">Đăng ký</button>
+            </div>
+          </form>
+
+          <!-- Đăng ký form (ẩn mặc định) -->
+          <form class="form" data-auth-form="register" hidden>
+            <label class="field">
+              <span class="field__label">Email</span>
+              <input class="field__input" type="email" placeholder="Enter your email" required />
+            </label>
+
+            <label class="field">
+              <span class="field__label">Mật khẩu</span>
+              <input class="field__input" type="password" placeholder="Enter your password" required />
+            </label>
+
+            <label class="field">
+              <span class="field__label">Xác nhận mật khẩu</span>
+              <input class="field__input" type="password" placeholder="Confirm your password" required />
+            </label>
+
+            <button class="btn btn--primary" type="submit">Đăng ký</button>
+
+            <div class="form__meta">
+              <span class="dot"></span>
+              <span>Đã có tài khoản?</span>
+              <button type="button" class="link" data-switch-to="login">Đăng nhập</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="./main.js"></script>
+  </body>
+</html>
