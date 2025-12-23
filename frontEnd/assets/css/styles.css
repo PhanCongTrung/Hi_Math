@@ -393,7 +393,21 @@ button{font:inherit}
 .contact__value{display:inline-block;margin-top: 6px; font-weight:800; color:#263149}
 .contact__value:hover{text-decoration:underline}
 
-.page-footer{margin-top: 135px; color: var(--muted); font-weight:700}
+.page-footer{
+  margin-top: 130px; 
+  color: var(--muted); font-weight:700;
+  display: flex;
+  justify-content: end;
+  /* align-items: end; */
+}
+
+.contactMe {
+  margin: 8px;
+}
+
+.myFacebook:hover {
+  color: pink;
+}
 
 /* Dynamic content panel (used when nav switches pages) */
 .panel{
