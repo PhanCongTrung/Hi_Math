@@ -1,16 +1,16 @@
 export function mount(container) {
   if (!container) return;
   // ensure css is loaded
-  if (!document.querySelector('link[data-panel="hoc-so"]')) {
+  if (!document.querySelector('link[data-panel="hoc-chu-so"]')) {
     const link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = './panels/hoc-so/style.css';
-    link.setAttribute('data-panel','hoc-so');
+    link.href = './panels/hoc-chu-so/style.css';
+    link.setAttribute('data-panel','hoc-chu-so');
     document.head.appendChild(link);
   }
 
   container.innerHTML = `
-    <div class="hocso-container">
+    <div class="hoc-chu-so-container">
       <header>
         <h1><i class="fas fa-graduation-cap"></i> Học Số 0-9</h1>
       </header>
@@ -52,7 +52,7 @@ export function mount(container) {
           </div>
         </div>
       </main>
-    </div>"},{ 
+    </div>
 
     <audio id="numberAudio" preload="auto"></audio>
   `;
@@ -142,17 +142,15 @@ export function mount(container) {
   document.addEventListener('keydown', handleKeydown);
 
   // store cleanup on container
-  container._hocCleanup = () => {
+  container._hocChuSoCleanup = () => {
     document.removeEventListener('keydown', handleKeydown);
     audioBtn?.removeEventListener('click', playAudio);
     prevBtn?.removeEventListener('click', () => changeNumber(currentNumberIndex - 1));
     nextBtn?.removeEventListener('click', () => changeNumber(currentNumberIndex + 1));
     try { audioElement.pause(); audioElement.currentTime = 0; } catch(e) {}
-    delete container._hocCleanup;
+    delete container._hocChuSoCleanup;
   };
 }
 
 export function unmount(container) {
-  if (!container) return;
-  if (container._hocCleanup) container._hocCleanup();
-}
+  if (!container) return; if (container._hocChuSoCleanup) container._hocChuSoCleanup(); }

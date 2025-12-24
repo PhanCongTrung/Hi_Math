@@ -1,0 +1,87 @@
+/* .demso-container { padding: 8px; } */
+.demso-container { box-sizing: border-box; }
+
+.demso-container .game-container {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    padding: 12px;
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+    overflow: visible;
+}
+
+/* Header / Stats / Question: slightly smaller to keep focus on icons + answers */
+.demso-container .game-header { text-align: center; display: none;}
+.demso-container .game-header h1 { font-family:'Fredoka One',cursive;color:#667eea;font-size:1rem;margin:0; }
+
+.demso-container .game-stats { display:grid; grid-template-columns: repeat(3,1fr); gap:8px; }
+.demso-container .stat { background: linear-gradient(135deg,#fff 0%, #f6f7ff 100%); border-radius:8px; padding:6px; text-align:center; border:1px solid #eef2ff; box-shadow:0 3px 8px rgba(0,0,0,0.03); }
+.demso-container .stat-label { font-size:0.7rem; color:#666; font-weight:600; }
+.demso-container .stat-value { font-size:1rem; font-weight:700; color:#667eea; font-family:'Fredoka One',cursive; }
+.demso-container .stat-value.correct { color:#4CAF50; }
+.demso-container .stat-value.wrong { color:#f44336; }
+
+.demso-container .question-box { 
+    background: linear-gradient(135deg, #fff9f9 0%, #fff0f0 100%);
+    border-radius: 10px;
+    padding: 8px 10px;
+    text-align: center;
+    border: 1px solid #ffe6e6;
+    font-size: 0.95rem;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+ }
+
+/* Icons display: make larger and central focus */
+.demso-container .icons-display {
+    background: linear-gradient(135deg,#f8f9ff 0%,#eef1ff 100%);
+    border-radius:10px;
+    padding:18px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:26px;
+    justify-content:space-evenly;
+    align-items:center;
+    min-height:220px;
+    border:1px solid #e6e9ff;
+    overflow:auto;
+    height: 15.2rem;
+}
+.demso-container .icon-item { display:flex; align-items:center; justify-content:center; animation: float 3s ease-in-out infinite; width:56px; height:56px; }
+.demso-container .icon-item i { font-size:4.8rem !important; filter: drop-shadow(2px 2px 6px rgba(0,0,0,0.12)); transition:all .28s ease; }
+
+/* Answers: larger, clearer, and avoid fixed heights to prevent overlap */
+/* .demso-container .answers-section { margin-top:10px; } */
+.demso-container .answers-grid { display:grid; grid-template-columns: repeat(2,1fr); gap:14px; align-items:center; }
+.demso-container .answer-btn { background:white; border:3px solid #667eea; border-radius:12px; padding:12px; font-size:1.8rem; font-weight:800; color:#667eea; box-shadow:0 6px 18px rgba(102,126,234,0.12); height:72px; display:flex; align-items:center; justify-content:center; width:100%; box-sizing: border-box; }
+.demso-container .answer-btn:hover {cursor: pointer; background-color: rgb(245, 245, 124);}
+.demso-container .answer-btn.correct { background: linear-gradient(135deg, #4CAF50, #45a049); color:white; border-color:#4CAF50; }
+.demso-container .answer-btn.incorrect { background: linear-gradient(135deg, #f44336, #e53935); color:white; border-color:#f44336; }
+
+/* Controls: ensure they sit below answers and do not overlap */
+.demso-container .controls { display:flex; gap:10px; justify-content:flex-end; align-items:center; margin-top:12px; padding-top:10px; border-top:1px solid rgba(102,126,234,0.06); z-index:1; }
+.demso-container .result-message { font-family:'Fredoka One',cursive; min-height:36px; padding:6px 10px; border-radius:10px; opacity:0; transition:opacity .25s ease; margin-right:auto; display:flex; align-items:center; }
+.demso-container .result-message.show { opacity:1; }
+.demso-container .result-message.correct { color:#4CAF50; background: rgba(76,175,80,0.08); }
+.demso-container .result-message.incorrect { color:#f44336; background: rgba(244,67,54,0.08); }
+
+@keyframes float { 0%,100% { transform: translateY(0);} 50% { transform: translateY(-8px);} }
+
+/* Responsive adjustments */
+@media (max-width:768px) {
+  .demso-container .answers-grid { grid-template-columns: 1fr; }
+  .demso-container .icon-item i { font-size:3.4rem !important; }
+  .demso-container .answer-btn { padding:12px; font-size:1.4rem; height:56px; }
+  .demso-container .icons-display { min-height:160px; padding:12px; gap:12px; }
+}
+
+.control-btn {
+    
+}

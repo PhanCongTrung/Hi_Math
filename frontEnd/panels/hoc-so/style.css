@@ -1,5 +1,5 @@
 /* Styles extracted from main.js for Học Số 0-9 panel */
-.container {
+.hocso-container {
   width: 100%;
   max-width: 100%;
   height: 100%;
@@ -13,7 +13,7 @@
   flex-direction: column;
 }
 
-header {
+.hocso-container header {
   text-align: center;
   margin-bottom: 10px;
   padding-bottom: 8px;
@@ -24,7 +24,7 @@ header {
   justify-content: center;
 }
 
-header h1 {
+.hocso-container header h1 {
   font-family: 'Fredoka One', cursive;
   color: #4a6bff;
   font-size: 1.25rem;
@@ -34,11 +34,11 @@ header h1 {
   margin: 0;
 }
 
-main { flex: 1; display: flex; flex-direction: column; gap: 12px; padding-top: 6px; }
+.hocso-container main { flex: 1; display: flex; flex-direction: column; gap: 12px; padding-top: 6px; }
 
-.audio-section { display: flex; justify-content: center; align-items: center; height: 48px; }
+.hocso-container .audio-section { display: flex; justify-content: center; align-items: center; height: 48px; }
 
-.audio-btn {
+.hocso-container .audio-btn {
   background: linear-gradient(to right, #4a6bff, #5b75ff);
   color: white;
   border: none;
@@ -54,13 +54,13 @@ main { flex: 1; display: flex; flex-direction: column; gap: 12px; padding-top: 6
   box-shadow: 0 4px 12px rgba(74, 107, 255, 0.18);
 }
 
-.audio-btn i { font-size: 1.1rem; }
+.hocso-container .audio-btn i { font-size: 1.1rem; }
 
-.number-nav-container { display: flex; justify-content: space-evenly; }
+.hocso-container .number-nav-container { display: flex; justify-content: space-evenly; }
 
-.number-display-container { display:flex;flex-direction: column;justify-content: center; align-items: center;}
+.hocso-container .number-display-container { display:flex;flex-direction: column;justify-content: center; align-items: center;}
 
-.number-icon {
+.hocso-container .number-icon {
   font-size: 4rem;
   font-weight: 900;
   color: #4a6bff;
@@ -75,28 +75,27 @@ main { flex: 1; display: flex; flex-direction: column; gap: 12px; padding-top: 6
   box-shadow: 0 6px 18px rgba(74, 107, 255, 0.08);
 }
 
-.number-name { font-size: 1.15rem; font-weight:700; }
+.hocso-container .number-name { font-size: 1.15rem; font-weight:700; }
 
-.nav-btn { width:44px; height:44px; background: linear-gradient(to right, #4a6bff, #5b75ff); border-radius: 40px; border: none; color: white; cursor: pointer; transition: transform 0.12s ease, opacity 0.12s ease; }
-.nav-btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; box-shadow: none; background: linear-gradient(to right, #bfcffb, #d3dbff); color: rgba(255,255,255,0.85); }
-.nav-btn:disabled:hover { transform: none; }
+.hocso-container .nav-btn { width:44px; height:44px; background: linear-gradient(to right, #4a6bff, #5b75ff); border-radius: 40px; border: none; color: white; cursor: pointer; transition: transform 0.12s ease, opacity 0.12s ease; }
+.hocso-container .nav-btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; box-shadow: none; background: linear-gradient(to right, #bfcffb, #d3dbff); color: rgba(255,255,255,0.85); }
+.hocso-container .nav-btn:disabled:hover { transform: none; }
 
-.image-section { padding: 6px; display: flex;justify-content: center; margin-bottom: auto; }
+.hocso-container .image-section { padding: 6px; display: flex;justify-content: center; margin-bottom: auto; }
 
-.image-wrapper { max-width: 520px; height: 270px; border-radius: 12px; }
+.hocso-container .image-wrapper { max-width: 520px; height: 270px; border-radius: 12px; }
 
-#numberImage { width:100%; height:100%; object-fit:cover; }
+.hocso-container #numberImage { width:100%; height:100%; object-fit:cover; }
 
-.quick-numbers { height: 70px; background: linear-gradient(135deg, #f3f6ff 0%, #eef4ff 100%); border-radius: 12px; padding: 8px; border: 1px solid #e6efff; margin-top: 8px; display:flex; justify-content: space-evenly; }
+.hocso-container .quick-numbers { height: 70px; background: linear-gradient(135deg, #f3f6ff 0%, #eef4ff 100%); border-radius: 12px; padding: 8px; border: 1px solid #e6efff; margin-top: 8px; display:flex; justify-content: space-evenly; }
 
-.numbers-container { display: flex; justify-content: flex-start; align-items: center; gap: 12px; height: 100%; overflow-x: auto; padding: 0 12px; }
+.hocso-container .numbers-container { display: flex; justify-content: flex-start; align-items: center; gap: 12px; height: 100%; overflow-x: auto; padding: 0 12px; }
 
-.number-btn { background-color: white; border: 2px solid #4a6bff; border-radius: 10px; width: 48px; height: 48px; font-size: 1.15rem; font-weight: 800; color: #4a6bff; cursor: pointer; transition: all 0.18s ease; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 10px rgba(74,107,255,0.06); }
+.hocso-container .number-btn { background-color: white; border: 2px solid #4a6bff; border-radius: 10px; width: 48px; height: 48px; font-size: 1.15rem; font-weight: 800; color: #4a6bff; cursor: pointer; transition: all 0.18s ease; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 10px rgba(74,107,255,0.06); }
 
-.number-btn:hover { transform: translateY(-4px); background-color:#4a6bff; color:#fff; }
-.number-btn.active { background-color: #4a6bff; color: #fff; transform: scale(1.06); box-shadow: 0 6px 18px rgba(74,107,255,0.12); }
-
-.numbers-container::-webkit-scrollbar { height: 6px; }
-.numbers-container::-webkit-scrollbar-track { background: transparent; }
-.numbers-container::-webkit-scrollbar-thumb { background: rgba(74,107,255,0.18); border-radius: 3px; }
-.numbers-container::-webkit-scrollbar-thumb:hover { background: rgba(74,107,255,0.28); }
+.hocso-container .number-btn:hover { transform: translateY(-4px); background-color:#4a6bff; color:#fff; }
+.hocso-container .number-btn.active { background-color: #4a6bff; color: #fff; transform: scale(1.06); box-shadow: 0 6px 18px rgba(74,107,255,0.12); }
+.hocso-container .numbers-container::-webkit-scrollbar { height: 6px; }
+.hocso-container .numbers-container::-webkit-scrollbar-track { background: transparent; }
+.hocso-container .numbers-container::-webkit-scrollbar-thumb { background: rgba(74,107,255,0.18); border-radius: 3px; }
+.hocso-container .numbers-container::-webkit-scrollbar-thumb:hover { background: rgba(74,107,255,0.28); }

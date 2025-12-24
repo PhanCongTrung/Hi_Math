@@ -133,7 +133,8 @@ export function mount(container) {
     currentAnswer = currentNumber % 2 === 0 ? 'even' : 'odd';
     currentNumberElement.textContent = currentNumber;
     currentNumberElement.draggable = true;
-    currentNumberElement.classList.remove('dragging');
+    // clear any dragging / feedback state
+    currentNumberElement.classList.remove('dragging','correct-number','wrong-number');
     isAnswered = false;
     evenBox.classList.remove('drag-over');
     oddBox.classList.remove('drag-over');
@@ -162,6 +163,9 @@ export function mount(container) {
     if (isAnswered) return;
     isAnswered = true;
     clearInterval(timerInterval);
+    // indicate wrong on the number itself
+    currentNumberElement.classList.add('wrong-number');
+    currentNumberElement.draggable = false;
     if (currentAnswer === 'even') {
       evenResultElement.textContent = 'Đáp án đúng!';
       evenResultElement.classList.add('correct');
@@ -220,10 +224,12 @@ export function mount(container) {
     const isCorrect = userAnswer === currentAnswer;
     if (isCorrect) {
       score++; correctAnswers++;
+      currentNumberElement.classList.add('correct-number');
       if (targetBox === evenBox) { evenResultElement.textContent = 'Đúng rồi!'; evenResultElement.classList.add('correct'); oddResultElement.textContent = ''; }
       else { oddResultElement.textContent = 'Đúng rồi!'; oddResultElement.classList.add('correct'); evenResultElement.textContent = ''; }
     } else {
       wrongAnswers++;
+      currentNumberElement.classList.add('wrong-number');
       if (targetBox === evenBox) {
         evenResultElement.textContent = 'Sai rồi!'; evenResultElement.classList.add('wrong');
         if (currentAnswer === 'odd') { oddResultElement.textContent = 'Đáp án đúng!'; oddResultElement.classList.add('correct'); }

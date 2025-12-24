@@ -1,0 +1,53 @@
+/* Scoped styles for Xếp Số panel */
+.xepso-container { width: 100%; height: 100%; }
+.xepso-container .game-container {
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  box-sizing: border-box;
+  background-color: white;
+  border-radius: 18px;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.18);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+}
+.xepso-container .game-header { text-align:center; margin-bottom:10px; }
+.xepso-container .game-header h1 { font-family:'Fredoka One', cursive; color:#2575fc; font-size:1.6rem; display:flex; gap:8px; align-items:center; justify-content:center; }
+.xepso-container .game-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:14px; }
+.xepso-container .stat { background:linear-gradient(135deg,#f8f9ff,#eef1ff); border-radius:10px; padding:8px; text-align:center; border:1px solid #e6e9ff; }
+.xepso-container .stat-label { font-size:0.75rem; color:#666; font-weight:600; }
+.xepso-container .stat-value { font-size:1.4rem; font-weight:700; color:#2575fc; font-family:'Fredoka One', cursive; }
+
+.xepso-container .sequence-section { flex:1; display:flex; flex-direction:column; margin-bottom:16px; }
+.xepso-container .sequence-section h3 { text-align:center; margin-bottom:12px; font-weight:700; }
+.xepso-container .number-sequence { flex:1; display:flex; justify-content:space-around; align-items:center; background:linear-gradient(135deg,#f0f9ff,#e6f3ff); border-radius:16px; padding:24px; box-shadow:0 10px 25px rgba(0,0,0,0.08); border:2px solid #d9e9ff; }
+
+.xepso-container .number-slot { width: clamp(70px, 12vw, 120px); aspect-ratio:1 / 1; display:flex; align-items:center; justify-content:center; border-radius:12px; font-size: clamp(1.6rem, 3.5vw, 2.6rem); font-weight:900; font-family:'Fredoka One', cursive; transition:all .25s ease; box-shadow:0 8px 20px rgba(0,0,0,0.08); }
+.xepso-container .number-slot.filled { background:linear-gradient(135deg,#2196F3,#03A9F4); color:white; border:3px solid #1976D2; }
+.xepso-container .number-slot.empty { background:white; color:#FFC107; border:4px dashed #FFC107; cursor:pointer; position:relative; }
+.xepso-container .number-slot.empty::after { content:"?"; position:absolute; font-size:3.2rem; color:#FFC107; }
+.xepso-container .number-slot.correct { background:linear-gradient(135deg,#4CAF50,#45a049); color:white; border-color:#388E3C; }
+.xepso-container .number-slot.incorrect-drop { animation:incorrectShake .5s ease; background:linear-gradient(135deg,#f44336,#e53935); color:white; }
+.xepso-container .number-slot.all-correct { background:linear-gradient(135deg,#4CAF50,#45a049); color:white; border-color:#388E3C; }
+
+@keyframes incorrectShake { 0%,100%{transform:translateX(0);}25%{transform:translateX(-8px);}75%{transform:translateX(8px);} }
+
+.xepso-container .answers-section { margin-bottom:18px; }
+.xepso-container .draggable-numbers { display:flex; justify-content:center; gap:16px; flex-wrap:wrap; }
+.xepso-container .draggable-number { width: clamp(60px, 10vw, 100px); aspect-ratio:1 / 1; background:linear-gradient(135deg,#FF9800,#FF5722); color:white; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size: clamp(1.2rem, 3vw, 2rem); font-weight:900; cursor:grab; box-shadow:0 8px 18px rgba(0,0,0,0.08); border:3px solid #FF9800; user-select:none; }
+.xepso-container .draggable-number.dragging { opacity:0.7; transform:scale(1.05); cursor:grabbing; }
+.xepso-container .draggable-number.used { opacity:0.3; cursor:not-allowed; transform:none; box-shadow:none; background:linear-gradient(135deg,#9E9E9E,#757575); border-color:#757575; }
+
+.xepso-container .controls { display:flex; justify-content:center; gap:12px; padding-top:10px; border-top:2px solid #f0f0f0; }
+.xepso-container .control-btn { border:none; border-radius:16px; padding:10px 18px; font-weight:600; display:flex; align-items:center; gap:8px; cursor:pointer; }
+.xepso-container .next-btn { background:linear-gradient(to right,#4CAF50,#8BC34A); color:white; }
+.xepso-container .restart-btn { background:linear-gradient(to right,#f44336,#FF9800); color:white; }
+
+@media (max-width:768px) {
+  .xepso-container .number-sequence { padding:16px; flex-wrap:wrap; gap:12px; }
+  .xepso-container .number-slot { width:80px; height:80px; font-size:2rem; }
+  .xepso-container .draggable-number { width:70px; height:70px; font-size:1.8rem; }
+}

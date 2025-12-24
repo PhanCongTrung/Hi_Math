@@ -1,0 +1,55 @@
+/* Scoped styles for So Sánh Số panel */
+.sosanh-container { width: 100%; height: 100%; }
+.sosanh-container .game-container {
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  box-sizing: border-box;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+}
+.sosanh-container .game-header { text-align:center; margin-bottom:8px; }
+.sosanh-container .game-header h1 { font-family: 'Fredoka One', cursive; color:#2575fc; font-size:1.4rem; display:flex; gap:8px; align-items:center; justify-content:center; }
+.sosanh-container .game-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:12px; }
+.sosanh-container .stat { background:linear-gradient(135deg,#f8f9ff 0%,#eef1ff 100%); border-radius:8px; padding:6px; text-align:center; border:1px solid #e6e9ff; }
+.sosanh-container .stat-label { font-size:0.72rem; color:#666; font-weight:600; }
+.sosanh-container .stat-value { font-size:1.4rem; font-weight:700; color:#2575fc; font-family:'Fredoka One', cursive; }
+.sosanh-container .numbers-display { display:flex; justify-content:center; align-items:center; gap:20px; flex:1; margin:10px 0; }
+.sosanh-container .number-box { width: clamp(110px, 18vw, 200px); aspect-ratio: 1 / 1; border-radius:14px; display:flex; align-items:center; justify-content:center; box-shadow:0 12px 25px rgba(0,0,0,0.12); }
+.sosanh-container .left-box { background:linear-gradient(135deg,#4CAF50,#8BC34A); border:5px solid #4CAF50; }
+.sosanh-container .right-box { background:linear-gradient(135deg,#2196F3,#03A9F4); border:5px solid #2196F3; }
+.sosanh-container .number-value { font-size: clamp(2rem, 5.5vw, 4.5rem); font-weight:900; color:white; font-family:'Fredoka One', cursive; text-shadow:2px 2px 6px rgba(0,0,0,0.25); }
+.sosanh-container .comparison-box { width: clamp(80px, 12vw, 140px); aspect-ratio: 1 / 1; background:white; border-radius:12px; display:flex; align-items:center; justify-content:center; box-shadow:0 8px 18px rgba(0,0,0,0.15); border:4px solid #FFC107; position:relative; transition:all 0.25s ease; }
+.sosanh-container .question-mark { font-size: clamp(1.8rem, 4.5vw, 3rem); font-weight:900; color:#FFC107; font-family:'Fredoka One', cursive; transition:opacity 0.25s ease; }
+.sosanh-container .answer-symbol { position:absolute; font-size: clamp(1.8rem, 4.5vw, 3rem); font-weight:900; color:#4CAF50; font-family:'Fredoka One', cursive; opacity:0; transition:opacity 0.25s ease; }
+.sosanh-container .comparison-box.show-answer .question-mark { opacity:0; }
+.sosanh-container .comparison-box.show-answer .answer-symbol { opacity:1; }
+.sosanh-container .question-box { padding:10px; margin-bottom:8px; text-align:center; }
+.sosanh-container .question-box h2 { font-size:1.2rem; font-weight:700; color:#333; }
+.sosanh-container .highlight { color:#FFC107; font-weight:900; font-family:'Fredoka One', cursive; }
+.sosanh-container .answers-section { margin-bottom:10px; }
+.sosanh-container .answers-container { display:flex; justify-content:center; gap:18px; }
+.sosanh-container .answer-btn { flex:1; max-width:200px; background:white; border:3px solid #757575; border-radius:12px; padding:12px; font-size:1rem; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:10px; box-shadow:0 6px 18px rgba(0,0,0,0.08); }
+.sosanh-container .answer-btn:hover {
+    cursor: pointer;
+    background-color: rgb(233, 233, 111);
+}
+.sosanh-container .answer-btn.correct { background:linear-gradient(135deg,#4CAF50,#45a049); border-color:#4CAF50; color:white; transform:scale(1.02); }
+.sosanh-container .answer-btn.incorrect { background:linear-gradient(135deg,#f44336,#e53935); border-color:#f44336; color:white; transform:scale(1.02); }
+.sosanh-container .controls { display:flex; justify-content:center; gap:10px; padding-top:10px; border-top:1px solid #f0f0f0; }
+.sosanh-container .control-btn { border:none; border-radius:16px; padding:8px 18px; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:8px; }
+.sosanh-container .next-btn { background:linear-gradient(to right,#4CAF50,#8BC34A); color:white; }
+.sosanh-container .restart-btn { background:linear-gradient(to right,#f44336,#FF9800); color:white; }
+
+@media (max-width:768px) {
+  .sosanh-container .numbers-display { flex-direction:column; }
+  .sosanh-container .number-box { width:150px; height:150px; }
+  .sosanh-container .comparison-box { width:100px; height:100px; }
+  .sosanh-container .number-value { font-size:3rem; }
+}

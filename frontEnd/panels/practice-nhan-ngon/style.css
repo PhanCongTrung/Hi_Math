@@ -1,0 +1,10 @@
+/* Minimal, namespaced styles for the placeholder panel */
+.practice-nhan-placeholder{font-family:Nunito, Arial, sans-serif;padding:18px}
+.practice-nhan-placeholder .placeholder-header{margin-bottom:12px}
+.practice-nhan-placeholder h2{margin:0;color:#2b6cb0;font-family:'Fredoka One',cursive}
+.practice-nhan-placeholder .subtitle{margin:4px 0 0;color:#6b7280;font-size:0.95rem}
+.practice-nhan-placeholder .placeholder-body{background:rgba(243,244,246,0.6);padding:12px;border-radius:10px;color:#111}
+.practice-nhan-placeholder .placeholder-body p{margin:0 0 10px}
+.practice-nhan-placeholder .placeholder-actions{display:flex;gap:8px}
+.nhan-btn{background:linear-gradient(90deg,#4f46e5,#06b6d4);color:#fff;border:none;padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:700}
+.nhan-btn:hover{opacity:0.95}

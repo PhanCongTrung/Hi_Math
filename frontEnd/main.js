@@ -257,7 +257,7 @@
 
     if (key === 'digits-hoc-so') {
       content.innerHTML = '<div class="loading">Đang tải...</div>';
-      import('./panels/hoc-so/panel.js').then(mod => {
+      import('./panels/hoc-chu-so/panel.js').then(mod => {
         if (content._mountedPanel && typeof content._mountedPanel.unmount === 'function') {
           try { content._mountedPanel.unmount(content); } catch(e) { console.warn('Error during panel unmount', e); }
           delete content._mountedPanel;
@@ -265,7 +265,7 @@
         mod.mount(content);
         content._mountedPanel = mod;
       }).catch(err => {
-        console.error('Failed to load hoc-so panel', err);
+        console.error('Failed to load hoc-chu-so panel', err);
         content.innerHTML = '<div class="panel"><h2>Lỗi khi tải panel</h2></div>';
       });
       return;
@@ -304,6 +304,70 @@
       return;
     }
 
+    if (key === 'digits-dem-so') {
+      content.innerHTML = '<div class="loading">Đang tải...</div>';
+      import('./panels/dem-so/panel.js').then(mod => {
+        if (content._mountedPanel && typeof content._mountedPanel.unmount === 'function') {
+          try { content._mountedPanel.unmount(content); } catch(e) { console.warn('Error during panel unmount', e); }
+          delete content._mountedPanel;
+        }
+        mod.mount(content);
+        content._mountedPanel = mod;
+      }).catch(err => {
+        console.error('Failed to load dem-so panel', err);
+        content.innerHTML = '<div class="panel"><h2>Lỗi khi tải panel</h2></div>';
+      });
+      return;
+    }
+
+    if (key === 'compare-so-sanh') {
+      content.innerHTML = '<div class="loading">Đang tải...</div>';
+      import('./panels/so-sanh/panel.js').then(mod => {
+        if (content._mountedPanel && typeof content._mountedPanel.unmount === 'function') {
+          try { content._mountedPanel.unmount(content); } catch(e) { console.warn('Error during panel unmount', e); }
+          delete content._mountedPanel;
+        }
+        mod.mount(content);
+        content._mountedPanel = mod;
+      }).catch(err => {
+        console.error('Failed to load so-sanh panel', err);
+        content.innerHTML = '<div class="panel"><h2>Lỗi khi tải panel</h2></div>';
+      });
+      return;
+    }
+
+    if (key === 'compare-xep-so') {
+      content.innerHTML = '<div class="loading">Đang tải...</div>';
+      import('./panels/xep-so/panel.js').then(mod => {
+        if (content._mountedPanel && typeof content._mountedPanel.unmount === 'function') {
+          try { content._mountedPanel.unmount(content); } catch(e) { console.warn('Error during panel unmount', e); }
+          delete content._mountedPanel;
+        }
+        mod.mount(content);
+        content._mountedPanel = mod;
+      }).catch(err => {
+        console.error('Failed to load xep-so panel', err);
+        content.innerHTML = '<div class="panel"><h2>Lỗi khi tải panel</h2></div>';
+      });
+      return;
+    }
+
+    if (key === 'practice-tinh-toan') {
+      content.innerHTML = '<div class="loading">Đang tải...</div>';
+      import('./panels/practice-tinh-toan/panel.js').then(mod => {
+        if (content._mountedPanel && typeof content._mountedPanel.unmount === 'function') {
+          try { content._mountedPanel.unmount(content); } catch(e) { console.warn('Error during panel unmount', e); }
+          delete content._mountedPanel;
+        }
+        mod.mount(content);
+        content._mountedPanel = mod;
+      }).catch(err => {
+        console.error('Failed to load practice-tinh-toan panel', err);
+        content.innerHTML = '<div class="panel"><h2>Lỗi khi tải panel</h2></div>';
+      });
+      return;
+    }
+
     // fallback simple panel
     content.innerHTML = `
       <div class="panel">
@@ -313,7 +377,7 @@
     `;
   }
 
-  // initDigitsPanel moved to panels/hoc-so/panel.js (module)
+  // initDigitsPanel moved to panels/hoc-chu-so/panel.js (module)
 
   // initGhepSoGame is migrated to panels/ghep-so/panel.js (module)
 
@@ -324,6 +388,7 @@
     'digits-ghep-so': 'Học chữ số — Ghép số',
     'digits-chan-le': 'Học chữ số — Chẵn lẻ',
     'digits-dem-hinh': 'Học chữ số — Đếm hình',
+    'digits-dem-so': 'Học chữ số — Đếm số',
     'compare-so-sanh': 'Phép so sánh — So sánh số',
     'compare-xep-so': 'Phép so sánh — Xếp số',
     'practice-tinh-toan': 'Luyện tập — Tính toán',
