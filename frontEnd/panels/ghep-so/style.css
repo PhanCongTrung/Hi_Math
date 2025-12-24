@@ -1,0 +1,75 @@
+/* Styles extracted from main.js for Ghép số game */
+/* Ensure the panel root stretches to the content area and the inner game container fills it */
+.content > .ghepso-game { height: 100%; display: flex; flex-direction: column; }
+
+.ghepso-game, .ghepso-game .game-container { width: 100%; max-width: 100%; height: 100%; min-height: 0; box-sizing: border-box; }
+
+.ghepso-game .game-container { background-color: white; border-radius: 12px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06); overflow: hidden; padding: 12px; display: flex; flex-direction: column; flex: 1; }
+
+.ghepso-game .game-header { display:flex; justify-content:space-between; align-items:center; gap:12px; padding-bottom:8px; border-bottom:1px solid #f0f0f0; }
+.ghepso-game .game-title h1 { font-family: 'Fredoka One', cursive; color: #4a6bff; font-size: 1.2rem; margin-bottom:0; display:flex; align-items:center; gap:8px; }
+.ghepso-game .game-stats { display:flex; gap:10px; }
+.ghepso-game .stat-box { background: linear-gradient(135deg, #f8f9ff 0%, #eef1ff 100%); border-radius:8px; padding:8px 10px; min-width:90px; }
+.ghepso-game .stat-value { font-size:1.1rem; font-weight:700; color:#4a6bff; font-family:'Fredoka One', cursive; }
+
+.ghepso-game .game-main { display:flex; gap:12px; margin-top:12px; flex:1; min-height:0; align-items: stretch; }
+.ghepso-game .numbers-section { flex: 1; }
+.ghepso-game .icons-section { flex: 2; }
+.ghepso-game .numbers-section, .ghepso-game .icons-section { background: linear-gradient(135deg, #f8fff9 0%, #f0fff3 100%); border-radius:12px; padding:12px; box-shadow:0 6px 15px rgba(0,0,0,0.05); border:1px solid #e6ffe9; display:flex; flex-direction:column; overflow:hidden; min-height: 0; }
+
+.ghepso-game .numbers-section h2, .ghepso-game .icons-section h2 { color:#4a6bff; font-size:1rem; margin-bottom:8px; }
+
+.ghepso-game .numbers-container { display:grid; grid-template-columns: repeat(3, 1fr); gap:10px; overflow-y:auto; padding:6px; flex:1; }
+.ghepso-game .number-item { background:white; border-radius:8px; padding:10px; font-size:1.6rem; font-weight:900; color:#ff6b6b; cursor:grab; text-align:center; box-shadow:0 6px 12px rgba(255,107,107,0.08); border:2px solid transparent; display:flex; align-items:center; justify-content:center; min-height:60px; user-select:none; }
+.ghepso-game .number-item.dragging { opacity:0.75; transform:scale(1.03); z-index:1000; }
+.ghepso-game .number-item.used { opacity:0.3; cursor:not-allowed; }
+
+.ghepso-game .icons-container { flex: 1; min-height: 0; display:grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(2, 1fr); gap:10px; overflow-y:auto; padding:6px; align-items: stretch; justify-items: stretch; align-content: stretch; grid-auto-rows: 1fr; }
+.ghepso-game .icon-item { background:white; border-radius:8px; padding:12px; text-align:center; box-shadow:0 6px 12px rgba(0,0,0,0.06); border:2px solid transparent; display:flex; flex-direction:column; justify-content:space-between; align-items:center; width:100%; height:100%; box-sizing:border-box; min-height:140px; }
+.ghepso-game .icon-item.highlight-correct { border-color:#4CAF50; background-color:rgba(76,175,80,0.06); transform:scale(1.01); }
+.ghepso-game .icon-item.highlight-incorrect { border-color:#f44336; background-color:rgba(244,67,54,0.06); transform:scale(1.01); }
+.ghepso-game .icon-item.completed { border-color:#4CAF50 !important; background-color:rgba(76,175,80,0.12) !important; box-shadow: 0 6px 15px rgba(76,175,80,0.15) !important; transform: none !important; }
+.ghepso-game .icon-item.completed .icon-answer { color: #2e7d32; }
+.ghepso-game .icon-name { font-weight:600; color:#333; font-size:0.95rem; margin-bottom:8px; }
+.ghepso-game .icon-group i { font-size:1.6rem; color:#4a6bff; margin:4px; }
+.ghepso-game .icon-answer { font-size:1.25rem; font-weight:900; color:#ff6b6b; font-family:'Fredoka One', cursive; }
+
+.ghepso-game .game-footer { display:flex; justify-content:space-between; align-items:center; padding-top:10px; border-top:1px solid #f0f0f0; }
+.ghepso-game .restart-btn { background: linear-gradient(to right,#4a6bff,#6a8bff); color:white; border:none; border-radius:16px; padding:8px 14px; }
+
+/* Modal styles for ghepso (improved) */
+.ghepso-game .modal-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); display:flex; justify-content:center; align-items:center; z-index:1000; opacity:0; visibility:hidden; transition:all 0.18s ease; }
+.ghepso-game .modal-overlay.active { opacity:1; visibility:visible; }
+.ghepso-game .modal-content { background:white; border-radius:14px; width:90%; max-width:420px; padding:18px; text-align:center; position:relative; overflow:visible; transform: translateY(-18px) scale(.98); opacity:0; transition: transform 0.36s cubic-bezier(.2,.9,.3,1), box-shadow 0.18s ease, opacity 0.28s ease; box-shadow: 0 10px 30px rgba(0,0,0,0.12); will-change: transform, opacity; }
+.ghepso-game .modal-overlay.active .modal-content { transform: translateY(0) scale(1); opacity:1; animation: popIn .36s ease both; }
+@keyframes popIn { from { transform: translateY(-18px) scale(.96); opacity:0; } to { transform: translateY(0) scale(1); opacity:1; } }
+
+/* Modal buttons: consistent lively styles */
+.ghepso-game .modal-btn { padding:10px 18px; border-radius:12px; border:none; font-weight:700; cursor:pointer; transition: transform .18s ease, box-shadow .18s ease; }
+.ghepso-game .modal-btn:hover { transform: translateY(-4px); box-shadow:0 14px 28px rgba(0,0,0,0.12); }
+
+.ghepso-game #ghep-levelCompleteModal .modal-content { padding:22px; border-radius:16px; max-width:520px; box-shadow: 0 30px 60px rgba(0,0,0,0.24); }
+.ghepso-game #ghep-levelCompleteModal .modal-content h3 { font-size:1.4rem; margin-bottom:6px; color: #2e7d32; }
+.ghepso-game #ghep-levelCompleteModal .modal-content p { color:#444; margin-bottom:8px; }
+.ghepso-game #ghep-levelCompleteModal .modal-content .modal-icon.success { width:92px; height:92px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:2rem; box-shadow: 0 12px 30px rgba(46,125,50,0.18); margin-bottom:12px; color:#fff; background: linear-gradient(135deg,#2e7d32,#60b659); }
+.ghepso-game #ghep-levelCompleteModal .modal-content .modal-icon.success { animation: popBounce .64s cubic-bezier(.2,.9,.3,1); }
+@keyframes popBounce { 0%{ transform: scale(.85); } 60%{ transform: scale(1.06); } 100%{ transform: scale(1); } }
+/* confetti burst using pseudo-element */
+.ghepso-game #ghep-levelCompleteModal .modal-content::before { content:""; position:absolute; left:50%; top:-70px; width:320px; height:160px; transform:translateX(-50%); background-image: radial-gradient(circle at 10% 20%, #ff7676 6px, transparent 7px), radial-gradient(circle at 40% 30%, #ffd166 6px, transparent 7px), radial-gradient(circle at 70% 25%, #98d98e 6px, transparent 7px), radial-gradient(circle at 85% 60%, #8ec5ff 6px, transparent 7px); background-repeat:no-repeat; animation: confettiFall 1.2s ease-out both; pointer-events:none; z-index:-1; opacity:0.95; }
+@keyframes confettiFall { 0%{ transform:translateX(-50%) translateY(-40px) rotate(0deg); opacity:0 } 30%{ opacity:1 } 100%{ transform:translateX(-50%) translateY(8px) rotate(720deg); opacity:1 } }
+.ghepso-game #ghep-levelCompleteModal .modal-content .modal-btn.next-btn { padding:12px 26px; border-radius: 12px; font-weight:700; box-shadow: 0 8px 18px rgba(46,125,50,0.14); background: linear-gradient(90deg,#66bb6a,#2e7d32); color:#fff; }
+.ghepso-game #ghep-levelCompleteModal .modal-content .modal-btn.next-btn:hover { transform: translateY(-6px); }
+.ghepso-game #ghep-gameOverModal .modal-content { padding:22px; border-radius:14px; max-width:480px; box-shadow: 0 24px 50px rgba(0,0,0,0.25); }
+.ghepso-game #ghep-gameOverModal .modal-content h3 { font-size:1.35rem; margin-bottom:6px; color: #c62828; }
+.ghepso-game #ghep-gameOverModal .modal-content p { color:#444; margin-bottom:8px; }
+.ghepso-game #ghep-gameOverModal .modal-content .modal-icon.failure { width:86px; height:86px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:2rem; box-shadow: 0 10px 28px rgba(198,40,40,0.18); margin-bottom:12px; background: linear-gradient(135deg,#ff6b6b,#ff8e8e); color: #fff; }
+.ghepso-game #ghep-gameOverModal .modal-content .modal-icon.failure { animation: failShake .82s ease both; }
+@keyframes failShake { 0%{ transform:translateY(-6px) rotate(0deg);} 20%{ transform:rotate(-6deg);} 40%{ transform:rotate(6deg);} 60%{ transform:rotate(-4deg);} 80%{ transform:rotate(2deg);} 100%{ transform:rotate(0deg); transform:translateY(0);} }
+.ghepso-game #ghep-gameOverModal .modal-content .modal-btn.retry-btn { padding:11px 22px; border-radius: 12px; font-weight:700; box-shadow: 0 8px 18px rgba(244,107,107,0.14); background: linear-gradient(90deg,#ff6b6b,#ff8e8e); color:#fff; }
+.ghepso-game #ghep-gameOverModal .modal-content .modal-btn.retry-btn:hover { transform: translateY(-6px); }
+
+@media (max-width: 520px) {
+  .ghepso-game #ghep-levelCompleteModal .modal-content { padding:18px; max-width:92%; }
+  .ghepso-game #ghep-gameOverModal .modal-content { padding:18px; max-width:92%; }
+  .ghepso-game #ghep-levelCompleteModal .modal-content .modal-stats { gap:12px; flex-direction:column; }
+}

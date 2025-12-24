@@ -234,6 +234,20 @@
     const content = document.querySelector('.content');
     if (!content) return;
 
+    // cleanup any active panel-specific listeners, timers, or mounted modules
+    if (content._digitsKeydownHandler) {
+      document.removeEventListener('keydown', content._digitsKeydownHandler);
+      delete content._digitsKeydownHandler;
+    }
+    if (content._ghepCleanup) {
+      content._ghepCleanup();
+      delete content._ghepCleanup;
+    }
+    if (content._mountedPanel && typeof content._mountedPanel.unmount === 'function') {
+      try { content._mountedPanel.unmount(content); } catch(e) { console.warn('Error during panel unmount', e); }
+      delete content._mountedPanel;
+    }
+
     // restore original home content
     if (key === 'home') {
       content.innerHTML = initialContentHTML;
@@ -241,15 +255,67 @@
       return;
     }
 
+    if (key === 'digits-hoc-so') {
+      content.innerHTML = '<div class="loading">Đang tải...</div>';
+      import('./panels/hoc-so/panel.js').then(mod => {
+        if (content._mountedPanel && typeof content._mountedPanel.unmount === 'function') {
+          try { content._mountedPanel.unmount(content); } catch(e) { console.warn('Error during panel unmount', e); }
+          delete content._mountedPanel;
+        }
+        mod.mount(content);
+        content._mountedPanel = mod;
+      }).catch(err => {
+        console.error('Failed to load hoc-so panel', err);
+        content.innerHTML = '<div class="panel"><h2>Lỗi khi tải panel</h2></div>';
+      });
+      return;
+    }
+
+
+    if (key === 'digits-ghep-so') {
+      content.innerHTML = '<div class="loading">Đang tải...</div>';
+      import('./panels/ghep-so/panel.js').then(mod => {
+        if (content._mountedPanel && typeof content._mountedPanel.unmount === 'function') {
+          try { content._mountedPanel.unmount(content); } catch(e) { console.warn('Error during panel unmount', e); }
+          delete content._mountedPanel;
+        }
+        mod.mount(content);
+        content._mountedPanel = mod;
+      }).catch(err => {
+        console.error('Failed to load ghep-so panel', err);
+        content.innerHTML = '<div class="panel"><h2>Lỗi khi tải panel</h2></div>';
+      });
+      return;
+    }
+
+    if (key === 'digits-chan-le') {
+      content.innerHTML = '<div class="loading">Đang tải...</div>';
+      import('./panels/chan-le/panel.js').then(mod => {
+        if (content._mountedPanel && typeof content._mountedPanel.unmount === 'function') {
+          try { content._mountedPanel.unmount(content); } catch(e) { console.warn('Error during panel unmount', e); }
+          delete content._mountedPanel;
+        }
+        mod.mount(content);
+        content._mountedPanel = mod;
+      }).catch(err => {
+        console.error('Failed to load chan-le panel', err);
+        content.innerHTML = '<div class="panel"><h2>Lỗi khi tải panel</h2></div>';
+      });
+      return;
+    }
+
+    // fallback simple panel
     content.innerHTML = `
-      <section class="panel" role="region" aria-label="Nội dung ${title}">
-        <div class="panel__header">
-          <h2>${title}</h2>
-        </div>
-        <div class="panel__body">Nội dung tạm cho <strong>${title}</strong> (khóa: <code>${key}</code>) — đây là khung xác nhận chuyển trang.</div>
-      </section>
+      <div class="panel">
+        <h2>${title}</h2>
+        <p>Nội dung sẽ được cập nhật.</p>
+      </div>
     `;
   }
+
+  // initDigitsPanel moved to panels/hoc-so/panel.js (module)
+
+  // initGhepSoGame is migrated to panels/ghep-so/panel.js (module)
 
   // Page title mapping for clearer panel headers
   const PAGE_TITLES = {

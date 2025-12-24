@@ -1,0 +1,102 @@
+/* Styles extracted from main.js for Học Số 0-9 panel */
+.container {
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  min-height: 480px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #f0f0f0;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+header h1 {
+  font-family: 'Fredoka One', cursive;
+  color: #4a6bff;
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+}
+
+main { flex: 1; display: flex; flex-direction: column; gap: 12px; padding-top: 6px; }
+
+.audio-section { display: flex; justify-content: center; align-items: center; height: 48px; }
+
+.audio-btn {
+  background: linear-gradient(to right, #4a6bff, #5b75ff);
+  color: white;
+  border: none;
+  border-radius: 40px;
+  padding: 8px 18px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.18s ease;
+  box-shadow: 0 4px 12px rgba(74, 107, 255, 0.18);
+}
+
+.audio-btn i { font-size: 1.1rem; }
+
+.number-nav-container { display: flex; justify-content: space-evenly; }
+
+.number-display-container { display:flex;flex-direction: column;justify-content: center; align-items: center;}
+
+.number-icon {
+  font-size: 4rem;
+  font-weight: 900;
+  color: #4a6bff;
+  height: 100px;
+  width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border-radius: 50%;
+  border: 5px solid #e8efff;
+  box-shadow: 0 6px 18px rgba(74, 107, 255, 0.08);
+}
+
+.number-name { font-size: 1.15rem; font-weight:700; }
+
+.nav-btn { width:44px; height:44px; background: linear-gradient(to right, #4a6bff, #5b75ff); border-radius: 40px; border: none; color: white; cursor: pointer; transition: transform 0.12s ease, opacity 0.12s ease; }
+.nav-btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; box-shadow: none; background: linear-gradient(to right, #bfcffb, #d3dbff); color: rgba(255,255,255,0.85); }
+.nav-btn:disabled:hover { transform: none; }
+
+.image-section { padding: 6px; display: flex;justify-content: center; margin-bottom: auto; }
+
+.image-wrapper { max-width: 520px; height: 270px; border-radius: 12px; }
+
+#numberImage { width:100%; height:100%; object-fit:cover; }
+
+.quick-numbers { height: 70px; background: linear-gradient(135deg, #f3f6ff 0%, #eef4ff 100%); border-radius: 12px; padding: 8px; border: 1px solid #e6efff; margin-top: 8px; display:flex; justify-content: space-evenly; }
+
+.numbers-container { display: flex; justify-content: flex-start; align-items: center; gap: 12px; height: 100%; overflow-x: auto; padding: 0 12px; }
+
+.number-btn { background-color: white; border: 2px solid #4a6bff; border-radius: 10px; width: 48px; height: 48px; font-size: 1.15rem; font-weight: 800; color: #4a6bff; cursor: pointer; transition: all 0.18s ease; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 10px rgba(74,107,255,0.06); }
+
+.number-btn:hover { transform: translateY(-4px); background-color:#4a6bff; color:#fff; }
+.number-btn.active { background-color: #4a6bff; color: #fff; transform: scale(1.06); box-shadow: 0 6px 18px rgba(74,107,255,0.12); }
+
+.numbers-container::-webkit-scrollbar { height: 6px; }
+.numbers-container::-webkit-scrollbar-track { background: transparent; }
+.numbers-container::-webkit-scrollbar-thumb { background: rgba(74,107,255,0.18); border-radius: 3px; }
+.numbers-container::-webkit-scrollbar-thumb:hover { background: rgba(74,107,255,0.28); }
