@@ -83,5 +83,36 @@
 }
 
 .control-btn {
+    padding: 6px 16px;
+    /* font-size: 18px; */
+    font-weight: bold;
+    color: white;
+    border: none; /* Bỏ viền mặc định xấu xí */
+    border-radius: 50px; /* Bo tròn góc */
+    cursor: pointer; /* Con trỏ hình bàn tay */
     
+    /* 2. MÀU SẮC (Gradient) - Bí kíp cho đẹp */
+    /* Tạo dải màu gồm 3 màu nối tiếp nhau */
+    background-image: linear-gradient(to right, #25aae1, #40e495, #30dd8a, #2bb673);
+    
+    /* Phóng to cái nền ra 300% để tí nữa mình dịch chuyển nó tạo hiệu ứng màu chạy */
+    background-size: 300% 100%;
+
+    /* 3. HIỆU ỨNG MƯỢT (Transition) */
+    /* Mọi thay đổi sẽ diễn ra trong 0.4 giây, không bụp phát ăn ngay */
+    transition: all 0.4s ease-in-out;
+    
+    /* Tạo bóng nhẹ ban đầu */
+    box-shadow: 0 4px 15px 0 rgba(49, 196, 190, 0.75);
+}
+
+.control-btn:hover {
+    /* Dịch chuyển vị trí nền -> Tạo cảm giác màu đang chảy */
+    background-position: 100% 0;
+    
+    /* Nút bay lên nhẹ một chút (trục Y hướng lên là số âm) */
+    transform: translateY(-4px);
+    
+    /* Bóng đổ to hơn và đậm hơn -> Cảm giác nút đang nổi lên */
+    box-shadow: 0 8px 25px rgba(49, 196, 190, 1);
 }
