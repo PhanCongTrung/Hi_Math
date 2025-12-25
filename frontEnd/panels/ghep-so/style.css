@@ -1,5 +1,11 @@
 /* Styles extracted from main.js for Ghép số game */
 /* Ensure the panel root stretches to the content area and the inner game container fills it */
+
+.subtitle {
+  color: rgb(101, 101, 218);
+  font-size: 20px;
+
+}
 .content > .ghepso-game { height: 100%; display: flex; flex-direction: column; }
 
 .ghepso-game, .ghepso-game .game-container { width: 100%; max-width: 100%; height: 100%; min-height: 0; box-sizing: border-box; }
@@ -15,7 +21,7 @@
 .ghepso-game .game-main { display:flex; gap:12px; margin-top:12px; flex:1; min-height:0; align-items: stretch; }
 .ghepso-game .numbers-section { flex: 1; }
 .ghepso-game .icons-section { flex: 2; }
-.ghepso-game .numbers-section, .ghepso-game .icons-section { background: linear-gradient(135deg, #f8fff9 0%, #f0fff3 100%); border-radius:12px; padding:12px; box-shadow:0 6px 15px rgba(0,0,0,0.05); border:1px solid #e6ffe9; display:flex; flex-direction:column; overflow:hidden; min-height: 0; }
+.ghepso-game .numbers-section, .ghepso-game .icons-section { background-color: #ececf9; border-radius:12px; padding:12px; box-shadow:0 6px 15px rgba(0,0,0,0.05); border:1px solid #e6ffe9; display:flex; flex-direction:column; overflow:hidden; min-height: 0; }
 
 .ghepso-game .numbers-section h2, .ghepso-game .icons-section h2 { color:#4a6bff; font-size:1rem; margin-bottom:8px; }
 

@@ -15,7 +15,6 @@ export function mount(container) {
       <div class="game-container" id="practiceGameContainer">
         <div class="selection-page active" id="practice-selectionPage">
           <div class="selection-header">
-            <h1><i class="fas fa-calculator"></i> Toán Học Vui</h1>
             <p class="subtitle">Chọn loại phép tính bạn muốn luyện tập</p>
           </div>
           <div class="selection-options">

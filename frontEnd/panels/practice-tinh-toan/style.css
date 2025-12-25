@@ -20,10 +20,15 @@
 .practice-container .game-page { height:100%; display:flex; flex-direction:column; opacity:0; visibility:hidden; transition:all .25s ease; }
 .practice-container .game-page.active { opacity:1; visibility:visible; }
 .practice-container .game-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; padding-bottom:12px; border-bottom:2px solid #f0f0f0; }
-.practice-container .back-btn { background:linear-gradient(to right,#757575,#9E9E9E); color:white; border:none; border-radius:18px; padding:8px 12px; font-weight:600; }
+.practice-container .back-btn { background-color: rgb(98, 97, 97); color:white; border:none; border-radius:18px; padding:8px 12px; font-weight:600; }
+.practice-container .back-btn:hover {
+  background-color: rgb(183, 180, 180);
+  cursor: pointer;
+}
+
 .practice-container .current-mode { font-size:1.05rem; font-weight:700; color:#2575fc; display:flex; gap:8px; align-items:center; }
-.practice-container .game-stats { display:flex; gap:10px; }
-.practice-container .mini-stat { background:linear-gradient(135deg,#f8f9ff,#eef1ff); padding:8px 10px; border-radius:10px; border:2px solid #e6e9ff; }
+.practice-container .game-stats { display:flex; gap:10px;}
+.practice-container .mini-stat { background-color: rgb(153, 153, 237); padding:8px 10px; border-radius:10px; border:2px solid #e6e9ff; }
 
 .practice-container .question-section { flex:1; display:flex; flex-direction:column; justify-content:center; margin-bottom:18px; }
 .practice-container .question-box { background:linear-gradient(135deg,#f0fff9,#e6fff3); border-radius:16px; padding:20px; text-align:center; box-shadow:0 10px 25px rgba(0,0,0,0.08); border:3px solid #d9ffe9; }
@@ -38,14 +43,55 @@
 .practice-container .answers-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; height:140px; }
 .practice-container .answer-btn { background:white; border:3px solid #2196F3; border-radius:12px; font-size:1.6rem; font-weight:900; color:#2196F3; display:flex; align-items:center; justify-content:center; }
 .practice-container .answer-btn:hover {
+    /* Dịch chuyển vị trí nền -> Tạo cảm giác màu đang chảy */
+    background-position: 100% 0;
+    
+    /* Nút bay lên nhẹ một chút (trục Y hướng lên là số âm) */
+    transform: translateY(-4px);
+    
+    /* Bóng đổ to hơn và đậm hơn -> Cảm giác nút đang nổi lên */
+    box-shadow: 0 8px 25px rgba(49, 196, 190, 1);
     cursor: pointer;
-    background-color: rgb(237, 237, 85);
+    background-color: #7fceef;
 }
 .practice-container .answer-btn.correct { background:linear-gradient(135deg,#4CAF50,#45a049); color:white; border-color:#4CAF50; }
 .practice-container .answer-btn.incorrect { background:linear-gradient(135deg,#f44336,#e53935); color:white; border-color:#f44336; }
 
 .practice-container .next-section { text-align:center; padding-top:12px; border-top:2px solid #f0f0f0; }
-.practice-container .next-btn { background:linear-gradient(to right,#4CAF50,#8BC34A); color:white; border:none; border-radius:22px; padding:10px 22px; font-weight:600; }
+.practice-container .next-btn {
+  padding: 6px 16px;
+    /* font-size: 18px; */
+    font-weight: bold;
+    color: white;
+    border: none; /* Bỏ viền mặc định xấu xí */
+    border-radius: 50px; /* Bo tròn góc */
+    cursor: pointer; /* Con trỏ hình bàn tay */
+    
+    /* 2. MÀU SẮC (Gradient) - Bí kíp cho đẹp */
+    /* Tạo dải màu gồm 3 màu nối tiếp nhau */
+    background-image: linear-gradient(to right, #25aae1, #408fe4, #3078dd, #2b55b6);
+    
+    /* Phóng to cái nền ra 300% để tí nữa mình dịch chuyển nó tạo hiệu ứng màu chạy */
+    background-size: 300% 100%;
+
+    /* 3. HIỆU ỨNG MƯỢT (Transition) */
+    /* Mọi thay đổi sẽ diễn ra trong 0.4 giây, không bụp phát ăn ngay */
+    transition: all 0.4s ease-in-out;
+    
+    /* Tạo bóng nhẹ ban đầu */
+    box-shadow: 0 4px 15px 0 rgba(49, 196, 190, 0.75);
+}
+
+.practice-container .next-btn:hover {
+  /* Dịch chuyển vị trí nền -> Tạo cảm giác màu đang chảy */
+    background-position: 100% 0;
+    
+    /* Nút bay lên nhẹ một chút (trục Y hướng lên là số âm) */
+    transform: translateY(-4px);
+    
+    /* Bóng đổ to hơn và đậm hơn -> Cảm giác nút đang nổi lên */
+    box-shadow: 0 8px 25px rgba(49, 196, 190, 1);
+}
 
 @media (max-width:768px) {
   .practice-container .math-expression .number, .practice-container .math-expression .question-mark { width:60px; height:60px; font-size:1.8rem; }

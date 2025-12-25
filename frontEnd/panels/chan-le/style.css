@@ -19,20 +19,20 @@
 } 
 
 .chanle-game .game-header { text-align: center; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid #f3f4f8; }
-.chanle-game .game-header h1 { font-family: 'Fredoka One', cursive; color: #2575fc; font-size: 1.15rem; display:flex; gap:8px; align-items:center; }
+.chanle-game .game-header h1 { color: #2575fc; font-size: 1.15rem;align-items:center; }
 .chanle-game .subtitle { color: #666; font-size: 0.85rem; font-weight:500; margin-top:4px; } 
 
 .chanle-game .game-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 10px; }
 .chanle-game .stat { display:flex; align-items:center; background: linear-gradient(135deg, #ffffff 0%, #f5f7ff 100%); border-radius:10px; padding:8px; box-shadow:0 4px 8px rgba(0,0,0,0.04); border:1px solid #eef2ff; min-height:46px; }
-.chanle-game .stat-icon { background: linear-gradient(135deg,#6a11cb,#2575fc); color:white; width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; margin-right:8px; font-size:0.95rem; }
+.chanle-game .stat-icon { background-color: #2575fc; color:white; width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; margin-right:8px; font-size:0.95rem; }
 .chanle-game .stat-label { font-size:0.75rem; color:#666; font-weight:700; }
 .chanle-game .stat-value { font-size:1.1rem; font-weight:800; color:#2575fc; font-family: 'Fredoka One', cursive; } 
 
 .chanle-game .game-area { display:flex; align-items:stretch; background: linear-gradient(135deg,#f8fafc 0%, #eef4ff 100%); border-radius:14px; min-height:320px; flex:1; position:relative; padding:0; overflow:hidden; } 
 
 .chanle-game .target-box { flex: 1 1 50%; max-width: none; height: auto; min-height:260px; border-radius:14px; padding:18px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; box-shadow:0 10px 20px rgba(0,0,0,0.06); transition:all .25s ease; border:3px solid transparent; margin:0; }
-.chanle-game .even-box { background: linear-gradient(135deg,#00b09b,#96c93d); color:white; height: 100%; border-top-right-radius:0; border-bottom-right-radius:0; border-top-left-radius:14px; border-bottom-left-radius:14px; }
-.chanle-game .odd-box { background: linear-gradient(135deg,#ff416c,#ff4b2b); color:white; height: 100%; border-top-left-radius:0; border-bottom-left-radius:0; border-top-right-radius:14px; border-bottom-right-radius:14px; }
+.chanle-game .even-box { background-color: rgb(226, 226, 18); color:white; height: 100%; border-top-right-radius:0; border-bottom-right-radius:0; border-top-left-radius:14px; border-bottom-left-radius:14px; }
+.chanle-game .odd-box { background-color: rgb(253, 165, 0); color:white; height: 100%; border-top-left-radius:0; border-bottom-left-radius:0; border-top-right-radius:14px; border-bottom-right-radius:14px; }
 .chanle-game .target-box.drag-over { transform:scale(1.03); box-shadow:0 20px 35px rgba(0,0,0,0.12); }
 .chanle-game .even-box.drag-over { border-color:#00ff88; box-shadow:0 0 24px rgba(0,255,136,0.32); }
 .chanle-game .odd-box.drag-over { border-color:#ff416c; box-shadow:0 0 24px rgba(255,65,108,0.32); }
@@ -44,7 +44,7 @@
 
 /* center number as overlay between boxes */
 .chanle-game .number-display { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); z-index:30; display:flex; flex-direction:column; align-items:center; justify-content:center; pointer-events:none; }
-.chanle-game .number-display .current-number { pointer-events:auto; width:170px; height:170px; background: linear-gradient(135deg,#6a11cb,#2575fc); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:4.6rem; font-weight:900; color:white; border:10px solid white; cursor:grab; user-select:none; transition:all .18s ease, background .22s ease, box-shadow .22s ease; box-shadow:0 18px 36px rgba(106,17,203,0.28); }
+.chanle-game .number-display .current-number { pointer-events: fill ; width:170px; height:170px; background-color: #2575fc; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:4.6rem; font-weight:900; color:white; border:10px solid white; cursor:grab; user-select:none; transition:all .18s ease, background .22s ease, box-shadow .22s ease; box-shadow:0 18px 36px rgba(106,17,203,0.28); }
 .chanle-game .current-number.dragging { transform:scale(1.04); box-shadow:0 20px 40px rgba(106,17,203,0.44); cursor:grabbing; }
 
 /* correct/wrong background state for current number */
@@ -72,8 +72,53 @@
 .chanle-game .game-controls { display:flex; justify-content:space-between; align-items:center; margin-top:12px; padding-top:12px; border-top:1px solid #f3f4f8; }
 .chanle-game .hint { color:#666; font-size:0.95rem; display:flex; align-items:center; gap:8px; flex:1; }
 .chanle-game .next-btn, .chanle-game .restart-btn { border:none; border-radius:25px; padding:10px 18px; font-weight:700; cursor:pointer; display:flex; align-items:center; gap:8px; }
-.chanle-game .next-btn { background: linear-gradient(to right,#00b09b,#96c93d); color:white; margin-right: 12px;}
-.chanle-game .restart-btn { background: linear-gradient(to right,#ff416c,#ff4b2b); color:white; }
+.chanle-game .next-btn {
+    padding: 6px 16px;
+    /* font-size: 18px; */
+    font-weight: bold;
+    color: white;
+    border: none; /* Bỏ viền mặc định xấu xí */
+    border-radius: 50px; /* Bo tròn góc */
+    cursor: pointer; /* Con trỏ hình bàn tay */
+    
+    /* 2. MÀU SẮC (Gradient) - Bí kíp cho đẹp */
+    /* Tạo dải màu gồm 3 màu nối tiếp nhau */
+    background-image: linear-gradient(to right, #25aae1, #408fe4, #3078dd, #2b55b6);
+    
+    /* Phóng to cái nền ra 300% để tí nữa mình dịch chuyển nó tạo hiệu ứng màu chạy */
+    background-size: 300% 100%;
+
+    /* 3. HIỆU ỨNG MƯỢT (Transition) */
+    /* Mọi thay đổi sẽ diễn ra trong 0.4 giây, không bụp phát ăn ngay */
+    transition: all 0.4s ease-in-out;
+    
+    /* Tạo bóng nhẹ ban đầu */
+    box-shadow: 0 4px 15px 0 rgba(49, 196, 190, 0.75);
+    margin-right: 8px;
+}
+.chanle-game .restart-btn {
+    padding: 6px 16px;
+    /* font-size: 18px; */
+    font-weight: bold;
+    color: white;
+    border: none; /* Bỏ viền mặc định xấu xí */
+    border-radius: 50px; /* Bo tròn góc */
+    cursor: pointer; /* Con trỏ hình bàn tay */
+    
+    /* 2. MÀU SẮC (Gradient) - Bí kíp cho đẹp */
+    /* Tạo dải màu gồm 3 màu nối tiếp nhau */
+    background-image: linear-gradient(to right, #25aae1, #408fe4, #3078dd, #2b55b6);
+    
+    /* Phóng to cái nền ra 300% để tí nữa mình dịch chuyển nó tạo hiệu ứng màu chạy */
+    background-size: 300% 100%;
+
+    /* 3. HIỆU ỨNG MƯỢT (Transition) */
+    /* Mọi thay đổi sẽ diễn ra trong 0.4 giây, không bụp phát ăn ngay */
+    transition: all 0.4s ease-in-out;
+    
+    /* Tạo bóng nhẹ ban đầu */
+    box-shadow: 0 4px 15px 0 rgba(49, 196, 190, 0.75);
+}
 
 .chanle-game .number-buttons { display: none; }
 .chanle-game .buttons-container { display:flex; justify-content:center; gap:18px; }

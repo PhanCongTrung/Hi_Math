@@ -90,6 +90,11 @@
         panel?.classList.remove('is-open');
       });
     }
+    // keep snow container in sync with sidebar visibility
+    try {
+      if (app.classList.contains('sidebar-hidden')) removeIceContainer('ice-sidebar');
+      else ensureIceContainer(document.querySelector('.sidebar'), 'ice-sidebar');
+    } catch (e) {}
   });
 
   function collapseSidebar() {
@@ -334,7 +339,9 @@
   // ===== Home music control =====
   const topbarMusicBtn = document.querySelector('.topbar__music');
   let homeAudio = null;
-  let isMusicEnabled = true; // toggle state (user can mute/unmute)
+  // toggle state (user can mute/unmute) - persisted in localStorage so user preference survives reloads
+  const MUSIC_KEY = 'hm_music_enabled';
+  let isMusicEnabled = localStorage.getItem(MUSIC_KEY) !== '0';
   let isMusicPlaying = false;
   const HOME_TRACK_COUNT = 4;
 
@@ -357,7 +364,8 @@
 
   function playHomeMusic() {
     if (!isMusicEnabled) return;
-    if (isMusicPlaying) return;
+    // avoid creating multiple audio instances
+    if (homeAudio) return;
     const src = pickRandomHomeTrack();
     homeAudio = new Audio(src);
     homeAudio.volume = 0.35;
@@ -390,6 +398,7 @@
 
   topbarMusicBtn?.addEventListener('click', () => {
     isMusicEnabled = !isMusicEnabled;
+    try { localStorage.setItem(MUSIC_KEY, isMusicEnabled ? '1' : '0'); } catch (e) {}
     if (isMusicEnabled) playHomeMusic();
     else stopHomeMusic();
   });
@@ -402,6 +411,95 @@
       if (isMusicEnabled) playHomeMusic();
     }, 300);
   }
+  
+  // ===== Snow effect (multi-area) =====
+  // We'll create small `.ice-container` elements inside topbar / sidebar / content
+  // and run a single interval that creates flakes for each visible container.
+  let _snowInterval = null;
+
+  function createSnowflakeIn(container) {
+    if (!container) return;
+    const snowflake = document.createElement('div');
+    snowflake.classList.add('snowflake');
+    const snowflakeChars = ['❄', '❅', '❆', '•'];
+    snowflake.innerText = snowflakeChars[Math.floor(Math.random() * snowflakeChars.length)];
+
+    // place within container (percent)
+    snowflake.style.left = Math.random() * 100 + '%';
+
+    const size = Math.random() * 15 + 10 + 'px';
+    snowflake.style.fontSize = size;
+
+    const fallDuration = Math.random() * 5 + 3 + 's';
+    const swayDuration = Math.random() * 2 + 2 + 's';
+
+    snowflake.style.animation = `fall ${fallDuration} linear infinite, sway ${swayDuration} ease-in-out infinite alternate`;
+
+    if (parseFloat(size) < 15) {
+      snowflake.style.opacity = Math.random() * 0.4 + 0.3;
+      snowflake.style.filter = 'blur(1px)';
+    } else {
+      snowflake.style.opacity = Math.random() * 0.4 + 0.6;
+      snowflake.style.filter = 'blur(0px)';
+    }
+
+    container.appendChild(snowflake);
+    setTimeout(() => snowflake.remove(), Math.max(3500, parseFloat(fallDuration) * 1000 + 500));
+  }
+
+  function ensureIceContainer(parentEl, id) {
+    if (!parentEl) return null;
+    let c = parentEl.querySelector(`#${id}`);
+    if (!c) {
+      c = document.createElement('div');
+      c.id = id;
+      c.className = 'ice-container';
+      parentEl.appendChild(c);
+    }
+    return c;
+  }
+
+  function removeIceContainer(id) {
+    const el = document.getElementById(id);
+    if (el) el.remove();
+  }
+
+  function startSnowMulti({ content = false } = {}) {
+    const topbar = document.querySelector('.topbar');
+    const sidebar = document.querySelector('.sidebar');
+    const app = document.querySelector('.app');
+
+    // always ensure topbar container
+    ensureIceContainer(topbar, 'ice-topbar');
+    // ensure sidebar only if visible
+    if (sidebar && !(app && app.classList.contains('sidebar-hidden'))) ensureIceContainer(sidebar, 'ice-sidebar');
+    // content only when requested
+    if (content) ensureIceContainer(document.querySelector('.content'), 'ice-content');
+
+    if (_snowInterval) return; // already running
+    _snowInterval = setInterval(() => {
+      const containers = Array.from(document.querySelectorAll('.ice-container'));
+      containers.forEach(c => {
+        if (Math.random() < 0.6) createSnowflakeIn(c);
+      });
+    }, 140);
+  }
+
+  function stopSnowAll() {
+    if (_snowInterval) {
+      clearInterval(_snowInterval);
+      _snowInterval = null;
+    }
+    // remove all ice containers
+    ['ice-topbar','ice-sidebar','ice-content'].forEach(removeIceContainer);
+  }
+
+  function removeContentSnow() { removeIceContainer('ice-content'); }
+
+  // ensure topbar/sidebar snow exist immediately; content only if initial home
+  startSnowMulti({ content: initialIsHome });
+  if (!isMusicEnabled) topbarMusicBtn?.classList.remove('playing');
+  // ===== end snow effect =====
   // ===== end home music control =====
 
   // Simple page render when clicking nav items or subitems
@@ -409,11 +507,10 @@
     const content = document.querySelector('.content');
     if (!content) return;
 
-    // control global home music: stop when navigating away, play when returning
+    // control global home music: stop when navigating away
     if (key !== 'home') {
       try { stopHomeMusic(); } catch(e) {}
-    } else {
-      try { if (isMusicEnabled) playHomeMusic(); } catch(e) {}
+      try { removeContentSnow(); } catch(e) {}
     }
 
     // cleanup any active panel-specific listeners, timers, or mounted modules
@@ -444,6 +541,9 @@
       // restore original home content
       content.innerHTML = initialContentHTML;
       initDynamicBindings();
+      // ensure snow and music are active on home
+      try { if (isMusicEnabled) playHomeMusic(); } catch(e) {}
+      try { startSnowMulti({ content: true }); } catch(e) {}
       return;
     }
 

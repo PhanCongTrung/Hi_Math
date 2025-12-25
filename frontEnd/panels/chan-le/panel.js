@@ -59,7 +59,7 @@ export function mount(container) {
         <div class="game-area">
             <div class="target-box even-box" id="cl-evenBox">
                 <div class="target-label">
-                    <i class="fas fa-check-double"></i>
+                    
                     <h2>CHẴN</h2>
                 </div>
                 <div class="target-instruction">Kéo thả vào đây</div>
@@ -73,7 +73,7 @@ export function mount(container) {
 
             <div class="target-box odd-box" id="cl-oddBox">
                 <div class="target-label">
-                    <i class="fas fa-check"></i>
+                    
                     <h2>LẺ</h2>
                 </div>
                 <div class="target-instruction">Kéo thả vào đây</div>

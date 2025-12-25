@@ -15,7 +15,7 @@
   flex: 1 1 auto;
 }
 .sosanh-container .game-header { text-align:center; margin-bottom:8px; }
-.sosanh-container .game-header h1 { font-family: 'Fredoka One', cursive; color:#2575fc; font-size:1.4rem; display:flex; gap:8px; align-items:center; justify-content:center; }
+.sosanh-container .game-header h1 {color:#2575fc; font-size:1.4rem; display:flex; gap:8px; align-items:center; justify-content:center; }
 .sosanh-container .game-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:12px; }
 .sosanh-container .stat { background:linear-gradient(135deg,#f8f9ff 0%,#eef1ff 100%); border-radius:8px; padding:6px; text-align:center; border:1px solid #e6e9ff; }
 .sosanh-container .stat-label { font-size:0.72rem; color:#666; font-weight:600; }
@@ -35,10 +35,18 @@
 .sosanh-container .highlight { color:#FFC107; font-weight:900; font-family:'Fredoka One', cursive; }
 .sosanh-container .answers-section { margin-bottom:10px; }
 .sosanh-container .answers-container { display:flex; justify-content:center; gap:18px; }
-.sosanh-container .answer-btn { flex:1; max-width:200px; background:white; border:3px solid #757575; border-radius:12px; padding:12px; font-size:1rem; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:10px; box-shadow:0 6px 18px rgba(0,0,0,0.08); }
+.sosanh-container .answer-btn { flex:1; max-width:200px; background-color: rgb(139, 187, 238); border:none;border-radius:12px; padding:12px; font-size:1rem; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:10px; box-shadow:0 6px 18px rgba(0,0,0,0.08); }
 .sosanh-container .answer-btn:hover {
+    /* Dịch chuyển vị trí nền -> Tạo cảm giác màu đang chảy */
+    background-position: 100% 0;
+    
+    /* Nút bay lên nhẹ một chút (trục Y hướng lên là số âm) */
+    transform: translateY(-4px);
+    
+    /* Bóng đổ to hơn và đậm hơn -> Cảm giác nút đang nổi lên */
+    box-shadow: 0 8px 25px rgba(49, 196, 190, 1);
     cursor: pointer;
-    background-color: rgb(233, 233, 111);
+    background-color: #1da0f1;
 }
 .sosanh-container .answer-btn.correct { background:linear-gradient(135deg,#4CAF50,#45a049); border-color:#4CAF50; color:white; transform:scale(1.02); }
 .sosanh-container .answer-btn.incorrect { background:linear-gradient(135deg,#f44336,#e53935); border-color:#f44336; color:white; transform:scale(1.02); }

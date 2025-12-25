@@ -13,7 +13,7 @@ export function mount(container) {
     <div class="sosanh-container">
       <div class="game-container">
         <div class="game-header">
-            <h1><i class="fas fa-balance-scale"></i> So Sánh Số</h1>
+            <h1>So Sánh Số</h1>
         </div>
 
         <div class="game-stats">
