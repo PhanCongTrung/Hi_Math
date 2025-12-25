@@ -119,6 +119,18 @@
       const key = btn.getAttribute('data-dropdown');
       if (!key) return;
 
+      // Close other open dropdowns first (only one open at a time)
+      dropdownBtns.forEach((other) => {
+        if (other === btn) return;
+        const otherKey = other.getAttribute('data-dropdown');
+        if (!otherKey) return;
+        const otherPanel = document.querySelector(`[data-submenu="${otherKey}"]`);
+        other.setAttribute('aria-expanded', 'false');
+        otherPanel?.classList.remove('is-open');
+        const otherChev = other.querySelector('.nav__chev');
+        if (otherChev) otherChev.style.transform = 'rotate(0deg)';
+      });
+
       const panel = document.querySelector(`[data-submenu="${key}"]`);
       const expanded = btn.getAttribute('aria-expanded') === 'true';
 
@@ -328,8 +340,18 @@
       delete content._mountedPanel;
     }
 
-    // restore original home content
+    // close any open dropdowns when navigating home
     if (key === 'home') {
+      document.querySelectorAll('[data-dropdown]').forEach(btn => {
+        const k = btn.getAttribute('data-dropdown');
+        const panel = k ? document.querySelector(`[data-submenu="${k}"]`) : null;
+        btn.setAttribute('aria-expanded', 'false');
+        panel?.classList.remove('is-open');
+        const chev = btn.querySelector('.nav__chev');
+        if (chev) chev.style.transform = 'rotate(0deg)';
+      });
+
+      // restore original home content
       content.innerHTML = initialContentHTML;
       initDynamicBindings();
       return;
@@ -553,6 +575,12 @@
     document.querySelectorAll('.nav__item').forEach(n => n.classList.remove('is-active'));
     const parentItem = el.closest('.nav__item');
     if (parentItem) parentItem.classList.add('is-active');
+
+    // update subitem active state: clear others and mark this subitem if applicable
+    document.querySelectorAll('.nav__subitem').forEach(s => s.classList.remove('is-active'));
+    if (el.classList.contains('nav__subitem')) {
+      el.classList.add('is-active');
+    }
 
     // close sidebar on mobile
     if (isMobileLayout()) closeSidebar();
