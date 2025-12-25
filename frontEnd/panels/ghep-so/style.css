@@ -10,7 +10,7 @@
 
 .ghepso-game, .ghepso-game .game-container { width: 100%; max-width: 100%; height: 100%; min-height: 0; box-sizing: border-box; }
 
-.ghepso-game .game-container { background-color: white; border-radius: 12px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06); overflow: hidden; padding: 12px; display: flex; flex-direction: column; flex: 1; }
+.ghepso-game .game-container { background-color: #c1edff; border-radius: 12px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06); overflow: hidden; padding: 12px; display: flex; flex-direction: column; flex: 1; }
 
 .ghepso-game .game-header { display:flex; justify-content:space-between; align-items:center; gap:12px; padding-bottom:8px; border-bottom:1px solid #f0f0f0; }
 .ghepso-game .game-title h1 { font-family: 'Fredoka One', cursive; color: #4a6bff; font-size: 1.2rem; margin-bottom:0; display:flex; align-items:center; gap:8px; }

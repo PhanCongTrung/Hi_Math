@@ -12,7 +12,7 @@ export function mount(container) {
   container.innerHTML = `
     <div class="hoc-chu-so-container">
       <header>
-        <h1><i class="fas fa-graduation-cap"></i> Học Số 0-9</h1>
+        <h1>Học Số 0-9</h1>
       </header>
 
       <main>
