@@ -40,9 +40,9 @@ export function mount(container) {
           </div>
         </div>
 
-        <div class="image-section">
-          <div class="image-wrapper">
-            <img id="numberImage" src="https://cdn.pixabay.com/photo/2016/11/29/13/55/balloons-1869796_1280.jpg" alt="Hình ảnh số 0">
+        <div class="icon-quantity-section">
+          <div class="icons-wrapper" id="iconsWrapper" aria-hidden="false">
+            <!-- Icons representing the current number will be inserted here -->
           </div>
         </div>
 
@@ -78,7 +78,7 @@ export function mount(container) {
   const nextBtn = container.querySelector('#nextBtn');
   const numberDisplay = container.querySelector('#numberDisplay');
   const numberName = container.querySelector('#numberName');
-  const numberImage = container.querySelector('#numberImage');
+  const iconsWrapper = container.querySelector('#iconsWrapper');
   const numbersContainer = container.querySelector('.numbers-container');
 
   function createNumberButtons() {
@@ -97,8 +97,8 @@ export function mount(container) {
     const currentData = numbersData[currentNumberIndex];
     numberDisplay.textContent = currentData.number;
     numberName.textContent = currentData.name;
-    numberImage.src = currentData.imageUrl;
-    numberImage.alt = `Hình ảnh minh họa cho số ${currentData.number}`;
+    // render N icons to visually represent the number
+    renderNumberIcons(currentData.number);
     if (audioElement) {
       try { audioElement.pause(); audioElement.currentTime = 0; } catch (e) {}
       audioElement.onended = null;
@@ -110,6 +110,37 @@ export function mount(container) {
     nextBtn.disabled = currentNumberIndex === numbersData.length - 1;
     container.querySelectorAll('.number-btn').forEach(btn => btn.classList.remove('active'));
     const btns = container.querySelectorAll('.number-btn'); if (btns[currentNumberIndex]) btns[currentNumberIndex].classList.add('active');
+    // Auto-play audio for the current number when display updates
+    // (best-effort; may be blocked by browser autoplay policies)
+    try { playAudio(); } catch (e) { /* ignore autoplay failures */ }
+  }
+
+  const iconOptions = [
+    { cls: 'fas fa-heart', color: '#f44336' },
+    { cls: 'fas fa-star', color: '#FFD700' },
+    { cls: 'fas fa-apple-alt', color: '#ff6b6b' },
+    { cls: 'fas fa-leaf', color: '#4CAF50' },
+    { cls: 'fas fa-square', color: '#607D8B' },
+    { cls: 'fas fa-lemon', color: '#FFEB3B' },
+    { cls: 'fas fa-ice-cream', color: '#FFB6C1' },
+    { cls: 'fas fa-carrot', color: '#FF9800' }
+  ];
+
+  function renderNumberIcons(count) {
+    if (!iconsWrapper) return;
+    iconsWrapper.innerHTML = '';
+    if (!count || count <= 0) return; // nothing to show for zero
+    const choice = iconOptions[Math.floor(Math.random() * iconOptions.length)];
+    const frag = document.createDocumentFragment();
+    for (let i = 0; i < count; i++) {
+      const iEl = document.createElement('i');
+      iEl.className = choice.cls;
+      iEl.style.color = choice.color;
+      iEl.style.fontSize = '2rem';
+      iEl.style.margin = '6px';
+      frag.appendChild(iEl);
+    }
+    iconsWrapper.appendChild(frag);
   }
 
   function changeNumber(index) {
@@ -121,9 +152,13 @@ export function mount(container) {
     if (!audioBtn || !audioElement) return;
     audioBtn.innerHTML = `<i class="fas fa-volume-up"></i><span>Đang phát...</span>`;
     audioBtn.disabled = true;
-    audioElement.onended = () => { if (audioBtn) { audioBtn.innerHTML = `<i class="fas fa-volume-up"></i><span>Phát âm</span>`; audioBtn.disabled = false; } };
     try { audioElement.pause(); audioElement.currentTime = 0; } catch(e) {}
-    const p = audioElement.play(); if (p && typeof p.then === 'function') p.catch(err => { console.error(err); if (audioBtn) { audioBtn.innerHTML = `<i class="fas fa-volume-up"></i><span>Phát âm</span>`; audioBtn.disabled = false; } });
+    audioElement.onended = () => {
+      if (audioBtn) { audioBtn.innerHTML = `<i class="fas fa-volume-up"></i><span>Phát âm</span>`; audioBtn.disabled = false; }
+      audioElement.onended = null;
+    };
+    const p = audioElement.play();
+    if (p && typeof p.then === 'function') p.catch(err => { console.error(err); if (audioBtn) { audioBtn.innerHTML = `<i class="fas fa-volume-up"></i><span>Phát âm</span>`; audioBtn.disabled = false; } });
   }
 
   function handleKeydown(event) {
@@ -136,18 +171,22 @@ export function mount(container) {
   }
 
   createNumberButtons(); updateDisplay();
-  audioBtn?.addEventListener('click', playAudio);
-  prevBtn?.addEventListener('click', () => changeNumber(currentNumberIndex - 1));
-  nextBtn?.addEventListener('click', () => changeNumber(currentNumberIndex + 1));
+  // named handlers so they can be removed cleanly on unmount
+  const audioClickHandler = (e) => { e.preventDefault(); playAudio(); };
+  const prevClickHandler = (e) => { e.preventDefault(); changeNumber(Math.max(0, currentNumberIndex - 1)); };
+  const nextClickHandler = (e) => { e.preventDefault(); changeNumber(Math.min(numbersData.length - 1, currentNumberIndex + 1)); };
+  audioBtn?.addEventListener('click', audioClickHandler);
+  prevBtn?.addEventListener('click', prevClickHandler);
+  nextBtn?.addEventListener('click', nextClickHandler);
   document.addEventListener('keydown', handleKeydown);
 
   // store cleanup on container
   container._hocChuSoCleanup = () => {
     document.removeEventListener('keydown', handleKeydown);
-    audioBtn?.removeEventListener('click', playAudio);
-    prevBtn?.removeEventListener('click', () => changeNumber(currentNumberIndex - 1));
-    nextBtn?.removeEventListener('click', () => changeNumber(currentNumberIndex + 1));
-    try { audioElement.pause(); audioElement.currentTime = 0; } catch(e) {}
+    audioBtn?.removeEventListener('click', audioClickHandler);
+    prevBtn?.removeEventListener('click', prevClickHandler);
+    nextBtn?.removeEventListener('click', nextClickHandler);
+    try { audioElement.pause(); audioElement.currentTime = 0; audioElement.src = ''; audioElement.onended = null; } catch(e) {}
     delete container._hocChuSoCleanup;
   };
 }

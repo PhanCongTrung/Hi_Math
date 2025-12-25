@@ -229,10 +229,90 @@
   // initial bind
   initDynamicBindings();
 
+  // ===== Home music control =====
+  const topbarMusicBtn = document.querySelector('.topbar__music');
+  let homeAudio = null;
+  let isMusicEnabled = true; // toggle state (user can mute/unmute)
+  let isMusicPlaying = false;
+  const HOME_TRACK_COUNT = 4;
+
+  function pickRandomHomeTrack() {
+    const i = Math.floor(Math.random() * HOME_TRACK_COUNT) + 1;
+    return `/assets/sound/sound_music_home_${i}.mp3`;
+  }
+
+  function clearHomeAudio() {
+    if (!homeAudio) return;
+    try {
+      homeAudio.pause();
+      homeAudio.currentTime = 0;
+      homeAudio.removeEventListener('ended', homeAudio._onEnded);
+    } catch (e) {}
+    homeAudio = null;
+    isMusicPlaying = false;
+    topbarMusicBtn?.classList.remove('playing');
+  }
+
+  function playHomeMusic() {
+    if (!isMusicEnabled) return;
+    if (isMusicPlaying) return;
+    const src = pickRandomHomeTrack();
+    homeAudio = new Audio(src);
+    homeAudio.volume = 0.35;
+    homeAudio._onEnded = () => {
+      // play next random track if still enabled
+      if (!isMusicEnabled) return clearHomeAudio();
+      playHomeMusic();
+    };
+    homeAudio.addEventListener('ended', homeAudio._onEnded);
+    homeAudio.play().then(() => {
+      isMusicPlaying = true;
+      topbarMusicBtn?.classList.add('playing');
+    }).catch(() => {
+      // autoplay might be blocked; keep state tidy
+      clearHomeAudio();
+    });
+  }
+
+  function stopHomeMusic() {
+    if (!homeAudio) return;
+    try {
+      homeAudio.pause();
+      homeAudio.currentTime = 0;
+      homeAudio.removeEventListener('ended', homeAudio._onEnded);
+    } catch (e) {}
+    homeAudio = null;
+    isMusicPlaying = false;
+    topbarMusicBtn?.classList.remove('playing');
+  }
+
+  topbarMusicBtn?.addEventListener('click', () => {
+    isMusicEnabled = !isMusicEnabled;
+    if (isMusicEnabled) playHomeMusic();
+    else stopHomeMusic();
+  });
+
+  // Auto-play on initial load only if we're on home content
+  const initialIsHome = true; // page loads with home content by default
+  if (initialIsHome) {
+    // try to start music (may be blocked by browser)
+    setTimeout(() => {
+      if (isMusicEnabled) playHomeMusic();
+    }, 300);
+  }
+  // ===== end home music control =====
+
   // Simple page render when clicking nav items or subitems
   function renderPanel(key, title) {
     const content = document.querySelector('.content');
     if (!content) return;
+
+    // control global home music: stop when navigating away, play when returning
+    if (key !== 'home') {
+      try { stopHomeMusic(); } catch(e) {}
+    } else {
+      try { if (isMusicEnabled) playHomeMusic(); } catch(e) {}
+    }
 
     // cleanup any active panel-specific listeners, timers, or mounted modules
     if (content._digitsKeydownHandler) {

@@ -102,6 +102,22 @@ export function mount(container) {
   const restartBtn = container.querySelector('#restartBtn');
   const resultMessageElement = container.querySelector('#resultMessage');
 
+  // audio helper (tracks current audio so it can be stopped on cleanup)
+  let currentAudio = null;
+  function playSoundFile(filename) {
+    return new Promise(resolve => {
+      try {
+        if (currentAudio) { try { currentAudio.pause(); currentAudio.currentTime = 0; } catch(e){} currentAudio = null; }
+        const audio = new Audio(`assets/sound/${filename}`);
+        currentAudio = audio;
+        const finish = () => { if (currentAudio === audio) currentAudio = null; resolve(); };
+        audio.addEventListener('ended', finish);
+        audio.addEventListener('error', finish);
+        const p = audio.play(); if (p && typeof p.then === 'function') p.catch(() => finish());
+      } catch (e) { currentAudio = null; resolve(); }
+    });
+  }
+
   function initGame() {
     questionNumber = 1;
     correctCount = 0;
@@ -183,11 +199,14 @@ export function mount(container) {
       correctCount++;
       resultMessageElement.textContent = '🎉 Chính xác!';
       resultMessageElement.classList.add('correct');
-      autoNextTimeout = setTimeout(() => { nextQuestion(); }, 1000);
+      // play long correct sound then next
+      playSoundFile('sound_correct_answer_long.mp3').then(() => nextQuestion());
     } else {
       wrongCount++;
       resultMessageElement.textContent = '❌ Sai rồi!';
       resultMessageElement.classList.add('incorrect');
+      // play wrong long sound then next
+      playSoundFile('sound_wrong_answer_long.mp3').then(() => nextQuestion());
     }
     resultMessageElement.classList.add('show');
     updateStats();
@@ -219,6 +238,7 @@ export function mount(container) {
     nextBtn.removeEventListener('click', nextQuestion);
     restartBtn.removeEventListener('click', initGame);
     if (autoNextTimeout) { clearTimeout(autoNextTimeout); autoNextTimeout = null; }
+    try { if (currentAudio) { currentAudio.pause(); currentAudio.currentTime = 0; currentAudio = null; } } catch(e) {}
     delete container._demSoCleanup;
   };
 }

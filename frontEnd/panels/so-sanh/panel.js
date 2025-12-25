@@ -96,6 +96,22 @@ export function mount(container) {
   const nextBtn = container.querySelector('#sosanh-nextBtn');
   const restartBtn = container.querySelector('#sosanh-restartBtn');
 
+  // audio helper
+  let currentAudio = null;
+  function playSoundFile(filename) {
+    return new Promise(resolve => {
+      try {
+        if (currentAudio) { try { currentAudio.pause(); currentAudio.currentTime = 0; } catch(e){} currentAudio = null; }
+        const audio = new Audio(`assets/sound/${filename}`);
+        currentAudio = audio;
+        const finish = () => { if (currentAudio === audio) currentAudio = null; resolve(); };
+        audio.addEventListener('ended', finish);
+        audio.addEventListener('error', finish);
+        const p = audio.play(); if (p && typeof p.then === 'function') p.catch(() => finish());
+      } catch (e) { currentAudio = null; resolve(); }
+    });
+  }
+
   function initGame() {
     questionNumber = 1; correctCount = 0; wrongCount = 0; isAnswered = false;
     if (autoNextTimeout) { clearTimeout(autoNextTimeout); autoNextTimeout = null; }
@@ -156,9 +172,8 @@ export function mount(container) {
 
     updateStats();
     nextBtn.disabled = false;
-    if (isCorrect) {
-      autoNextTimeout = setTimeout(() => nextQuestion(), 2000);
-    }
+    const soundFile = isCorrect ? 'sound_correct_answer_long.mp3' : 'sound_wrong_answer_long.mp3';
+    playSoundFile(soundFile).then(() => nextQuestion());
   }
 
   function updateStats() { correctCountElement.textContent = correctCount; wrongCountElement.textContent = wrongCount; }
@@ -183,6 +198,7 @@ export function mount(container) {
     nextBtn.removeEventListener('click', nextQuestion);
     restartBtn.removeEventListener('click', initGame);
     if (autoNextTimeout) { clearTimeout(autoNextTimeout); autoNextTimeout = null; }
+    try { if (currentAudio) { currentAudio.pause(); currentAudio.currentTime = 0; currentAudio = null; } } catch(e) {}
     delete container._soSanhCleanup;
   };
 }

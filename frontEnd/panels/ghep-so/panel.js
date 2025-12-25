@@ -80,83 +80,83 @@ export function mount(container) {
   const levelQuestions = {
     1: [
       { iconType: "Táo", icon: "fas fa-apple-alt", answer: 3, count: 3 },
-      { iconType: "Cam", icon: "fas fa-lemon", answer: 4, count: 4 },
-      { iconType: "Chuối", icon: "fas fa-lemon", answer: 2, count: 2 },
-      { iconType: "Dâu", icon: "fas fa-strawberry", answer: 5, count: 5 },
-      { iconType: "Nho", icon: "fas fa-grapes", answer: 1, count: 1 },
-      { iconType: "Dưa hấu", icon: "fas fa-watermelon", answer: 6, count: 6 }
+      { iconType: "Chanh", icon: "fas fa-lemon", answer: 4, count: 4 },
+      { iconType: "Cà rốt", icon: "fas fa-carrot", answer: 2, count: 2 },
+      { iconType: "Kem", icon: "fas fa-ice-cream", answer: 5, count: 5 },
+      { iconType: "Lá", icon: "fas fa-leaf", answer: 1, count: 1 },
+      { iconType: "Trái tim", icon: "fas fa-heart", answer: 6, count: 6 }
     ],
     2: [
-      { iconType: "Dứa", icon: "fas fa-pineapple", answer: 2, count: 2 },
-      { iconType: "Cherry", icon: "fas fa-cherry", answer: 4, count: 4 },
-      { iconType: "Mận", icon: "fas fa-plum", answer: 3, count: 3 },
-      { iconType: "Lê", icon: "fas fa-pear", answer: 5, count: 5 },
-      { iconType: "Táo", icon: "fas fa-apple-alt", answer: 1, count: 1 },
-      { iconType: "Cam", icon: "fas fa-lemon", answer: 6, count: 6 }
+      { iconType: "Ngôi sao", icon: "fas fa-star", answer: 2, count: 2 },
+      { iconType: "Táo", icon: "fas fa-apple-alt", answer: 4, count: 4 },
+      { iconType: "Cà rốt", icon: "fas fa-carrot", answer: 3, count: 3 },
+      { iconType: "Hình vuông", icon: "fas fa-square", answer: 5, count: 5 },
+      { iconType: "Trái tim", icon: "fas fa-heart", answer: 1, count: 1 },
+      { iconType: "Chanh", icon: "fas fa-lemon", answer: 6, count: 6 }
     ],
     3: [
-      { iconType: "Chuối", icon: "fas fa-lemon", answer: 5, count: 5 },
-      { iconType: "Dâu", icon: "fas fa-strawberry", answer: 2, count: 2 },
-      { iconType: "Nho", icon: "fas fa-grapes", answer: 4, count: 4 },
-      { iconType: "Dưa hấu", icon: "fas fa-watermelon", answer: 3, count: 3 },
-      { iconType: "Dứa", icon: "fas fa-pineapple", answer: 6, count: 6 },
-      { iconType: "Cherry", icon: "fas fa-cherry", answer: 1, count: 1 }
+      { iconType: "Cà rốt", icon: "fas fa-carrot", answer: 5, count: 5 },
+      { iconType: "Kem", icon: "fas fa-ice-cream", answer: 2, count: 2 },
+      { iconType: "Lá", icon: "fas fa-leaf", answer: 4, count: 4 },
+      { iconType: "Trái tim", icon: "fas fa-heart", answer: 3, count: 3 },
+      { iconType: "Ngôi sao", icon: "fas fa-star", answer: 6, count: 6 },
+      { iconType: "Táo", icon: "fas fa-apple-alt", answer: 1, count: 1 }
     ],
     4: [
-      { iconType: "Mận", icon: "fas fa-plum", answer: 4, count: 4 },
-      { iconType: "Lê", icon: "fas fa-pear", answer: 2, count: 2 },
+      { iconType: "Hình vuông", icon: "fas fa-square", answer: 4, count: 4 },
+      { iconType: "Trái tim", icon: "fas fa-heart", answer: 2, count: 2 },
       { iconType: "Táo", icon: "fas fa-apple-alt", answer: 5, count: 5 },
-      { iconType: "Cam", icon: "fas fa-lemon", answer: 3, count: 3 },
-      { iconType: "Chuối", icon: "fas fa-lemon", answer: 1, count: 1 },
-      { iconType: "Dâu", icon: "fas fa-strawberry", answer: 6, count: 6 }
+      { iconType: "Chanh", icon: "fas fa-lemon", answer: 3, count: 3 },
+      { iconType: "Cà rốt", icon: "fas fa-carrot", answer: 1, count: 1 },
+      { iconType: "Kem", icon: "fas fa-ice-cream", answer: 6, count: 6 }
     ],
     5: [
-      { iconType: "Nho", icon: "fas fa-grapes", answer: 3, count: 3 },
-      { iconType: "Dưa hấu", icon: "fas fa-watermelon", answer: 5, count: 5 },
-      { iconType: "Dứa", icon: "fas fa-pineapple", answer: 2, count: 2 },
-      { iconType: "Cherry", icon: "fas fa-cherry", answer: 4, count: 4 },
-      { iconType: "Mận", icon: "fas fa-plum", answer: 6, count: 6 },
-      { iconType: "Lê", icon: "fas fa-pear", answer: 1, count: 1 }
+      { iconType: "Lá", icon: "fas fa-leaf", answer: 3, count: 3 },
+      { iconType: "Trái tim", icon: "fas fa-heart", answer: 5, count: 5 },
+      { iconType: "Ngôi sao", icon: "fas fa-star", answer: 2, count: 2 },
+      { iconType: "Táo", icon: "fas fa-apple-alt", answer: 4, count: 4 },
+      { iconType: "Hình vuông", icon: "fas fa-square", answer: 6, count: 6 },
+      { iconType: "Chanh", icon: "fas fa-lemon", answer: 1, count: 1 }
     ],
     6: [
       { iconType: "Táo", icon: "fas fa-apple-alt", answer: 4, count: 4 },
-      { iconType: "Cam", icon: "fas fa-lemon", answer: 6, count: 6 },
-      { iconType: "Chuối", icon: "fas fa-lemon", answer: 2, count: 2 },
-      { iconType: "Dâu", icon: "fas fa-strawberry", answer: 5, count: 5 },
-      { iconType: "Nho", icon: "fas fa-grapes", answer: 3, count: 3 },
-      { iconType: "Dưa hấu", icon: "fas fa-watermelon", answer: 1, count: 1 }
+      { iconType: "Chanh", icon: "fas fa-lemon", answer: 6, count: 6 },
+      { iconType: "Cà rốt", icon: "fas fa-carrot", answer: 2, count: 2 },
+      { iconType: "Kem", icon: "fas fa-ice-cream", answer: 5, count: 5 },
+      { iconType: "Lá", icon: "fas fa-leaf", answer: 3, count: 3 },
+      { iconType: "Trái tim", icon: "fas fa-heart", answer: 1, count: 1 }
     ],
     7: [
-      { iconType: "Dứa", icon: "fas fa-pineapple", answer: 3, count: 3 },
-      { iconType: "Cherry", icon: "fas fa-cherry", answer: 5, count: 5 },
-      { iconType: "Mận", icon: "fas fa-plum", answer: 2, count: 2 },
-      { iconType: "Lê", icon: "fas fa-pear", answer: 6, count: 6 },
-      { iconType: "Táo", icon: "fas fa-apple-alt", answer: 4, count: 4 },
-      { iconType: "Cam", icon: "fas fa-lemon", answer: 1, count: 1 }
+      { iconType: "Ngôi sao", icon: "fas fa-star", answer: 3, count: 3 },
+      { iconType: "Táo", icon: "fas fa-apple-alt", answer: 5, count: 5 },
+      { iconType: "Hình vuông", icon: "fas fa-square", answer: 2, count: 2 },
+      { iconType: "Trái tim", icon: "fas fa-heart", answer: 6, count: 6 },
+      { iconType: "Cà rốt", icon: "fas fa-carrot", answer: 4, count: 4 },
+      { iconType: "Chanh", icon: "fas fa-lemon", answer: 1, count: 1 }
     ],
     8: [
-      { iconType: "Chuối", icon: "fas fa-lemon", answer: 6, count: 6 },
-      { iconType: "Dâu", icon: "fas fa-strawberry", answer: 3, count: 3 },
-      { iconType: "Nho", icon: "fas fa-grapes", answer: 5, count: 5 },
-      { iconType: "Dưa hấu", icon: "fas fa-watermelon", answer: 2, count: 2 },
-      { iconType: "Dứa", icon: "fas fa-pineapple", answer: 4, count: 4 },
-      { iconType: "Cherry", icon: "fas fa-cherry", answer: 1, count: 1 }
+      { iconType: "Cà rốt", icon: "fas fa-carrot", answer: 6, count: 6 },
+      { iconType: "Kem", icon: "fas fa-ice-cream", answer: 3, count: 3 },
+      { iconType: "Lá", icon: "fas fa-leaf", answer: 5, count: 5 },
+      { iconType: "Trái tim", icon: "fas fa-heart", answer: 2, count: 2 },
+      { iconType: "Ngôi sao", icon: "fas fa-star", answer: 4, count: 4 },
+      { iconType: "Táo", icon: "fas fa-apple-alt", answer: 1, count: 1 }
     ],
     9: [
-      { iconType: "Mận", icon: "fas fa-plum", answer: 5, count: 5 },
-      { iconType: "Lê", icon: "fas fa-pear", answer: 2, count: 2 },
+      { iconType: "Hình vuông", icon: "fas fa-square", answer: 5, count: 5 },
+      { iconType: "Trái tim", icon: "fas fa-heart", answer: 2, count: 2 },
       { iconType: "Táo", icon: "fas fa-apple-alt", answer: 6, count: 6 },
-      { iconType: "Cam", icon: "fas fa-lemon", answer: 3, count: 3 },
-      { iconType: "Chuối", icon: "fas fa-lemon", answer: 4, count: 4 },
-      { iconType: "Dâu", icon: "fas fa-strawberry", answer: 1, count: 1 }
+      { iconType: "Chanh", icon: "fas fa-lemon", answer: 3, count: 3 },
+      { iconType: "Cà rốt", icon: "fas fa-carrot", answer: 4, count: 4 },
+      { iconType: "Kem", icon: "fas fa-ice-cream", answer: 1, count: 1 }
     ],
     10: [
-      { iconType: "Nho", icon: "fas fa-grapes", answer: 8, count: 8 },
-      { iconType: "Dưa hấu", icon: "fas fa-watermelon", answer: 7, count: 7 },
-      { iconType: "Dứa", icon: "fas fa-pineapple", answer: 9, count: 9 },
-      { iconType: "Cherry", icon: "fas fa-cherry", answer: 6, count: 6 },
-      { iconType: "Mận", icon: "fas fa-plum", answer: 10, count: 10 },
-      { iconType: "Lê", icon: "fas fa-pear", answer: 5, count: 5 }
+      { iconType: "Lá", icon: "fas fa-leaf", answer: 8, count: 8 },
+      { iconType: "Trái tim", icon: "fas fa-heart", answer: 7, count: 7 },
+      { iconType: "Ngôi sao", icon: "fas fa-star", answer: 9, count: 9 },
+      { iconType: "Táo", icon: "fas fa-apple-alt", answer: 6, count: 6 },
+      { iconType: "Hình vuông", icon: "fas fa-square", answer: 10, count: 10 },
+      { iconType: "Chanh", icon: "fas fa-lemon", answer: 5, count: 5 }
     ]
   };
 
@@ -192,6 +192,29 @@ export function mount(container) {
   const modalNextLevel = container.querySelector('#ghep-modalNextLevel');
   const modalLevelScore = container.querySelector('#ghep-modalLevelScore');
 
+  // audio helper (tracks current audio so it can be stopped on cleanup)
+  let currentAudio = null;
+  const _activeAudios = new Set();
+  function playSoundFile(filename) {
+    return new Promise(resolve => {
+      try {
+        if (currentAudio) {
+          try { currentAudio.pause(); currentAudio.currentTime = 0; } catch(e){}
+          currentAudio = null;
+        }
+        const audio = new Audio(`assets/sound/${filename}`);
+        currentAudio = audio;
+        _activeAudios.add(audio);
+        const onEnd = () => { try { _activeAudios.delete(audio); } catch(e){} if (currentAudio === audio) currentAudio = null; cleanupListeners(); resolve(); };
+        const onError = () => { try { _activeAudios.delete(audio); } catch(e){} if (currentAudio === audio) currentAudio = null; cleanupListeners(); resolve(); };
+        function cleanupListeners(){ try { audio.removeEventListener('ended', onEnd); audio.removeEventListener('error', onError); } catch(e){} }
+        audio.addEventListener('ended', onEnd);
+        audio.addEventListener('error', onError);
+        const p = audio.play(); if (p && typeof p.then === 'function') p.catch(() => onError());
+      } catch (e) { currentAudio = null; resolve(); }
+    });
+  }
+
   function shuffleArray(arr) { const shuffled = [...arr]; for (let i = shuffled.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]; } return shuffled; }
 
   function initGame() {
@@ -205,6 +228,19 @@ export function mount(container) {
   function createIcons() { iconsContainer.innerHTML = ''; currentGameData.forEach((q, idx) => { const iconEl = document.createElement('div'); iconEl.className = 'icon-item'; iconEl.dataset.id = `g-icon-${idx}`; iconEl.dataset.answer = q.answer; let iconsHTML = ''; for (let i = 0; i < q.count; i++) iconsHTML += `<i class="${q.icon}" style="color:${getIconColor(q.iconType)}"></i>`; iconEl.innerHTML = `\n          <div class="icon-name">${q.iconType}</div>\n          <div class="icon-group">${iconsHTML}</div>\n          <div class="icon-answer" id="g-answer-${idx}">?</div>\n        `; iconsContainer.appendChild(iconEl); }); }
 
   function getIconColor(type) { const map = { 'Táo':'#ff6b6b','Cam':'#FF9800','Chuối':'#FFC107','Dâu':'#f44336','Nho':'#9C27B0','Dưa hấu':'#4CAF50','Dứa':'#FF9800','Cherry':'#E91E63','Mận':'#9C27B0','Lê':'#8BC34A' }; return map[type] || '#4a6bff'; }
+  function getIconColor(type) { const map = {
+    'Táo':'#ff6b6b',
+    'Chanh':'#FFEB3B',
+    'Cà rốt':'#FF9800',
+    'Kem':'#FFB6C1',
+    'Lá':'#4CAF50',
+    'Trái tim':'#f44336',
+    'Ngôi sao':'#FFD700',
+    'Hình vuông':'#607D8B',
+    'Cam':'#FF9800',
+    'Chuối':'#FFC107',
+    'Nho':'#9C27B0'
+  }; return map[type] || '#4a6bff'; }
 
   function initDragAndDrop() { const numberItems = container.querySelectorAll('.number-item:not(.used)'); numberItems.forEach(n => { n.removeEventListener('dragstart', handleDragStart); n.removeEventListener('touchstart', handleTouchStart); n.addEventListener('dragstart', handleDragStart); n.addEventListener('touchstart', handleTouchStart, { passive: false }); }); if (dragMoveHandler) container.removeEventListener('dragover', dragMoveHandler); dragMoveHandler = handleDragMove; container.addEventListener('dragover', dragMoveHandler); container.addEventListener('drop', handleDrop); }
 
@@ -214,7 +250,34 @@ export function mount(container) {
 
   function handleDragEnd() { if (!draggedNumber) return; if (currentIconHighlighted) { currentIconHighlighted.classList.remove('highlight-correct','highlight-incorrect'); currentIconHighlighted = null; } draggedNumber.element.classList.remove('dragging'); document.removeEventListener('dragend', handleDragEnd); }
 
-  function handleDrop(e) { if (!isGameActive || !draggedNumber) { e.preventDefault(); return; } e.preventDefault(); const icon = e.target.closest('.icon-item'); if (!icon || icon.classList.contains('completed')) return; const idx = parseInt(icon.dataset.id.split('-')[2]); const answer = parseInt(icon.dataset.answer); if (draggedNumber.number === answer) { const pts = 10 * (levelConfig[level] ? levelConfig[level].scoreMultiplier : 1); score += pts; scoreEl.textContent = score; icon.classList.add('completed'); currentGameData[idx].placedNumber = draggedNumber.number; container.querySelector(`#g-answer-${idx}`).textContent = draggedNumber.number; draggedNumber.element.classList.add('used'); draggedNumber.element.draggable = false; resetTimer(); checkLevelCompletion(); } else { icon.classList.add('highlight-incorrect'); timeLeft -= (levelConfig[level] ? levelConfig[level].timeDecrement : 0); if (timeLeft < 0) timeLeft = 0; timerEl.textContent = timeLeft; if (timeLeft <= 0) endLevel(false); setTimeout(()=> icon.classList.remove('highlight-incorrect'), 500); } draggedNumber = null; }
+  function handleDrop(e) {
+    if (!isGameActive || !draggedNumber) { e.preventDefault(); return; }
+    e.preventDefault();
+    const icon = e.target.closest('.icon-item');
+    if (!icon || icon.classList.contains('completed')) return;
+    const idx = parseInt(icon.dataset.id.split('-')[2]);
+    const answer = parseInt(icon.dataset.answer);
+      if (draggedNumber.number === answer) {
+        const pts = 10 * (levelConfig[level] ? levelConfig[level].scoreMultiplier : 1);
+        score += pts; scoreEl.textContent = score;
+        icon.classList.add('completed');
+        currentGameData[idx].placedNumber = draggedNumber.number;
+        container.querySelector(`#g-answer-${idx}`).textContent = draggedNumber.number;
+        draggedNumber.element.classList.add('used'); draggedNumber.element.draggable = false;
+        resetTimer();
+        playSoundFile('sound_correct_answer_bit.mp3').then(() => checkLevelCompletion());
+      } else {
+        icon.classList.add('highlight-incorrect');
+        timeLeft -= (levelConfig[level] ? levelConfig[level].timeDecrement : 0);
+        if (timeLeft < 0) timeLeft = 0;
+        timerEl.textContent = timeLeft;
+        if (timeLeft <= 0) endLevel(false);
+        playSoundFile('sound_wrong_answer_bit.mp3');
+        setTimeout(() => icon.classList.remove('highlight-incorrect'), 500);
+    }
+    draggedNumber = null;
+  }
+
 
   function handleTouchStart(e) { if (!isGameActive) { e.preventDefault(); return; } const touch = e.touches[0]; draggedNumber = { element: e.target, number: parseInt(e.target.dataset.number), id: e.target.dataset.id }; draggedNumber.element.classList.add('dragging'); const touchMove = (moveEvent) => { if (!draggedNumber) return; const t = moveEvent.touches[0]; const icons = container.querySelectorAll('.icon-item:not(.completed)'); let closest=null; let minD=Infinity; icons.forEach(icon => { const r = icon.getBoundingClientRect(); const cx=r.left+r.width/2; const cy=r.top+r.height/2; const d=Math.hypot(t.clientX-cx,t.clientY-cy); if (d<120 && d<minD){minD=d;closest=icon;} }); if (currentIconHighlighted && currentIconHighlighted !== closest) currentIconHighlighted.classList.remove('highlight-correct','highlight-incorrect'); if (closest) { currentIconHighlighted=closest; const answer=parseInt(closest.dataset.answer); if (draggedNumber.number===answer) {closest.classList.remove('highlight-incorrect'); closest.classList.add('highlight-correct');} else {closest.classList.remove('highlight-correct'); closest.classList.add('highlight-incorrect');} } else if (currentIconHighlighted) { currentIconHighlighted.classList.remove('highlight-correct','highlight-incorrect'); currentIconHighlighted=null; } }; const touchEnd = (endEvent) => { if (!draggedNumber) return; const t = endEvent.changedTouches[0]; const icons = container.querySelectorAll('.icon-item:not(.completed)'); let closest=null; let minD=Infinity; icons.forEach(icon => { const r = icon.getBoundingClientRect(); const cx=r.left+r.width/2; const cy=r.top+r.height/2; const d=Math.hypot(t.clientX-cx,t.clientY-cy); if (d<120 && d<minD){minD=d;closest=icon;} }); if (closest) { const idx = parseInt(closest.dataset.id.split('-')[2]); const answer = parseInt(closest.dataset.answer); if (draggedNumber.number===answer) { const pts=10*(levelConfig[level] ? levelConfig[level].scoreMultiplier : 1); score+=pts; scoreEl.textContent=score; closest.classList.add('completed'); currentGameData[idx].placedNumber = draggedNumber.number; container.querySelector(`#g-answer-${idx}`).textContent=draggedNumber.number; draggedNumber.element.classList.add('used'); draggedNumber.element.draggable=false; resetTimer(); checkLevelCompletion(); } else { closest.classList.add('highlight-incorrect'); timeLeft -= (levelConfig[level] ? levelConfig[level].timeDecrement : 0); if (timeLeft<0) timeLeft=0; timerEl.textContent=timeLeft; if (timeLeft<=0) endLevel(false); setTimeout(()=>closest.classList.remove('highlight-incorrect'),500); } } if (currentIconHighlighted) { currentIconHighlighted.classList.remove('highlight-correct','highlight-incorrect'); currentIconHighlighted=null; } draggedNumber.element.classList.remove('dragging'); draggedNumber=null; document.removeEventListener('touchmove', touchMove); document.removeEventListener('touchend', touchEnd); }; document.addEventListener('touchmove', touchMove, { passive:false }); document.addEventListener('touchend', touchEnd); e.preventDefault(); }
 
@@ -226,7 +289,26 @@ export function mount(container) {
   function showModal(modal){ modal.classList.add('active'); document.body.style.overflow='hidden'; }
   function hideModal(modal){ modal.classList.remove('active'); document.body.style.overflow=''; }
 
-  function endLevel(isWin){ isGameActive=false; clearInterval(timerInterval); setTimeout(()=>{ if (isWin){ modalCompletedLevel.textContent = level; if (modalNextLevel) modalNextLevel.textContent = Math.min(level + 1, 10); if (modalLevelScore) modalLevelScore.textContent = score; showModal(levelCompleteModal); if (autoAdvanceTimeoutId) clearTimeout(autoAdvanceTimeoutId); autoAdvanceTimeoutId = setTimeout(() => { if (!container || !container.querySelector) return; handleNextLevel(); autoAdvanceTimeoutId = null; }, 3000); } else { modalLevel.textContent = level; showModal(gameOverModal); } }, 200); }
+  function endLevel(isWin){
+    isGameActive=false;
+    clearInterval(timerInterval);
+    setTimeout(()=>{
+      if (isWin){
+        modalCompletedLevel.textContent = level;
+        if (modalNextLevel) modalNextLevel.textContent = Math.min(level + 1, 10);
+        if (modalLevelScore) modalLevelScore.textContent = score;
+        showModal(levelCompleteModal);
+        // play long correct sound then advance
+        playSoundFile('sound_correct_answer_long.mp3').then(() => {
+          if (!container || !container.querySelector) return;
+          handleNextLevel();
+        });
+      } else {
+        modalLevel.textContent = level;
+        showModal(gameOverModal);
+      }
+    }, 200);
+  }
 
   // named handlers
   restartBtn.addEventListener('click', initGame);
@@ -251,6 +333,17 @@ export function mount(container) {
     restartBtn.removeEventListener('click', initGame);
     retryLevelBtn?.removeEventListener('click', handleRetry);
     nextLevelBtn?.removeEventListener('click', handleNextLevel);
+    try {
+      // stop the last tracked audio
+      if (currentAudio) { try { currentAudio.pause(); currentAudio.currentTime = 0; } catch(e){} currentAudio = null; }
+      // stop any other audios created by this panel
+      if (_activeAudios.size) {
+        _activeAudios.forEach(a => {
+          try { a.pause(); a.currentTime = 0; a.src = ''; } catch(e) {}
+        });
+        _activeAudios.clear();
+      }
+    } catch(e) {}
     delete container._ghepCleanup;
   };
 }

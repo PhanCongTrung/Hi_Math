@@ -94,6 +94,22 @@ export function mount(container) {
   function updateModeDisplay(){ let modeText=''; let iconClass=''; switch(currentMode){ case 'addition': modeText='Phép Cộng'; iconClass='fas fa-plus-circle'; break; case 'subtraction': modeText='Phép Trừ'; iconClass='fas fa-minus-circle'; break; case 'both': modeText='Cả Hai'; iconClass='fas fa-random'; break; } currentModeElement.innerHTML = `<i class="${iconClass}"></i> ${modeText}`; }
 
   // ---------- question generation ----------
+  // audio helper (tracks current audio so it can be stopped on cleanup)
+  let currentAudio = null;
+  function playSoundFile(filename) {
+    return new Promise(resolve => {
+      try {
+        if (currentAudio) { try { currentAudio.pause(); currentAudio.currentTime = 0; } catch(e){} currentAudio = null; }
+        const audio = new Audio(`assets/sound/${filename}`);
+        currentAudio = audio;
+        const finish = () => { if (currentAudio === audio) currentAudio = null; resolve(); };
+        audio.addEventListener('ended', finish);
+        audio.addEventListener('error', finish);
+        const p = audio.play(); if (p && typeof p.then === 'function') p.catch(() => finish());
+      } catch (e) { currentAudio = null; resolve(); }
+    });
+  }
+
   function generateNewQuestion(){ isAnswered=false; nextBtn.disabled=true; if (autoNextTimeout){ clearTimeout(autoNextTimeout); autoNextTimeout=null; } let operationType = currentMode; if (operationType === 'both'){ operationType = Math.random()>0.5 ? 'addition' : 'subtraction'; } currentQuestion = operationType==='addition' ? generateAdditionQuestion() : generateSubtractionQuestion(); displayQuestion(); generateAnswers(); }
 
   function generateAdditionQuestion(){ const numberOfTerms = getRandomNumber(2,5); const numbers=[]; let sum=0; for (let i=0;i<numberOfTerms;i++){ if (i===numberOfTerms-1){ const maxNumber = 20 - sum; numbers.push(maxNumber<=0?0:getRandomNumber(1,maxNumber)); sum += numbers[i]; } else { const maxForThis = Math.min(10, 20 - sum - (numberOfTerms - i - 1)); const number = getRandomNumber(1, Math.max(1, maxForThis)); numbers.push(number); sum += number; } } currentAnswer = sum; return { type:'addition', numbers, answer:sum, expression: numbers.join(' + ') }; }
@@ -104,7 +120,29 @@ export function mount(container) {
 
   function generateAnswers(){ answersGrid.innerHTML=''; const correctAnswer = currentAnswer; const answers=[correctAnswer]; while (answers.length<4){ let wrongAnswer; const offset = getRandomNumber(1,3); const shouldAdd = Math.random()>0.5; wrongAnswer = shouldAdd ? correctAnswer + offset : correctAnswer - offset; if (wrongAnswer>=0 && wrongAnswer<=20 && !answers.includes(wrongAnswer)) answers.push(wrongAnswer); } const shuffled = shuffleArray(answers); shuffled.forEach(answer=>{ const btn = document.createElement('button'); btn.className='answer-btn'; btn.textContent = answer; btn.dataset.value = answer; btn.dataset.correct = answer===correctAnswer? 'true':'false'; btn.addEventListener('click', () => handleAnswerClick(btn)); answersGrid.appendChild(btn); }); }
 
-  function handleAnswerClick(clickedButton){ if (isAnswered) return; isAnswered=true; const isCorrect = clickedButton.dataset.correct === 'true'; const allAnswerButtons = container.querySelectorAll('.answer-btn'); allAnswerButtons.forEach(button=>{ button.disabled = true; if (button.dataset.correct === 'true') button.classList.add('correct'); else if (button === clickedButton && !isCorrect) button.classList.add('incorrect'); }); if (isCorrect){ gameCorrect++; totalCorrect++; autoNextTimeout = setTimeout(()=>{ nextQuestion(); }, 1500); } else { gameWrong++; totalWrong++; } updateGameStats(); nextBtn.disabled = false; }
+  function handleAnswerClick(clickedButton){
+    if (isAnswered) return;
+    isAnswered = true;
+    const isCorrect = clickedButton.dataset.correct === 'true';
+    const allAnswerButtons = container.querySelectorAll('.answer-btn');
+    allAnswerButtons.forEach(button => {
+      button.disabled = true;
+      if (button.dataset.correct === 'true') button.classList.add('correct');
+      else if (button === clickedButton && !isCorrect) button.classList.add('incorrect');
+    });
+    if (isCorrect) {
+      gameCorrect++; totalCorrect++;
+      // play long correct then next
+      playSoundFile('sound_correct_answer_long.mp3').then(() => nextQuestion());
+    } else {
+      gameWrong++; totalWrong++;
+      // play wrong long then next
+      playSoundFile('sound_wrong_answer_long.mp3').then(() => nextQuestion());
+    }
+    updateGameStats();
+    nextBtn.disabled = false;
+  }
+
 
   function nextQuestion(){ if (autoNextTimeout){ clearTimeout(autoNextTimeout); autoNextTimeout=null; } generateNewQuestion(); }
 
@@ -131,6 +169,7 @@ export function mount(container) {
     backBtn.removeEventListener('click', showSelectionPage);
     nextBtn.removeEventListener('click', nextQuestion);
     if (autoNextTimeout){ clearTimeout(autoNextTimeout); autoNextTimeout=null; }
+    try { if (currentAudio) { currentAudio.pause(); currentAudio.currentTime = 0; currentAudio = null; } } catch(e) {}
     delete container._practiceCleanup;
   };
 }

@@ -120,6 +120,26 @@ export function mount(container) {
   const nextBtn = container.querySelector('#cl-nextBtn');
   const restartBtn = container.querySelector('#cl-restartBtn');
 
+  // audio helper (tracks current audio so it can be stopped on cleanup)
+  let currentAudio = null;
+  function playSoundFile(filename) {
+    return new Promise(resolve => {
+      try {
+        // stop any previously playing audio for this panel
+        if (currentAudio) {
+          try { currentAudio.pause(); currentAudio.currentTime = 0; } catch (e) {}
+          currentAudio = null;
+        }
+        const audio = new Audio(`assets/sound/${filename}`);
+        currentAudio = audio;
+        const finish = () => { if (currentAudio === audio) currentAudio = null; resolve(); };
+        audio.addEventListener('ended', finish);
+        audio.addEventListener('error', finish);
+        const p = audio.play(); if (p && typeof p.then === 'function') p.catch(() => finish());
+      } catch (e) { currentAudio = null; resolve(); }
+    });
+  }
+
   // helpers
   function updateStats() {
     scoreElement.textContent = score;
@@ -179,7 +199,8 @@ export function mount(container) {
     }
     wrongAnswers++;
     updateStats();
-    setTimeout(nextQuestion, 2000);
+    // play wrong long sound then next
+    playSoundFile('sound_wrong_answer_long.mp3').then(() => nextQuestion());
   }
 
   function nextQuestion() {
@@ -239,7 +260,8 @@ export function mount(container) {
       }
     }
     updateStats();
-    setTimeout(nextQuestion, 2000);
+    const soundFile = isCorrect ? 'sound_correct_answer_long.mp3' : 'sound_wrong_answer_long.mp3';
+    playSoundFile(soundFile).then(() => nextQuestion());
   }
 
 
@@ -322,6 +344,8 @@ export function mount(container) {
     }
 
     try { currentNumberElement.draggable = false; } catch(e) {}
+    // stop any playing audio
+    try { if (currentAudio) { currentAudio.pause(); currentAudio.currentTime = 0; currentAudio = null; } } catch(e) {}
     delete container._chanLeCleanup;
   };
 }

@@ -75,6 +75,22 @@ export function mount(container) {
   const nextBtn = container.querySelector('#xepso-nextBtn');
   const restartBtn = container.querySelector('#xepso-restartBtn');
 
+  // audio helper
+  let currentAudio = null;
+  function playSoundFile(filename) {
+    return new Promise(resolve => {
+      try {
+        if (currentAudio) { try { currentAudio.pause(); currentAudio.currentTime = 0; } catch(e){} currentAudio = null; }
+        const audio = new Audio(`assets/sound/${filename}`);
+        currentAudio = audio;
+        const finish = () => { if (currentAudio === audio) currentAudio = null; resolve(); };
+        audio.addEventListener('ended', finish);
+        audio.addEventListener('error', finish);
+        const p = audio.play(); if (p && typeof p.then === 'function') p.catch(() => finish());
+      } catch (e) { currentAudio = null; resolve(); }
+    });
+  }
+
   function initGame() {
     questionNumber = 1; correctCount = 0; wrongCount = 0; correctSlotsCount = 0;
     if (autoNextTimeout) { clearTimeout(autoNextTimeout); autoNextTimeout = null; }
@@ -180,11 +196,14 @@ export function mount(container) {
       const numberIndex = draggableNumbers.indexOf(draggedNumber.number);
       if (numberIndex > -1) draggableNumbers.splice(numberIndex,1);
       correctSlotsCount++;
-      checkIfCompleted();
+      // play bit-correct sound
+      playSoundFile('sound_correct_answer_bit.mp3').then(() => checkIfCompleted());
     } else {
       slot.classList.add('incorrect-drop');
       setTimeout(()=>{ slot.classList.remove('incorrect-drop'); draggedNumber.element.classList.remove('dragging'); draggedNumber.element.style.transform = ''; }, 500);
       wrongCount++; updateStats();
+      // play bit-wrong sound then continue
+      playSoundFile('sound_wrong_answer_bit.mp3');
     }
     draggedNumber = null;
   }
@@ -196,7 +215,8 @@ export function mount(container) {
     if (correctSlotsCount === totalSlots) {
       correctCount++; updateStats();
       document.querySelectorAll('.number-slot').forEach(slot=>slot.classList.add('all-correct'));
-      autoNextTimeout = setTimeout(()=>{ nextQuestion(); }, 2000);
+      // play long success then next
+      playSoundFile('sound_correct_answer_long.mp3').then(() => { nextQuestion(); });
     }
   }
 
@@ -223,6 +243,7 @@ export function mount(container) {
     restartBtn.removeEventListener('click', initGame);
     document.removeEventListener('dragover', docDragOver);
     if (autoNextTimeout) { clearTimeout(autoNextTimeout); autoNextTimeout = null; }
+    try { if (currentAudio) { currentAudio.pause(); currentAudio.currentTime = 0; currentAudio = null; } } catch(e) {}
     delete container._xepSoCleanup;
   };
 }

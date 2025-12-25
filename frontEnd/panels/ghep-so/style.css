@@ -31,7 +31,7 @@
 .ghepso-game .icon-item.completed { border-color:#4CAF50 !important; background-color:rgba(76,175,80,0.12) !important; box-shadow: 0 6px 15px rgba(76,175,80,0.15) !important; transform: none !important; }
 .ghepso-game .icon-item.completed .icon-answer { color: #2e7d32; }
 .ghepso-game .icon-name { font-weight:600; color:#333; font-size:0.95rem; margin-bottom:8px; }
-.ghepso-game .icon-group i { font-size:1.6rem; color:#4a6bff; margin:4px; }
+.ghepso-game .icon-group i { font-size:2rem; color:#4a6bff; margin:6px; }
 .ghepso-game .icon-answer { font-size:1.25rem; font-weight:900; color:#ff6b6b; font-family:'Fredoka One', cursive; }
 
 .ghepso-game .game-footer { display:flex; justify-content:space-between; align-items:center; padding-top:10px; border-top:1px solid #f0f0f0; }
