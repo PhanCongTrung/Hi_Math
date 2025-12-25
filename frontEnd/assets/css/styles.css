@@ -360,7 +360,7 @@ button{font:inherit}
   box-shadow: 0 20px 50px rgba(6,18,40,0.12);
   min-height: 0;
   overflow-y: auto;
-  /* position: relative; allow absolute snow container inside */
+  position: relative; /* allow absolute positioned fun-zone inside */
 }
 
 .hero{
@@ -798,6 +798,56 @@ button{font:inherit}
   .modal__tab{font-size: 14px; padding: 9px 12px}
   .modal-backdrop{padding: 12px}
 }
+
+/* --- Fun-zone (snowball) styles - small widget bottom-right --- */
+.fun-zone-container{
+  position: absolute;
+  right: 100px;
+  bottom: 36px;
+  /* width: 170px; */
+  max-width: 34%;
+  /* background: rgba(255,255,255,0.06); */
+  border-radius: 14px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  z-index: 40;
+  pointer-events: auto;
+  /* box-shadow: 0 8px 30px rgba(2,6,23,0.28); */
+}
+.fun-zone-container .instruction-text{font-size:16px;margin:0;color:rgba(255,255,255,0.9);opacity:.95}
+.snowball-arena{height:90px;width:100%;display:flex;align-items:center;justify-content:center;position:relative}
+.snowball-mover{position:relative;width:70px;height:70px}
+.snowball-scaler{width:100%;height:100%;position:relative;cursor:pointer;transform-origin:center bottom}
+.snowball-inner{width:100%;height:100%;border-radius:50%;background:radial-gradient(circle at 35% 35%, #ffffff 0%, #ffffff 48%, #d1e5f5 90%, #b0d0ea 100%);box-shadow: inset -5px -5px 12px rgba(0,50,100,0.08), inset 5px 5px 12px rgba(255,255,255,1), 0 0 0 2px rgba(255,255,255,0.45);animation: rotateBall 4s linear infinite}
+.shadow-blur{position:absolute;width:80%;height:10px;background:rgba(0,0,0,0.18);bottom:-10px;left:10%;border-radius:50%;filter:blur(3px);z-index:-1}
+
+/* Normal rolling: wider range for more noticeable travel (CSS-driven oscillation)
+  Use a dedicated class `.auto` on the mover so JS can pause/resume the animation cleanly. */
+@keyframes moverOscillate{0%{transform:translateX(-110px)}50%{transform:translateX(110px)}100%{transform:translateX(-110px)}}
+.snowball-mover.auto{animation: moverOscillate 11200ms ease-in-out infinite}
+@keyframes rotateBall{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+
+.snowball-scaler{ /* ensure transforms run smoothly when JS applies them */
+  width:100%;height:100%;position:relative;cursor:pointer;transform-origin:center bottom;transition: transform 5600ms ease-in-out;
+}
+
+/* helper class used when JS wants to pause the auto oscillation without touching inline styles */
+.snowball-mover.paused{animation-play-state:paused}
+
+/* When clicked (poof): hide the ball and shadow immediately; quote will show */
+.snowball-scaler.poof .snowball-inner{opacity:0;visibility:hidden;transform:scale(0.02)}
+.snowball-scaler.poof .shadow-blur{opacity:0;visibility:hidden}
+
+.hidden-quote{position:absolute;font-size:14px;font-weight:800;color:#fff;text-shadow:1px 2px 4px rgba(0,0,0,0.28);text-align:center;opacity:0;transform:scale(0.86);transition:all .45s cubic-bezier(.175,.885,.32,1.275);width:95%;pointer-events:none}
+.hidden-quote.show-quote{opacity:1;transform:scale(1);z-index:50}
+
+@media (max-width: 700px){
+  .fun-zone-container{right:12px;bottom:12px;width:140px}
+}
+
 
 
 

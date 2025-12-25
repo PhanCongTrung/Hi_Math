@@ -36,7 +36,7 @@ export function mount(container) {
 
         <!-- Câu hỏi -->
         <div class="question-box">
-            <h2>Đếm số icon dưới đây:</h2>
+            <h2>Đếm số hình dưới đây:</h2>
         </div>
 
         <!-- Hiển thị icon - CHIẾM NHIỀU KHÔNG GIAN -->

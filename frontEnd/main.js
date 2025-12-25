@@ -270,7 +270,7 @@
         { label: 'Học số', page: 'digits-hoc-so' },
         { label: 'Ghép số', page: 'digits-ghep-so' },
         { label: 'Chẵn lẻ', page: 'digits-chan-le' },
-        { label: 'Đếm số', page: 'digits-dem-so' }
+        { label: 'Đếm hình', page: 'digits-dem-so' }
       ],
       'compare': [
         { label: 'So sánh số', page: 'compare-so-sanh' },
@@ -330,6 +330,127 @@
         });
         f.appendChild(container);
       });
+    });
+    // initialize fun-zone (snowball) if present
+    try { initFunZone(); } catch (e) { /* ignore */ }
+  }
+
+  // Fun-zone (snowball) behavior: keeps the user's original algorithm and timings
+  function initFunZone() {
+    const funQuotes = [
+      "Sai thì sửa, sợ gì! Thử lại nào siêu nhân!",
+      "Toán học dễ như ăn kẹo ấy nhỉ!",
+      "Não bộ đang tập thể dục đó, cố lên!",
+      "Sắp thành 'Trùm Cuối' môn Toán rồi!",
+      "1 + 1 = 2, Sự nỗ lực của bạn = Vô Giá!",
+      "Cứ bình tĩnh, hít thở sâu và tính tiếp!",
+      "Tuyệt vời ông mặt trời!"
+    ];
+
+    const snowballScaler = document.getElementById('snowballScaler');
+    const snowballMover = document.getElementById('snowballMover');
+    const quoteDisplay = document.getElementById('quoteDisplay');
+    if (!snowballScaler) return;
+
+    // avoid double-binding; still ensure auto-move starts when entering home
+    if (snowballScaler._funBound) {
+      try { startAutoMove(snowballMover); } catch (e) {}
+      return;
+    }
+    snowballScaler._funBound = true;
+
+    // Duration and distances
+    const MOVE_DURATION = 5600; // ms for a half-cycle (left->right or right->left)
+    const DIST = 110; // px travel distance
+
+    let isAnimating = false;
+
+    // JS-driven oscillation helpers
+    // Use CSS-driven oscillation: toggle `.auto` class on the mover to start/stop continuous movement.
+    function startAutoMove(el) {
+      if (!el) return;
+      try { if (el._autoTimer) { clearTimeout(el._autoTimer); el._autoTimer = null; } } catch (e) {}
+      el.classList.add('auto');
+      el.classList.remove('paused');
+    }
+
+    function stopAutoMove(el) {
+      if (!el) return;
+      try { if (el._autoTimer) { clearTimeout(el._autoTimer); el._autoTimer = null; } } catch (e) {}
+      el.classList.remove('auto');
+      el.classList.add('paused');
+    }
+
+    // ensure auto-roll on home
+    try { startAutoMove(snowballMover); } catch (e) {}
+
+    // click handling: hide ball (no crack), show quote, then reappear while moving and growing
+    snowballScaler.addEventListener('click', function () {
+      if (isAnimating) return;
+      isAnimating = true;
+
+      // stop auto movement
+      try { stopAutoMove(snowballMover); } catch (e) {}
+
+      // hide ball and shadow immediately
+      snowballScaler.classList.add('poof');
+      if (quoteDisplay) {
+        const idx = Math.floor(Math.random() * funQuotes.length);
+        quoteDisplay.textContent = funQuotes[idx];
+        quoteDisplay.classList.add('show-quote');
+      }
+
+      const quoteMs = 5600;
+
+      setTimeout(() => {
+        // hide quote
+        if (quoteDisplay) quoteDisplay.classList.remove('show-quote');
+
+        // small wait for hide animation
+        setTimeout(() => {
+          // prepare reappear: position mover at left and scaler very small
+          try {
+            // remove poof (so inner will re-show when we set scale)
+            snowballScaler.classList.remove('poof');
+
+            // set initial small scale instantly
+            snowballScaler.style.transition = 'none';
+            snowballScaler.style.transform = 'scale(0.02)';
+
+            // position mover at left off-screen position
+            snowballMover.style.transition = 'none';
+            snowballMover.style.transform = `translateX(-${DIST}px)`;
+
+            // force reflow
+            void snowballMover.offsetWidth;
+
+            // animate mover to right while scaling up
+            snowballMover.style.transition = `transform ${MOVE_DURATION}ms ease-in-out`;
+            snowballScaler.style.transition = `transform ${MOVE_DURATION}ms ease-in-out`;
+
+            // set target transforms
+            snowballMover.style.transform = `translateX(${DIST}px)`;
+            snowballScaler.style.transform = 'scale(1)';
+
+            const onEnd = (ev) => {
+              if (ev.propertyName === 'transform') {
+                // when mover finished crossing, resume auto oscillation smoothly
+                // align CSS animation phase so it continues without a jump
+                try { snowballMover.style.animationDelay = `-${MOVE_DURATION}ms`; startAutoMove(snowballMover); } catch (e) {}
+                snowballMover.removeEventListener('transitionend', onEnd);
+                // cleanup inline transitions after small delay
+                setTimeout(() => {
+                  try { snowballMover.style.transition = ''; snowballMover.style.transform = ''; snowballScaler.style.transition = ''; snowballScaler.style.transform = ''; } catch(e){}
+                  isAnimating = false;
+                }, 80);
+              }
+            };
+            snowballMover.addEventListener('transitionend', onEnd);
+          } catch (e) {
+            isAnimating = false;
+          }
+        }, 300);
+      }, quoteMs);
     });
   }
 
