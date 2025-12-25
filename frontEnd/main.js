@@ -67,9 +67,48 @@
   }
 
   toggleBtn?.addEventListener('click', () => {
-    if (!isMobileLayout()) return;
-    toggleSidebar();
+    if (isMobileLayout()) {
+      toggleSidebar();
+    } else {
+      toggleCollapseSidebar();
+    }
   });
+
+  // hide / show sidebar completely (expand content to full width)
+  const hideBtn = document.querySelector('[data-action="hide-sidebar"]');
+  hideBtn?.addEventListener('click', () => {
+    const app = document.querySelector('.app');
+    if (!app) return;
+    app.classList.toggle('sidebar-hidden');
+    // when hiding, also remove collapsed state and close submenus
+    if (app.classList.contains('sidebar-hidden')) {
+      app.classList.remove('sidebar-collapsed');
+      document.querySelectorAll('[data-dropdown]').forEach(btn => {
+        const k = btn.getAttribute('data-dropdown');
+        const panel = k ? document.querySelector(`[data-submenu="${k}"]`) : null;
+        btn.setAttribute('aria-expanded', 'false');
+        panel?.classList.remove('is-open');
+      });
+    }
+  });
+
+  function collapseSidebar() {
+    const app = document.querySelector('.app');
+    if (!app) return;
+    app.classList.add('sidebar-collapsed');
+  }
+
+  function expandSidebar() {
+    const app = document.querySelector('.app');
+    if (!app) return;
+    app.classList.remove('sidebar-collapsed');
+  }
+
+  function toggleCollapseSidebar() {
+    const app = document.querySelector('.app');
+    if (!app) return;
+    app.classList.toggle('sidebar-collapsed');
+  }
 
   backdrop?.addEventListener('click', closeSidebar);
 
@@ -221,19 +260,70 @@
 
   // bind interactions that live inside the main content area (re-run after restoring)
   function initDynamicBindings() {
-    const features = document.querySelectorAll('[data-feature]');
-    features.forEach((f) => {
-      // remove previous handler to avoid duplicate alerts when re-binding
-      f.replaceWith(f.cloneNode(true));
-    });
+    const FEATURE_CHILDREN = {
+      'digits': [
+        { label: 'Học số', page: 'digits-hoc-so' },
+        { label: 'Ghép số', page: 'digits-ghep-so' },
+        { label: 'Chẵn lẻ', page: 'digits-chan-le' },
+        { label: 'Đếm số', page: 'digits-dem-so' }
+      ],
+      'compare': [
+        { label: 'So sánh số', page: 'compare-so-sanh' },
+        { label: 'Xếp số', page: 'compare-xep-so' }
+      ],
+      'calc': [
+        { label: 'Tính toán', page: 'practice-tinh-toan' },
+        { label: 'Tính bằng Ngón Tay', page: 'practice-nhan-ngon' }
+      ],
+      'games': [
+        { label: 'Hứng táo Newton', page: 'games' },
+        { label: 'Khủng long Toán', page: 'games-dino' }
+      ]
+    };
 
-    // re-query and bind features
+    // remove old handlers by cloning
+    const features = document.querySelectorAll('[data-feature]');
+    features.forEach((f) => f.replaceWith(f.cloneNode(true)));
+
+    // bind expand/collapse behavior
     document.querySelectorAll('[data-feature]').forEach((f) => {
       f.addEventListener('click', (e) => {
         e.preventDefault();
-        const name = f.getAttribute('data-feature');
-        if (!name) return;
-        alert(`Bạn vừa chọn: ${name}. (Demo UI — sẽ nối trang thật sau)`);
+        const key = f.getAttribute('data-feature');
+        if (!key) return;
+
+        const currentlyOpen = f.classList.contains('is-open');
+
+        // close other open features
+        document.querySelectorAll('.feature.is-open').forEach((other) => {
+          if (other === f) return;
+          other.classList.remove('is-open');
+          const oc = other.querySelector('.feature-children');
+          if (oc) oc.remove();
+        });
+
+        if (currentlyOpen) {
+          // close this one
+          f.classList.remove('is-open');
+          const oc = f.querySelector('.feature-children');
+          if (oc) oc.remove();
+          return;
+        }
+
+        // open this feature and inject children links
+        f.classList.add('is-open');
+        const children = FEATURE_CHILDREN[key] || [];
+        const container = document.createElement('div');
+        container.className = 'feature-children';
+        children.forEach((item) => {
+          const a = document.createElement('a');
+          a.href = '#';
+          a.className = 'feature-child';
+          a.setAttribute('data-page', item.page);
+          a.textContent = item.label;
+          container.appendChild(a);
+        });
+        f.appendChild(container);
       });
     });
   }
