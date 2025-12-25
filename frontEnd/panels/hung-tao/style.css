@@ -1,0 +1,51 @@
+.hungtao-panel .game-wrapper{max-width:420px;margin:0 auto;padding:12px;background:transparent;position:relative}
+.hungtao-panel .game-wrapper .hud{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.hungtao-panel .game-wrapper .score-board{font-weight:700;color:#37474f}
+.hungtao-panel .game-wrapper .lives-wrapper{display:flex;gap:6px}
+.hungtao-panel .heart{color:#b0bec5;font-size:18px}
+.hungtao-panel .heart.active{color:#e53935}
+.hungtao-panel .question-board{font-size:18px;font-weight:700;text-align:center;margin-bottom:8px;color:#263238}
+.hungtao-panel canvas{display:block;width:100%;height:auto;border-radius:8px;background:#e8f5e9}
+/* Unified overlay centered inside the game-wrapper */
+.hungtao-panel .game-wrapper .overlay{
+	position: absolute;
+    /* inset: 0; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.75);
+    z-index: 50;
+    padding: 18px;
+    box-sizing: border-box;
+    flex-direction: column;
+    top: 0;
+    left: 0;
+    color: white;
+    width: 100%;
+    height: 100%;
+}
+.hungtao-panel .game-wrapper .overlay.hidden{display:none !important}
+.hungtao-panel .game-wrapper .overlay h1{margin:0 0 8px 0}
+.hungtao-panel .game-wrapper .overlay p{margin:0 0 12px 0}
+.hungtao-panel .game-wrapper .overlay button{ /* use global .hungtao-panel button styles to preserve original look */ }
+.hungtao-panel .game-wrapper .overlay button:active{transform:translateY(2px)}
+/* Scoped styles for Hứng Táo panel */
+.hungtao-panel * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; user-select: none; }
+.hungtao-panel { display:block; margin: 0 auto; padding: 18px; max-width: 460px; }
+.hungtao-panel .game-wrapper { position: relative; width: 420px; height: 620px; border: 8px solid #5D4037; border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.2); background-color: #81D4FA; overflow: hidden; }
+.hungtao-panel canvas { display:block; background: transparent; width:100%; height:auto; }
+.hungtao-panel .hud { position:absolute; top:10px; left:10px; right:10px; display:flex; justify-content:space-between; align-items:center; z-index:10; }
+.hungtao-panel .score-board { font-size:20px; font-weight:bold; color:#fff; background:rgba(0,0,0,0.3); padding:5px 12px; border-radius:15px; }
+.hungtao-panel .lives-wrapper { display:flex; }
+.hungtao-panel .heart { font-size:24px; margin:0 2px; color:#ddd; transition: transform 0.2s; }
+.hungtao-panel .heart.active { color:#FF1744; }
+.hungtao-panel .question-board { position:absolute; top:60px; width:100%; text-align:center; pointer-events:none; z-index:5; }
+.hungtao-panel #question-text { font-size:32px; font-weight:900; color:#fff; background-color:#FF6F00; padding:8px 25px; border-radius:50px; border:3px solid #fff; box-shadow:0 4px 0 rgba(0,0,0,0.2); }
+.hungtao-panel .hidden { display:none !important; }
+.hungtao-panel h1 { font-size:36px; color:#FFEB3B; margin-bottom:20px; }
+.hungtao-panel button { margin-top:20px; padding:12px 30px; font-size:22px; font-weight:bold; color:white; background-color:#2E7D32; border:none; border-radius:50px; cursor:pointer; box-shadow:0 5px 0 #1B5E20; }
+.hungtao-panel button:active { transform: translateY(5px); box-shadow: none; }
+
+/* Ensure panel sits centered inside main content */
+.hungtao-panel { display:flex; justify-content:center; }
+

@@ -144,13 +144,6 @@ button{font:inherit}
 
 .topbar__music.playing{ box-shadow: 0 8px 24px rgba(111,123,255,.18); background: linear-gradient(135deg, rgba(111,123,255,.12), rgba(255,99,199,.08)); }
 
-/* indicate that autoplay was blocked and we need a user interaction to resume */
-.topbar__music.needs-interaction{
-  box-shadow: 0 6px 18px rgba(255,99,199,.12);
-  outline: 2px dashed rgba(255,99,199,.18);
-  transform: translateY(-2px);
-}
-
 .topbar__menu{display:none}
 
 .avatar{

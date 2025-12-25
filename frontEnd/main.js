@@ -234,8 +234,6 @@
   let homeAudio = null;
   let isMusicEnabled = true; // toggle state (user can mute/unmute)
   let isMusicPlaying = false;
-  let autoplayBlocked = false;
-  let _resumeOnInteraction = null;
   const HOME_TRACK_COUNT = 4;
 
   function pickRandomHomeTrack() {
@@ -253,14 +251,6 @@
     homeAudio = null;
     isMusicPlaying = false;
     topbarMusicBtn?.classList.remove('playing');
-    topbarMusicBtn?.classList.remove('needs-interaction');
-    autoplayBlocked = false;
-    if (_resumeOnInteraction) {
-      document.removeEventListener('click', _resumeOnInteraction);
-      document.removeEventListener('keydown', _resumeOnInteraction);
-      document.removeEventListener('touchstart', _resumeOnInteraction);
-      _resumeOnInteraction = null;
-    }
   }
 
   function playHomeMusic() {
@@ -275,47 +265,13 @@
       playHomeMusic();
     };
     homeAudio.addEventListener('ended', homeAudio._onEnded);
-    const p = homeAudio.play();
-    if (p && typeof p.then === 'function') {
-      p.then(() => {
-        isMusicPlaying = true;
-        topbarMusicBtn?.classList.add('playing');
-        // clear any pending resume handlers
-        if (_resumeOnInteraction) {
-          document.removeEventListener('click', _resumeOnInteraction);
-          document.removeEventListener('keydown', _resumeOnInteraction);
-          document.removeEventListener('touchstart', _resumeOnInteraction);
-          _resumeOnInteraction = null;
-          autoplayBlocked = false;
-          topbarMusicBtn?.classList.remove('needs-interaction');
-        }
-      }).catch(() => {
-        // autoplay blocked by browser: set a one-time resume on next user interaction
-        autoplayBlocked = true;
-        topbarMusicBtn?.classList.add('needs-interaction');
-        // ensure we don't add multiple handlers
-        if (!_resumeOnInteraction) {
-          _resumeOnInteraction = () => {
-            if (_resumeOnInteraction) {
-              document.removeEventListener('click', _resumeOnInteraction);
-              document.removeEventListener('keydown', _resumeOnInteraction);
-              document.removeEventListener('touchstart', _resumeOnInteraction);
-            }
-            _resumeOnInteraction = null;
-            autoplayBlocked = false;
-            // try to play again
-            if (isMusicEnabled) playHomeMusic();
-          };
-          document.addEventListener('click', _resumeOnInteraction, { once: true });
-          document.addEventListener('keydown', _resumeOnInteraction, { once: true });
-          document.addEventListener('touchstart', _resumeOnInteraction, { once: true });
-        }
-      });
-    } else {
-      // older browsers: assume play started synchronously
+    homeAudio.play().then(() => {
       isMusicPlaying = true;
       topbarMusicBtn?.classList.add('playing');
-    }
+    }).catch(() => {
+      // autoplay might be blocked; keep state tidy
+      clearHomeAudio();
+    });
   }
 
   function stopHomeMusic() {
@@ -328,14 +284,6 @@
     homeAudio = null;
     isMusicPlaying = false;
     topbarMusicBtn?.classList.remove('playing');
-    topbarMusicBtn?.classList.remove('needs-interaction');
-    autoplayBlocked = false;
-    if (_resumeOnInteraction) {
-      document.removeEventListener('click', _resumeOnInteraction);
-      document.removeEventListener('keydown', _resumeOnInteraction);
-      document.removeEventListener('touchstart', _resumeOnInteraction);
-      _resumeOnInteraction = null;
-    }
   }
 
   topbarMusicBtn?.addEventListener('click', () => {
@@ -347,8 +295,10 @@
   // Auto-play on initial load only if we're on home content
   const initialIsHome = true; // page loads with home content by default
   if (initialIsHome) {
-    // try to start music immediately (may be blocked by browser)
-    try { if (isMusicEnabled) playHomeMusic(); } catch(e) { /* ignore */ }
+    // try to start music (may be blocked by browser)
+    setTimeout(() => {
+      if (isMusicEnabled) playHomeMusic();
+    }, 300);
   }
   // ===== end home music control =====
 
@@ -498,6 +448,55 @@
       return;
     }
 
+    if (key === 'practice-nhan-ngon') {
+      content.innerHTML = '<div class="loading">Đang tải...</div>';
+      import('./panels/practice-nhan-ngon/panel.js').then(mod => {
+        if (content._mountedPanel && typeof content._mountedPanel.unmount === 'function') {
+          try { content._mountedPanel.unmount(content); } catch(e) { console.warn('Error during panel unmount', e); }
+          delete content._mountedPanel;
+        }
+        mod.mount(content);
+        content._mountedPanel = mod;
+      }).catch(err => {
+        console.error('Failed to load practice-nhan-ngon panel', err);
+        content.innerHTML = '<div class="panel"><h2>Lỗi khi tải panel</h2></div>';
+      });
+      return;
+    }
+
+    if (key === 'games-dino') {
+      content.innerHTML = '<div class="loading">Đang tải...</div>';
+      import('./panels/dino-math/panel.js').then(mod => {
+        if (content._mountedPanel && typeof content._mountedPanel.unmount === 'function') {
+          try { content._mountedPanel.unmount(content); } catch(e) { console.warn('Error during panel unmount', e); }
+          delete content._mountedPanel;
+        }
+        mod.mount(content);
+        content._mountedPanel = mod;
+      }).catch(err => {
+        console.error('Failed to load dino-math panel', err);
+        content.innerHTML = '<div class="panel"><h2>Lỗi khi tải panel</h2></div>';
+      });
+      return;
+    }
+
+    if (key === 'games') {
+      // mount the "Hứng táo" overview panel
+      content.innerHTML = '<div class="loading">Đang tải...</div>';
+      import('./panels/hung-tao/panel.js').then(mod => {
+        if (content._mountedPanel && typeof content._mountedPanel.unmount === 'function') {
+          try { content._mountedPanel.unmount(content); } catch(e) { console.warn('Error during panel unmount', e); }
+          delete content._mountedPanel;
+        }
+        mod.mount(content);
+        content._mountedPanel = mod;
+      }).catch(err => {
+        console.error('Failed to load hung-tao panel', err);
+        content.innerHTML = '<div class="panel"><h2>Lỗi khi tải panel</h2></div>';
+      });
+      return;
+    }
+
     // fallback simple panel
     content.innerHTML = `
       <div class="panel">
@@ -522,8 +521,10 @@
     'compare-so-sanh': 'Phép so sánh — So sánh số',
     'compare-xep-so': 'Phép so sánh — Xếp số',
     'practice-tinh-toan': 'Luyện tập — Tính toán',
+    'practice-nhan-ngon': 'Luyện tập — Tính bằng ngón tay',
     'practice-so-sanh': 'Luyện tập — So sánh',
     'games': 'Trò chơi',
+    'games-dino': 'Trò chơi — Khủng long giỏi toán',
     'users': 'Người dùng',
     'digits': 'Học chữ số',
     'compare': 'Phép so sánh',
