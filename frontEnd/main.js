@@ -234,6 +234,8 @@
   let homeAudio = null;
   let isMusicEnabled = true; // toggle state (user can mute/unmute)
   let isMusicPlaying = false;
+  let autoplayBlocked = false;
+  let _resumeOnInteraction = null;
   const HOME_TRACK_COUNT = 4;
 
   function pickRandomHomeTrack() {
@@ -251,6 +253,14 @@
     homeAudio = null;
     isMusicPlaying = false;
     topbarMusicBtn?.classList.remove('playing');
+    topbarMusicBtn?.classList.remove('needs-interaction');
+    autoplayBlocked = false;
+    if (_resumeOnInteraction) {
+      document.removeEventListener('click', _resumeOnInteraction);
+      document.removeEventListener('keydown', _resumeOnInteraction);
+      document.removeEventListener('touchstart', _resumeOnInteraction);
+      _resumeOnInteraction = null;
+    }
   }
 
   function playHomeMusic() {
@@ -265,13 +275,47 @@
       playHomeMusic();
     };
     homeAudio.addEventListener('ended', homeAudio._onEnded);
-    homeAudio.play().then(() => {
+    const p = homeAudio.play();
+    if (p && typeof p.then === 'function') {
+      p.then(() => {
+        isMusicPlaying = true;
+        topbarMusicBtn?.classList.add('playing');
+        // clear any pending resume handlers
+        if (_resumeOnInteraction) {
+          document.removeEventListener('click', _resumeOnInteraction);
+          document.removeEventListener('keydown', _resumeOnInteraction);
+          document.removeEventListener('touchstart', _resumeOnInteraction);
+          _resumeOnInteraction = null;
+          autoplayBlocked = false;
+          topbarMusicBtn?.classList.remove('needs-interaction');
+        }
+      }).catch(() => {
+        // autoplay blocked by browser: set a one-time resume on next user interaction
+        autoplayBlocked = true;
+        topbarMusicBtn?.classList.add('needs-interaction');
+        // ensure we don't add multiple handlers
+        if (!_resumeOnInteraction) {
+          _resumeOnInteraction = () => {
+            if (_resumeOnInteraction) {
+              document.removeEventListener('click', _resumeOnInteraction);
+              document.removeEventListener('keydown', _resumeOnInteraction);
+              document.removeEventListener('touchstart', _resumeOnInteraction);
+            }
+            _resumeOnInteraction = null;
+            autoplayBlocked = false;
+            // try to play again
+            if (isMusicEnabled) playHomeMusic();
+          };
+          document.addEventListener('click', _resumeOnInteraction, { once: true });
+          document.addEventListener('keydown', _resumeOnInteraction, { once: true });
+          document.addEventListener('touchstart', _resumeOnInteraction, { once: true });
+        }
+      });
+    } else {
+      // older browsers: assume play started synchronously
       isMusicPlaying = true;
       topbarMusicBtn?.classList.add('playing');
-    }).catch(() => {
-      // autoplay might be blocked; keep state tidy
-      clearHomeAudio();
-    });
+    }
   }
 
   function stopHomeMusic() {
@@ -284,6 +328,14 @@
     homeAudio = null;
     isMusicPlaying = false;
     topbarMusicBtn?.classList.remove('playing');
+    topbarMusicBtn?.classList.remove('needs-interaction');
+    autoplayBlocked = false;
+    if (_resumeOnInteraction) {
+      document.removeEventListener('click', _resumeOnInteraction);
+      document.removeEventListener('keydown', _resumeOnInteraction);
+      document.removeEventListener('touchstart', _resumeOnInteraction);
+      _resumeOnInteraction = null;
+    }
   }
 
   topbarMusicBtn?.addEventListener('click', () => {
@@ -295,10 +347,8 @@
   // Auto-play on initial load only if we're on home content
   const initialIsHome = true; // page loads with home content by default
   if (initialIsHome) {
-    // try to start music (may be blocked by browser)
-    setTimeout(() => {
-      if (isMusicEnabled) playHomeMusic();
-    }, 300);
+    // try to start music immediately (may be blocked by browser)
+    try { if (isMusicEnabled) playHomeMusic(); } catch(e) { /* ignore */ }
   }
   // ===== end home music control =====
 
