@@ -64,6 +64,8 @@ export function mount(container) {
     </div>
   `;
 
+  try { if (window.HiMathStats) window.HiMathStats.event('panel_mount', { page: 'practice-tinh-toan' }); } catch (e) {}
+
   // ---------- scoped state ----------
   let totalCorrect = 0, totalWrong = 0, gameCorrect = 0, gameWrong = 0;
   let currentMode = ''; // 'addition'|'subtraction'|'both'
@@ -131,10 +133,12 @@ export function mount(container) {
     });
     if (isCorrect) {
       gameCorrect++; totalCorrect++;
+      try { if (window.HiMathStats) window.HiMathStats.record('practice_math_attempt', { mode: currentMode, question: currentQuestion, chosen: clickedButton.dataset.value, correct: true }); } catch(e) {}
       // play long correct then next
       playSoundFile('sound_correct_answer_long.mp3').then(() => nextQuestion());
     } else {
       gameWrong++; totalWrong++;
+      try { if (window.HiMathStats) window.HiMathStats.record('practice_math_attempt', { mode: currentMode, question: currentQuestion, chosen: clickedButton.dataset.value, correct: false }); } catch(e) {}
       // play wrong long then next
       playSoundFile('sound_wrong_answer_long.mp3').then(() => nextQuestion());
     }
@@ -170,6 +174,7 @@ export function mount(container) {
     if (autoNextTimeout){ clearTimeout(autoNextTimeout); autoNextTimeout=null; }
     try { if (currentAudio) { currentAudio.pause(); currentAudio.currentTime = 0; currentAudio = null; } } catch(e) {}
     delete container._practiceCleanup;
+    try { if (window.HiMathStats) window.HiMathStats.event('panel_unmount', { page: 'practice-tinh-toan' }); } catch (e) {}
   };
 }
 

@@ -37,6 +37,8 @@ export function mount(container) {
 		</div>
 	`;
 
+	try { if (window.HiMathStats) window.HiMathStats.event('panel_mount', { page: 'practice-nhan-ngon' }); } catch (e) {}
+
 	const qs = sel => container.querySelector(sel);
 
 	// dynamic script loader (idempotent)
@@ -149,6 +151,7 @@ export function mount(container) {
 				scoreEl.innerText = score;
 				canvasElement.style.filter = 'sepia(1) hue-rotate(90deg) saturate(5)';
 				setTimeout(() => { canvasElement.style.filter = 'none'; }, 300);
+				try { if (window.HiMathStats) window.HiMathStats.record('practice_nhan_attempt', { question: currentTarget, correct: true, score }); } catch (e) {}
 				newQuestion();
 			}
 		} else {
@@ -196,6 +199,7 @@ export function mount(container) {
 		try { if (hands && typeof hands.close === 'function') hands.close(); } catch (e) {}
 		// remove DOM
 		container.innerHTML = '';
+		try { if (window.HiMathStats) window.HiMathStats.event('panel_unmount', { page: 'practice-nhan-ngon' }); } catch (e) {}
 		// don't remove loaded scripts to avoid breaking other panels
 		delete container._practiceNhanCleanup;
 	};

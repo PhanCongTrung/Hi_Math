@@ -66,6 +66,9 @@ export function mount(container) {
     </div>
   `;
 
+  // instrumentation
+  try { if (window.HiMathStats) window.HiMathStats.event('panel_mount', { page: 'digits-dem-so' }); } catch (e) {}
+
   // ================================
   // GAME LOGIC (scoped to container)
   // ================================
@@ -87,6 +90,7 @@ export function mount(container) {
   let correctCount = 0;
   let wrongCount = 0;
   let isAnswered = false;
+  let sessionAttempts = [];
   let currentCorrectAnswer = 0;
   let currentIconsData = [];
   let currentIconType = null;
@@ -208,6 +212,8 @@ export function mount(container) {
       // play wrong long sound then next
       playSoundFile('sound_wrong_answer_long.mp3').then(() => nextQuestion());
     }
+    // record attempt to session buffer
+    try { sessionAttempts.push({ questionNumber, correctAnswer: currentCorrectAnswer, chosen: Number(clickedButton.dataset.answer), correct: isCorrect, ts: Date.now() }); } catch (e) {}
     resultMessageElement.classList.add('show');
     updateStats();
   }
@@ -239,7 +245,10 @@ export function mount(container) {
     restartBtn.removeEventListener('click', initGame);
     if (autoNextTimeout) { clearTimeout(autoNextTimeout); autoNextTimeout = null; }
     try { if (currentAudio) { currentAudio.pause(); currentAudio.currentTime = 0; currentAudio = null; } } catch(e) {}
+    // send session attempts to gateway
+    try { if (window.HiMathStats && sessionAttempts && sessionAttempts.length) window.HiMathStats.recordAttempt('dem-so', { attempts: sessionAttempts, totalCorrect: correctCount, totalWrong: wrongCount }); } catch (e) {}
     delete container._demSoCleanup;
+    try { if (window.HiMathStats) window.HiMathStats.event('panel_unmount', { page: 'digits-dem-so' }); } catch (e) {}
   };
 }
 

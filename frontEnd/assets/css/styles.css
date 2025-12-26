@@ -364,9 +364,9 @@ button{font:inherit}
 }
 
 .hero{
-  display:grid;
+  /* display:grid;
   grid-template-columns: 1.2fr .8fr;
-  gap: 18px;
+  gap: 18px; */
   align-items: stretch;
 }
 
@@ -374,8 +374,27 @@ button{font:inherit}
   margin: 0;
   font-size: 34px;
   letter-spacing: -0.3px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
 }
-.hero__title span{
+
+.hero__title > span{
+  background: linear-gradient(90deg, #FFE259, #FFA751);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  flex: 1 1 auto;
+  display: block;
+  min-width: 0;
+}
+
+.hero__actions{ margin-left: auto; }
+
+.hero__greeting{
+  font-weight:800;
+  font-size:1.02em;
   background: linear-gradient(90deg, #FFE259, #FFA751);
   -webkit-background-clip:text;
   background-clip:text;

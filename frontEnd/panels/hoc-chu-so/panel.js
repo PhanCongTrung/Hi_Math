@@ -57,6 +57,8 @@ export function mount(container) {
     <audio id="numberAudio" preload="auto"></audio>
   `;
 
+  try { if (window.HiMathStats) window.HiMathStats.event('panel_mount', { page: 'digits-hoc-so' }); } catch (e) {}
+
   // initialize digits functionality (adapted from main.js)
   const numbersData = [
     { number: 0, name: "Số Không", imageUrl: "https://cdn.pixabay.com/photo/2016/11/29/13/55/balloons-1869796_1280.jpg", audioUrl: "assets/sound/so_khong.mp3" },
@@ -188,6 +190,7 @@ export function mount(container) {
     nextBtn?.removeEventListener('click', nextClickHandler);
     try { audioElement.pause(); audioElement.currentTime = 0; audioElement.src = ''; audioElement.onended = null; } catch(e) {}
     delete container._hocChuSoCleanup;
+    try { if (window.HiMathStats) window.HiMathStats.event('panel_unmount', { page: 'digits-hoc-so' }); } catch (e) {}
   };
 }
 

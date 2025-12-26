@@ -75,6 +75,9 @@ export function mount(container) {
     </div>
   `;
 
+  // instrumentation: notify stats system that panel mounted
+  try { if (window.HiMathStats) window.HiMathStats.event('panel_mount', { page: 'digits-ghep-so' }); } catch (e) {}
+
   // Game data (copied from main.js)
   const levelQuestions = {
     1: [
@@ -264,6 +267,7 @@ export function mount(container) {
         container.querySelector(`#g-answer-${idx}`).textContent = draggedNumber.number;
         draggedNumber.element.classList.add('used'); draggedNumber.element.draggable = false;
         resetTimer();
+        try { if (window.HiMathStats) window.HiMathStats.record('ghep_attempt', { level, questionIndex: idx, correct: true, chosen: draggedNumber.number, answer, timeLeft, score }); } catch (e) {}
         playSoundFile('sound_correct_answer_bit.mp3').then(() => checkLevelCompletion());
       } else {
         icon.classList.add('highlight-incorrect');
@@ -271,6 +275,7 @@ export function mount(container) {
         if (timeLeft < 0) timeLeft = 0;
         timerEl.textContent = timeLeft;
         if (timeLeft <= 0) endLevel(false);
+        try { if (window.HiMathStats) window.HiMathStats.record('ghep_attempt', { level, questionIndex: idx, correct: false, chosen: draggedNumber.number, answer, timeLeft, score }); } catch (e) {}
         playSoundFile('sound_wrong_answer_bit.mp3');
         setTimeout(() => icon.classList.remove('highlight-incorrect'), 500);
     }
@@ -293,6 +298,7 @@ export function mount(container) {
     clearInterval(timerInterval);
     setTimeout(()=>{
       if (isWin){
+        try { if (window.HiMathStats) window.HiMathStats.record('ghep_level_complete', { level, score, questions: currentGameData }); } catch (e) {}
         modalCompletedLevel.textContent = level;
         if (modalNextLevel) modalNextLevel.textContent = Math.min(level + 1, 10);
         if (modalLevelScore) modalLevelScore.textContent = score;
@@ -303,6 +309,7 @@ export function mount(container) {
           handleNextLevel();
         });
       } else {
+        try { if (window.HiMathStats) window.HiMathStats.record('ghep_level_failed', { level, score, questions: currentGameData }); } catch (e) {}
         modalLevel.textContent = level;
         showModal(gameOverModal);
       }
@@ -344,6 +351,7 @@ export function mount(container) {
       }
     } catch(e) {}
     delete container._ghepCleanup;
+    try { if (window.HiMathStats) window.HiMathStats.event('panel_unmount', { page: 'digits-ghep-so' }); } catch (e) {}
   };
 }
 

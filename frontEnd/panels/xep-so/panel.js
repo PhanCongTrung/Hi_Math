@@ -54,6 +54,9 @@ export function mount(container) {
     </div>
   `;
 
+  // instrumentation: panel mounted
+  try { if (window.HiMathStats) window.HiMathStats.event('panel_mount', { page: 'compare-xep-so' }); } catch (e) {}
+
   // ---------- Game state (scoped) ----------
   let questionNumber = 1;
   let correctCount = 0;
@@ -196,12 +199,14 @@ export function mount(container) {
       const numberIndex = draggableNumbers.indexOf(draggedNumber.number);
       if (numberIndex > -1) draggableNumbers.splice(numberIndex,1);
       correctSlotsCount++;
+      try { if (window.HiMathStats) window.HiMathStats.record('xep_attempt', { questionNumber, correct: true, correctValue, chosen: draggedNumber.number }); } catch (e) {}
       // play bit-correct sound
       playSoundFile('sound_correct_answer_bit.mp3').then(() => checkIfCompleted());
     } else {
       slot.classList.add('incorrect-drop');
       setTimeout(()=>{ slot.classList.remove('incorrect-drop'); draggedNumber.element.classList.remove('dragging'); draggedNumber.element.style.transform = ''; }, 500);
       wrongCount++; updateStats();
+      try { if (window.HiMathStats) window.HiMathStats.record('xep_attempt', { questionNumber, correct: false, correctValue, chosen: draggedNumber.number }); } catch (e) {}
       // play bit-wrong sound then continue
       playSoundFile('sound_wrong_answer_bit.mp3');
     }
@@ -224,6 +229,8 @@ export function mount(container) {
 
   function nextQuestion() { if (autoNextTimeout) { clearTimeout(autoNextTimeout); autoNextTimeout = null; } questionNumber++; generateNewQuestion(); }
 
+  // when leaving the panel, record unmount
+
   function getRandomNumber(min,max) { return Math.floor(Math.random()*(max-min+1))+min; }
 
   // document-level dragover to allow drops (scoped cleanup later)
@@ -245,6 +252,7 @@ export function mount(container) {
     if (autoNextTimeout) { clearTimeout(autoNextTimeout); autoNextTimeout = null; }
     try { if (currentAudio) { currentAudio.pause(); currentAudio.currentTime = 0; currentAudio = null; } } catch(e) {}
     delete container._xepSoCleanup;
+    try { if (window.HiMathStats) window.HiMathStats.event('panel_unmount', { page: 'compare-xep-so', stats: { lastQuestion: questionNumber, correctCount, wrongCount } }); } catch (e) {}
   };
 }
 

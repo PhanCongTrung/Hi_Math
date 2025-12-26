@@ -96,6 +96,13 @@ export function mount(container) {
     </div>
   `;
 
+  // instrumentation
+  try { if (window.HiMathStats) window.HiMathStats.event('panel_mount', { page: 'digits-chan-le' }); } catch (e) {}
+
+  // session recording
+  let sessionStart = Date.now();
+  let sessionAttempts = []; // { question, chosen, correctAnswer, correct, ts, timeLeft?, reason? }
+
   // state
   let score = 0;
   let correctAnswers = 0;
@@ -199,6 +206,9 @@ export function mount(container) {
     }
     wrongAnswers++;
     updateStats();
+    try {
+      sessionAttempts.push({ question: currentNumber, chosen: null, correctAnswer: currentAnswer, correct: false, ts: Date.now(), timeLeft, reason: 'timeout' });
+    } catch (e) {}
     // play wrong long sound then next
     playSoundFile('sound_wrong_answer_long.mp3').then(() => nextQuestion());
   }
@@ -261,6 +271,9 @@ export function mount(container) {
     }
     updateStats();
     const soundFile = isCorrect ? 'sound_correct_answer_long.mp3' : 'sound_wrong_answer_long.mp3';
+    try {
+      sessionAttempts.push({ question: currentNumber, chosen: userAnswer, correctAnswer: currentAnswer, correct: isCorrect, ts: Date.now(), timeLeft });
+    } catch (e) {}
     playSoundFile(soundFile).then(() => nextQuestion());
   }
 
@@ -346,7 +359,10 @@ export function mount(container) {
     try { currentNumberElement.draggable = false; } catch(e) {}
     // stop any playing audio
     try { if (currentAudio) { currentAudio.pause(); currentAudio.currentTime = 0; currentAudio = null; } } catch(e) {}
+    // send session attempts to gateway
+    try { if (window.HiMathStats) window.HiMathStats.recordAttempt('chan-le', { attempts: sessionAttempts, totalCorrect: correctAnswers, totalWrong: wrongAnswers, durationMs: Date.now() - sessionStart }); } catch (e) {}
     delete container._chanLeCleanup;
+    try { if (window.HiMathStats) window.HiMathStats.event('panel_unmount', { page: 'digits-chan-le' }); } catch (e) {}
   };
 }
 

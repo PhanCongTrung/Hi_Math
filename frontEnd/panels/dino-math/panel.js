@@ -40,6 +40,8 @@ export function mount(container) {
     </div>
   `;
 
+    try { if (window.HiMathStats) window.HiMathStats.event('panel_mount', { page: 'games-dino' }); } catch (e) {}
+
   // --- SELECTORS (scoped to container) ---
   const qs = sel => container.querySelector(sel);
 
@@ -345,10 +347,12 @@ export function mount(container) {
       allBtns.forEach(b => { if (parseInt(b.innerText) === correctAns) correctBtnDOM = b; });
       if (userAns === correctAns) {
           clickedBtn.classList.add('correct');
+          try { if (window.HiMathStats) window.HiMathStats.record('dino_math_attempt', { userAns, correctAns, correct: true, score }); } catch (e) {}
           setTimeout(() => { qs('#math-modal').classList.add('hidden'); resumeGame(); }, 1000);
       } else {
           clickedBtn.classList.add('wrong');
           if (correctBtnDOM) correctBtnDOM.classList.add('correct');
+          try { if (window.HiMathStats) window.HiMathStats.record('dino_math_attempt', { userAns, correctAns, correct: false, score }); } catch (e) {}
           setTimeout(() => {
               lives--;
               updateLivesUI();
@@ -384,6 +388,7 @@ export function mount(container) {
   container._dinoCleanup = () => {
       try { document.removeEventListener('keydown', keydownListener); document.removeEventListener('keyup', keyupHandler); } catch(e){}
       try { cancelAnimationFrame(frameId); } catch(e){}
+      try { if (window.HiMathStats) window.HiMathStats.event('panel_unmount', { page: 'games-dino', finalScore: score }); } catch (e) {}
       delete container._dinoCleanup;
   };
 }

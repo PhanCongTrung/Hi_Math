@@ -5,10 +5,11 @@
   const authBackdrop = document.querySelector('[data-auth-backdrop]');
   const authOpenBtn = document.querySelector('[data-action="open-auth"]');
   const authCloseBtn = document.querySelector('[data-auth-close]');
-  const authForm = document.querySelector('[data-auth-form]');
-  const authEmail = document.querySelector('[data-auth-email]');
+  const authOverlayEl = document.getElementById('auth-overlay');
 
   const AUTH_KEY = 'hm_is_authed';
+  const USERS_KEY = 'hm_users';
+  const CURRENT_USER_KEY = 'hm_user';
 
   const locks = {
     sidebar: false,
@@ -16,8 +17,43 @@
   };
 
   function isAuthed() {
-    return localStorage.getItem(AUTH_KEY) === '1';
+    return localStorage.getItem(AUTH_KEY) === '1' && Boolean(localStorage.getItem(CURRENT_USER_KEY));
   }
+
+  function getUsers() {
+    try { return JSON.parse(localStorage.getItem(USERS_KEY) || '[]'); } catch(e) { return []; }
+  }
+
+  function saveUsers(list) {
+    try { localStorage.setItem(USERS_KEY, JSON.stringify(list)); } catch(e) {}
+  }
+
+  function seedDemoUser() {
+    const users = getUsers();
+    const exists = users.some(u => u.username === 'abc');
+    if (!exists) {
+      users.push({ childName: 'ABC', username: 'abc', password: 'abc' });
+      saveUsers(users);
+    }
+  }
+
+  function getCurrentUser() {
+    try { return JSON.parse(localStorage.getItem(CURRENT_USER_KEY) || 'null'); } catch(e){ return null; }
+  }
+
+  function setCurrentUser(user) {
+    try { localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user)); } catch(e){}
+  }
+
+  function clearCurrentUser() {
+    try { localStorage.removeItem(CURRENT_USER_KEY); localStorage.removeItem(AUTH_KEY); } catch(e){}
+  }
+
+
+
+  // seed demo user immediately
+  seedDemoUser();
+  updateAuthUI();
 
   function syncScrollLock() {
     const shouldLock = Boolean(locks.sidebar || locks.auth);
@@ -248,20 +284,98 @@
     }
   });
 
+  // connect any open-auth buttons (hero / overlay) to modal
+  document.addEventListener('click', (e) => {
+    const open = e.target.closest('[data-action="open-auth"]');
+    if (open) {
+      e.preventDefault();
+      openAuth();
+    }
+
+    const overlayLogin = e.target.closest('#auth-overlay');
+    if (overlayLogin) {
+      e.preventDefault();
+      openAuth();
+    }
+  });
+
+  // simple guard: when user clicks protected nav items or feature links, show overlay if not authed
+  function showAuthOverlay() {
+    if (!authOverlayEl) return;
+    authOverlayEl.hidden = false;
+  }
+
+  function hideAuthOverlay() { if (authOverlayEl) authOverlayEl.hidden = true; }
+
+  // protected areas by page key
+  const PROTECTED_KEYS = new Set(['digits-hoc-so','digits-ghep-so','digits-chan-le','digits-dem-so','compare-so-sanh','compare-xep-so','practice-tinh-toan','practice-nhan-ngon','games','games-dino']);
   // Handle both forms
+  // handle login and register with localStorage (demo only)
   document.querySelectorAll('[data-auth-form]').forEach(form => {
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       const isLogin = form.getAttribute('data-auth-form') === 'login';
-      localStorage.setItem(AUTH_KEY, '1');
-      closeAuth();
-      alert(isLogin ? 'Đăng nhập demo thành công! (Chưa có backend)' : 'Đăng ký demo thành công! (Chưa có backend)');
+
+      if (isLogin) {
+        const username = form.querySelector('[data-auth-username]')?.value?.trim();
+        const password = form.querySelector('[data-auth-password]')?.value || '';
+        if (!username || !password) return alert('Vui lòng nhập tên đăng nhập và mật khẩu');
+
+        const users = getUsers();
+        const found = users.find(u => u.username === username && u.password === password);
+        if (!found) return alert('Tên đăng nhập hoặc mật khẩu không đúng (demo)');
+
+        setCurrentUser(found);
+        try { localStorage.setItem(AUTH_KEY, '1'); } catch(e){}
+        closeAuth();
+        updateAuthUI();
+        return alert('Đăng nhập thành công (demo)');
+      } else {
+        const childName = form.querySelector('[data-auth-childname]')?.value?.trim();
+        const username = form.querySelector('[data-auth-username]')?.value?.trim();
+        const parentCode = form.querySelector('[data-auth-parentcode]')?.value?.trim();
+        const password = form.querySelector('[data-auth-password]')?.value || '';
+        const passwordConfirm = form.querySelector('[data-auth-password-confirm]')?.value || '';
+
+        if (!childName || !username || !password) return alert('Vui lòng điền đủ thông tin');
+        if (password !== passwordConfirm) return alert('Mật khẩu xác nhận không khớp');
+
+        const users = getUsers();
+        if (users.some(u => u.username === username)) return alert('Tên đăng nhập đã tồn tại');
+        const newUser = { childName, username, parentCode: parentCode || null, password };
+        users.push(newUser);
+        saveUsers(users);
+        setCurrentUser(newUser);
+        try { localStorage.setItem(AUTH_KEY, '1'); } catch(e){}
+        closeAuth();
+        updateAuthUI();
+        return alert('Đăng ký thành công (demo)');
+      }
     });
   });
 
   // preserve initial main content so we can restore it when clicking 'home'
   const contentElement = document.querySelector('.content');
   const initialContentHTML = contentElement ? contentElement.innerHTML : '';
+
+  // update hero and top UI based on auth state
+  function updateAuthUI() {
+    const hero = document.querySelector('.hero__copy');
+    const heroActions = document.querySelector('.hero__actions');
+    const avatarBtn = document.querySelector('.avatar');
+    const current = getCurrentUser();
+
+    if (current) {
+      // show greeting in hero
+      if (heroActions) heroActions.innerHTML = `<div class="hero__greeting">Xin chào bé ${escapeHtml(current.childName || current.username)}</div>`;
+      if (avatarBtn) avatarBtn.title = `Đăng nhập: ${current.username}`;
+    } else {
+      if (heroActions) heroActions.innerHTML = `<button class="btn btn--primary" data-action="open-auth">Đăng nhập / Đăng ký</button>`;
+      if (avatarBtn) avatarBtn.title = 'Tài khoản';
+    }
+  }
+
+  function escapeHtml(s){ return String(s).replace(/[&<>"']/g, function(m){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[m]; }); }
 
   // bind interactions that live inside the main content area (re-run after restoring)
   function initDynamicBindings() {
@@ -532,6 +646,10 @@
       if (isMusicEnabled) playHomeMusic();
     }, 300);
   }
+
+  // track current page for stats
+  let _currentPage = 'home';
+  try { if (window.HiMathStats && typeof window.HiMathStats.startPage === 'function') window.HiMathStats.startPage('home'); } catch (e) {}
   
   // ===== Snow effect (multi-area) =====
   // We'll create small `.ice-container` elements inside topbar / sidebar / content
@@ -830,6 +948,22 @@
       return;
     }
 
+    if (key === 'users') {
+      content.innerHTML = '<div class="loading">Đang tải...</div>';
+      import('./panels/users/panel.js').then(mod => {
+        if (content._mountedPanel && typeof content._mountedPanel.unmount === 'function') {
+          try { content._mountedPanel.unmount(content); } catch(e) { console.warn('Error during panel unmount', e); }
+          delete content._mountedPanel;
+        }
+        mod.mount(content);
+        content._mountedPanel = mod;
+      }).catch(err => {
+        console.error('Failed to load users panel', err);
+        content.innerHTML = '<div class="panel"><h2>Lỗi khi tải mục Phụ huynh</h2></div>';
+      });
+      return;
+    }
+
     // fallback simple panel
     content.innerHTML = `
       <div class="panel">
@@ -896,7 +1030,20 @@
     // close sidebar on mobile
     if (isMobileLayout()) closeSidebar();
 
+    // if protected, ensure auth
+    if (PROTECTED_KEYS.has(key) && !isAuthed()) {
+      showAuthOverlay();
+      // small hint and stop navigation
+      return openAuth();
+    }
+
+    hideAuthOverlay();
+    try {
+      if (window.HiMathStats && typeof window.HiMathStats.endPage === 'function') window.HiMathStats.endPage(_currentPage);
+    } catch (e) {}
     // render panel with clear title
     renderPanel(key, title);
+    try { if (window.HiMathStats && typeof window.HiMathStats.startPage === 'function') window.HiMathStats.startPage(key); } catch (e) {}
+    _currentPage = key;
   });
 })();

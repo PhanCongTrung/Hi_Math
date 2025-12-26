@@ -65,7 +65,7 @@ export function mount(container) {
 
   function spawnApple() { let safeLanes = getAvailableLanes(); if (safeLanes.length === 0) return; let randomLane = safeLanes[Math.floor(Math.random()*safeLanes.length)]; const hasCorrectApple = apples.some(a => a.value === currentResult); let shouldSpawnCorrect = false; if (!hasCorrectApple) { let chance = 0.2 + (consecutiveWrongApples * 0.15); if (Math.random() < chance) shouldSpawnCorrect = true; } let value; if (shouldSpawnCorrect) { value = currentResult; consecutiveWrongApples = 0; } else { consecutiveWrongApples++; do { if (Math.random() > 0.5) { let offset = Math.floor(Math.random()*5)-2; value = currentResult + offset; if (value < 0) value = 0; } else { value = Math.floor(Math.random()*20); } } while (value === currentResult); } apples.push({ lane: randomLane, y: -40, speed: 0.8 + Math.random()*0.4, value: value }); }
 
-  function updateApples() { for (let i = 0; i < apples.length; i++) { let apple = apples[i]; apple.y += apple.speed; if (apple.lane === basket.lane && apple.y >= basket.y && apple.y <= basket.y + basket.height) { checkAnswer(apple.value); apples.splice(i,1); i--; continue; } if (apple.y > canvas.height) { apples.splice(i,1); i--; } } }
+  function updateApples() { for (let i = 0; i < apples.length; i++) { let apple = apples[i]; apple.y += apple.speed; if (apple.lane === basket.lane && apple.y >= basket.y && apple.y <= basket.y + basket.height) { _checkAnswerTracked(apple.value); apples.splice(i,1); i--; continue; } if (apple.y > canvas.height) { apples.splice(i,1); i--; } } }
 
   function checkAnswer(value) { if (value === currentResult) { score++; qs('#score').innerText = score; generateNewQuestion(); apples = []; } else { loseLife(); } }
 
@@ -78,8 +78,18 @@ export function mount(container) {
   function keyHandler(e) { if (!gameRunning) return; if (e.code === 'ArrowLeft') { if (basket.lane > 0) basket.lane--; } if (e.code === 'ArrowRight') { if (basket.lane < LANE_COUNT -1) basket.lane++; } }
 
   function initGame() { if (animationId) cancelAnimationFrame(animationId); gameRunning = true; score = 0; lives = 5; apples = []; frameCount = 0; basket.lane = 2; consecutiveWrongApples = 0; qs('#score').innerText = score; updateLivesUI(); qs('#start-screen').classList.add('hidden'); qs('#game-over-screen').classList.add('hidden'); generateNewQuestion(); gameLoop(); }
+      function checkAnswer(value) { if (value === currentResult) { score++; qs('#score').innerText = score; generateNewQuestion(); apples = []; } else { loseLife(); } }
 
+      // record attempts
+      const _origCheckAnswer = checkAnswer;
+      function _checkAnswerTracked(value) {
+        try { if (window.HiMathStats) window.HiMathStats.record('hungtao_attempt', { value, result: currentResult, correct: value === currentResult, score }); } catch (e) {}
+        return _origCheckAnswer(value);
+      }
+      // replace usage where apples collected call checkAnswer -> ensure we call tracked version
+      // update updateApples to call _checkAnswerTracked instead of checkAnswer
   function gameOver() { gameRunning = false; cancelAnimationFrame(animationId); qs('#final-score').innerText = score; qs('#game-over-screen').classList.remove('hidden'); }
+
 
   // Bind UI
   qs('#btn-start').addEventListener('click', initGame);
@@ -95,6 +105,7 @@ export function mount(container) {
     try { document.removeEventListener('keydown', keyHandler); } catch(e){}
     try { cancelAnimationFrame(animationId); } catch(e){}
     delete container._hungtaoCleanup;
+    try { if (window.HiMathStats) window.HiMathStats.event('panel_unmount', { page: 'games' }); } catch (e) {}
   };
 }
 

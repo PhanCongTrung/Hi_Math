@@ -173,7 +173,7 @@
             <span class="nav__icon" aria-hidden="true">
               <svg viewBox="0 0 24 24"><path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 21a8 8 0 0 0-16 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
             </span>
-            <span class="nav__text">Người dùng</span>
+            <span class="nav__text">Phụ huynh</span>
           </a>
         </nav>
 
@@ -186,7 +186,12 @@
       <main class="content" role="main">
         <section class="hero">
           <div class="hero__copy">
-            <h1 class="hero__title"><span>Hi Math - Học Toán Thật Vui</span></h1>
+            <h1 class="hero__title">
+              <span>Hi Math - Học Toán Thật Vui</span>
+              <div class="hero__actions">
+                <button class="btn btn--primary" data-action="open-auth">Đăng nhập / Đăng ký</button>
+              </div>
+            </h1>
             <!-- <p class="hero__desc">
               Hi Math là website học toán dành cho trẻ em: vừa học, vừa chơi, vừa rèn logic.
               Mình thiết kế giao diện thân thiện, nhiều màu sắc nhưng vẫn dễ nhìn.
@@ -322,13 +327,13 @@
           <!-- Đăng nhập form -->
           <form class="form" data-auth-form="login">
             <label class="field">
-              <span class="field__label">Email</span>
-              <input class="field__input" type="email" placeholder="Enter your email" required data-auth-email />
+              <span class="field__label">Tên đăng nhập</span>
+              <input class="field__input" type="text" placeholder="Tên đăng nhập" required data-auth-username />
             </label>
 
             <label class="field">
               <span class="field__label">Mật khẩu</span>
-              <input class="field__input" type="password" placeholder="Enter your password" required />
+              <input class="field__input" type="password" placeholder="Mật khẩu" required data-auth-password />
             </label>
 
             <button class="btn btn--primary" type="submit">Đăng nhập</button>
@@ -343,18 +348,28 @@
           <!-- Đăng ký form (ẩn mặc định) -->
           <form class="form" data-auth-form="register" hidden>
             <label class="field">
-              <span class="field__label">Email</span>
-              <input class="field__input" type="email" placeholder="Enter your email" required />
+              <span class="field__label">Tên của bé</span>
+              <input class="field__input" type="text" placeholder="Tên của bé" required data-auth-childname />
+            </label>
+
+            <label class="field">
+              <span class="field__label">Tên đăng nhập</span>
+              <input class="field__input" type="text" placeholder="Tên đăng nhập" required data-auth-username />
+            </label>
+
+            <label class="field">
+              <span class="field__label">Mã phụ huynh</span>
+              <input class="field__input" type="text" placeholder="Mã phụ huynh" data-auth-parentcode />
             </label>
 
             <label class="field">
               <span class="field__label">Mật khẩu</span>
-              <input class="field__input" type="password" placeholder="Enter your password" required />
+              <input class="field__input" type="password" placeholder="Mật khẩu" required data-auth-password />
             </label>
 
             <label class="field">
               <span class="field__label">Xác nhận mật khẩu</span>
-              <input class="field__input" type="password" placeholder="Confirm your password" required />
+              <input class="field__input" type="password" placeholder="Xác nhận mật khẩu" required data-auth-password-confirm />
             </label>
 
             <button class="btn btn--primary" type="submit">Đăng ký</button>
@@ -369,6 +384,15 @@
       </div>
     </div>
 
+    <script src="./stats/gateway.js"></script>
     <script src="./main.js"></script>
+    <div id="auth-overlay" class="auth-overlay" hidden>
+      <div class="auth-overlay__inner">
+        <p>Bạn cần <strong>Đăng nhập</strong> để sử dụng chức năng này.</p>
+        <div class="auth-overlay__actions">
+          <button class="btn btn--primary" data-action="open-auth">Đăng nhập / Đăng ký</button>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

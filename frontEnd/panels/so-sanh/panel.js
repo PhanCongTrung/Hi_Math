@@ -74,6 +74,8 @@ export function mount(container) {
     </div>
   `;
 
+  try { if (window.HiMathStats) window.HiMathStats.event('panel_mount', { page: 'compare-so-sanh' }); } catch (e) {}
+
   // ---------- Game logic (scoped to container) ----------
   let questionNumber = 1;
   let correctCount = 0;
@@ -170,6 +172,8 @@ export function mount(container) {
       if (correctAnswer === 'larger') largerBtn.classList.add('correct'); else smallerBtn.classList.add('correct');
     }
 
+    try { if (window.HiMathStats) window.HiMathStats.record('so_sanh_attempt', { questionNumber, leftNumber, rightNumber, chosen: userAnswer, correct: isCorrect }); } catch (e) {}
+
     updateStats();
     nextBtn.disabled = false;
     const soundFile = isCorrect ? 'sound_correct_answer_long.mp3' : 'sound_wrong_answer_long.mp3';
@@ -200,6 +204,7 @@ export function mount(container) {
     if (autoNextTimeout) { clearTimeout(autoNextTimeout); autoNextTimeout = null; }
     try { if (currentAudio) { currentAudio.pause(); currentAudio.currentTime = 0; currentAudio = null; } } catch(e) {}
     delete container._soSanhCleanup;
+    try { if (window.HiMathStats) window.HiMathStats.event('panel_unmount', { page: 'compare-so-sanh' }); } catch (e) {}
   };
 }
 
